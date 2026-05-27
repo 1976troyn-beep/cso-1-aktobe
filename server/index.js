@@ -591,7 +591,7 @@ app.post("/api/upload", verifyAdmin, upload.array("files"), (req, res) => {
 
     type: file.mimetype.startsWith("video") ? "video" : "image",
 
-    src: `http://localhost:${PORT}/uploads/${file.filename}`,
+    src: `${process.env.SERVER_URL}/uploads/${file.filename}`,
 
     name: file.originalname,
   }))
