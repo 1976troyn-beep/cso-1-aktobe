@@ -101,10 +101,11 @@ app.get("/api/sections", async (req, res) => {
 
     res.json(parsedSections)
   } catch (error) {
-    console.error(error)
+    console.error("SECTIONS ERROR:", error)
 
     res.status(500).json({
       message: "Ошибка загрузки sections",
+      error: error.message,
     })
   }
 })
