@@ -112,7 +112,8 @@ app.get("/api/sections", async (req, res) => {
 
     res.status(500).json({
       message: "Ошибка загрузки sections",
-      error: error.message,
+      error: String(error),
+      stack: error.stack,
     })
   }
 })
