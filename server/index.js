@@ -9,14 +9,14 @@ require("dotenv").config()
 const pool = require("./pgdb")
 
 const app = express()
-const PORT = 4000
+const PORT = process.env.PORT || 4000
+const SERVER_URL = process.env.SERVER_URL || `http://localhost:${PORT}`
 
 app.use(cors())
 app.use(express.json())
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
-const SERVER_URL =
-process.env.SERVER_URL || "http://localhost:4000"
+
 async function query(sql, params = []) {
   const result = await pool.query(sql, params)
   return result.rows
@@ -31,6 +31,50 @@ function getAqtobeDateTime() {
     hour: "2-digit",
     minute: "2-digit",
   })
+}
+
+function parseMedia(media) {
+  try {
+    if (typeof media === "string") {
+      return JSON.parse(media || "[]")
+    }
+
+    return media || []
+  } catch {
+    return []
+  }
+}
+
+function fixMediaUrl(item) {
+  if (!item || typeof item !== "object") return item
+
+  return {
+    ...item,
+    src: item.src?.replace("http://localhost:4000", SERVER_URL),
+    preview: item.preview?.replace("http://localhost:4000", SERVER_URL),
+  }
+}
+
+function normalizeMedia(media) {
+  const parsed = parseMedia(media)
+
+  if (Array.isArray(parsed)) {
+    return parsed.map(fixMediaUrl)
+  }
+
+  if (parsed && typeof parsed === "object") {
+    const result = {}
+
+    Object.entries(parsed).forEach(([key, value]) => {
+      result[key] = Array.isArray(value)
+        ? value.map(fixMediaUrl)
+        : value
+    })
+
+    return result
+  }
+
+  return []
 }
 
 const storage = multer.diskStorage({
@@ -92,30 +136,10 @@ app.get("/api/sections", async (req, res) => {
         END
     `)
 
-    const parsedSections = sections.map((section) => {
-      const media = (() => {
-        try {
-          if (typeof section.media === "string") {
-            return JSON.parse(section.media || "[]")
-          }
-
-          return section.media || []
-        } catch {
-          return []
-        }
-      })()
-
-      const fixedMedia = media.map((item) => ({
-        ...item,
-        src: item.src?.replace("http://localhost:4000", SERVER_URL),
-        preview: item.preview?.replace("http://localhost:4000", SERVER_URL),
-      }))
-
-      return {
-        ...section,
-        media: fixedMedia,
-      }
-    })
+    const parsedSections = sections.map((section) => ({
+      ...section,
+      media: normalizeMedia(section.media),
+    }))
 
     res.json(parsedSections)
   } catch (error) {
@@ -611,7 +635,8 @@ app.post("/api/upload", verifyAdmin, upload.array("files"), (req, res) => {
 
     type: file.mimetype.startsWith("video") ? "video" : "image",
 
-   src: `${process.env.SERVER_URL}/uploads/${file.filename}`,
+    src: `${SERVER_URL}/uploads/${file.filename}`,
+    preview: `${SERVER_URL}/uploads/${file.filename}`,
 
     name: file.originalname,
   }))
@@ -661,5 +686,5 @@ app.post("/api/admin/login", async (req, res) => {
 /* ===================== START SERVER ===================== */
 
 app.listen(PORT, () => {
-  console.log(`Server started: http://localhost:${PORT}`)
+  console.log(`Server started: ${SERVER_URL}`)
 })
