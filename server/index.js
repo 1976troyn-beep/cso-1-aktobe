@@ -93,10 +93,17 @@ app.get("/api/sections", async (req, res) => {
 
     const parsedSections = sections.map((section) => ({
       ...section,
-      media:
-        typeof section.media === "string"
-          ? JSON.parse(section.media || "[]")
-          : section.media || [],
+      media: (() => {
+        try {
+          if (typeof section.media === "string") {
+            return JSON.parse(section.media || "[]")
+          }
+
+          return section.media || []
+        } catch {
+          return []
+        }
+      })(),
     }))
 
     res.json(parsedSections)
