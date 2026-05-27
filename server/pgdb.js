@@ -13,18 +13,12 @@ const parsedUrl = new URL(databaseUrl)
 console.log("DATABASE HOST:", parsedUrl.hostname)
 console.log("DATABASE PORT:", parsedUrl.port)
 
-const isLocalDatabase =
-  parsedUrl.hostname === "localhost" ||
-  parsedUrl.hostname === "127.0.0.1" ||
-  parsedUrl.hostname === "::1"
-
 const pool = new Pool({
   connectionString: databaseUrl,
-  ssl: isLocalDatabase
-    ? false
-    : {
-        rejectUnauthorized: false,
-      },
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
 })
 
 module.exports = pool
