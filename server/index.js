@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const multer = require("multer")
 const path = require("path")
+const fs = require("fs")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -11,7 +12,11 @@ const pool = require("./pgdb")
 const app = express()
 const PORT = process.env.PORT || 4000
 const SERVER_URL = process.env.SERVER_URL || `http://localhost:${PORT}`
+const uploadsPath = path.join(__dirname, "uploads")
 
+if (!fs.existsSync(uploadsPath)) {
+  fs.mkdirSync(uploadsPath, { recursive: true })
+}
 app.use(cors())
 app.use(express.json())
 
@@ -79,7 +84,7 @@ function normalizeMedia(media) {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "uploads"))
+   cb(null, uploadsPath)
   },
 
   filename: (req, file, cb) => {
