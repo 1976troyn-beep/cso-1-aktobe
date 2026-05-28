@@ -72,9 +72,7 @@ function LoadingScreen() {
           </div>
         </motion.div>
 
-        <h1 className="text-2xl font-black">
-          Загрузка сайта
-        </h1>
+        <h1 className="text-2xl font-black">Загрузка сайта</h1>
 
         <p className="mt-2 text-sm font-bold text-slate-500 dark:text-white/60">
           Подготавливаем разделы и данные...
@@ -100,7 +98,7 @@ function SitePage() {
           className="min-h-screen overflow-x-hidden bg-[#eef7f7] text-[#12315c] transition-colors duration-500 dark:bg-[#071827] dark:text-white"
         >
           <Header />
-          <div className="h-[92px] md:h-[108px]" />
+
           <HeroSection />
           <Services />
           <Conditions />
