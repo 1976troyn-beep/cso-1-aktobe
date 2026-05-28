@@ -267,29 +267,37 @@ export default function AdminSections() {
   }
 
   async function handleSave() {
-    try {
-      const response = await authFetch(
-        `/api/sections/${activeSection.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(activeSection),
-        }
-      )
-
-      if (!response.ok) {
-        throw new Error("Ошибка сохранения")
-      }
-
-      showAlert("success", "Раздел успешно сохранён")
-    } catch (error) {
-      console.error(error)
-      showAlert("error", "Не удалось сохранить раздел")
-    }
+    console.log("SAVE CLICK", activeSection)
+  if (!activeSection) {
+    showAlert("error", "Раздел не выбран")
+    return
   }
 
+  showAlert("warning", "Сохраняю изменения...")
+
+  try {
+    const response = await authFetch(
+      `/api/sections/${activeSection.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(activeSection),
+      }
+    )
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      throw new Error(errorText || "Ошибка сохранения")
+    }
+
+    showAlert("success", "Раздел успешно сохранён")
+  } catch (error) {
+    console.error("SAVE ERROR:", error)
+    showAlert("error", "Не удалось сохранить раздел")
+  }
+}
   if (loading) {
     return (
       <div className="text-2xl font-black text-[#12315c]">
