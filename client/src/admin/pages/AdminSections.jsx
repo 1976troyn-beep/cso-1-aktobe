@@ -323,7 +323,7 @@ export default function AdminSections() {
           </p>
 
           <h1 className="mt-3 text-3xl font-black leading-[1.04] text-[#12315c] md:text-4xl">
-            Редактор разделов сайта
+            TEST ALERT SYSTEM
           </h1>
 
           <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 md:text-base">
