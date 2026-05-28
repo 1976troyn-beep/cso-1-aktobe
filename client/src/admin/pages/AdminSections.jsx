@@ -6,6 +6,8 @@ import {
   CheckCircle2,
   Trash2,
   Upload,
+  XCircle,
+  AlertTriangle,
 } from "lucide-react"
 
 import authFetch from "../utils/authFetch"
@@ -95,9 +97,18 @@ const disabledMediaSections = [
 export default function AdminSections() {
   const [sections, setSections] = useState(initialSections)
   const [activeId, setActiveId] = useState("hero")
-  const [saved, setSaved] = useState(false)
+  const [alert, setAlert] = useState(null)
   const [loading, setLoading] = useState(true)
   const editorRef = useRef(null)
+
+  function showAlert(type, message) {
+    setAlert({ type, message })
+
+    setTimeout(() => {
+      setAlert(null)
+    }, 2200)
+  }
+
   useEffect(() => {
     fetch(`${API_URL}/api/sections`)
       .then((res) => res.json())
@@ -109,12 +120,14 @@ export default function AdminSections() {
       .catch((error) => {
         console.error("Ошибка загрузки разделов:", error)
         setLoading(false)
+        showAlert("error", "Не удалось загрузить разделы")
       })
   }, [])
 
   const activeSection = sections.find(
     (section) => section.id === activeId
   )
+
   function selectSection(id) {
     setActiveId(id)
 
@@ -126,7 +139,8 @@ export default function AdminSections() {
         })
       }
     }, 80)
-  } 
+  }
+
   function updateField(field, value) {
     setSections((prev) =>
       prev.map((section) =>
@@ -209,9 +223,10 @@ export default function AdminSections() {
       )
 
       event.target.value = ""
+      showAlert("success", "Файлы успешно загружены")
     } catch (error) {
       console.error(error)
-      alert("Не удалось загрузить файлы")
+      showAlert("error", "Не удалось загрузить файлы")
     }
   }
 
@@ -247,6 +262,8 @@ export default function AdminSections() {
         }
       })
     )
+
+    showAlert("warning", "Медиа удалено. Нажмите «Сохранить»")
   }
 
   async function handleSave() {
@@ -266,11 +283,10 @@ export default function AdminSections() {
         throw new Error("Ошибка сохранения")
       }
 
-      setSaved(true)
-      setTimeout(() => setSaved(false), 1800)
+      showAlert("success", "Раздел успешно сохранён")
     } catch (error) {
       console.error(error)
-      alert("Не удалось сохранить раздел")
+      showAlert("error", "Не удалось сохранить раздел")
     }
   }
 
@@ -867,15 +883,24 @@ export default function AdminSections() {
       </div>
 
       <AnimatePresence>
-        {saved && (
+        {alert && (
           <motion.div
             initial={{ opacity: 0, y: 25, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 25, scale: 0.96 }}
-            className="fixed bottom-6 left-4 right-4 z-50 flex items-center justify-center gap-3 rounded-2xl bg-white px-5 py-4 font-black text-[#12315c] shadow-2xl md:bottom-8 md:left-auto md:right-8 md:w-fit"
+            className={`fixed bottom-6 left-4 right-4 z-50 flex items-center justify-center gap-3 rounded-2xl px-5 py-4 font-black shadow-2xl md:bottom-8 md:left-auto md:right-8 md:w-fit ${
+              alert.type === "success"
+                ? "bg-emerald-50 text-emerald-700"
+                : alert.type === "error"
+                  ? "bg-red-50 text-red-600"
+                  : "bg-amber-50 text-amber-700"
+            }`}
           >
-            <CheckCircle2 className="text-[#05a99d]" />
-            Успешно сохранено
+            {alert.type === "success" && <CheckCircle2 />}
+            {alert.type === "error" && <XCircle />}
+            {alert.type === "warning" && <AlertTriangle />}
+
+            {alert.message}
           </motion.div>
         )}
       </AnimatePresence>
