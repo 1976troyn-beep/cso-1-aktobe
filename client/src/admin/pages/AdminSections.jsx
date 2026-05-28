@@ -100,13 +100,21 @@ export default function AdminSections() {
   const [alert, setAlert] = useState(null)
   const [loading, setLoading] = useState(true)
   const editorRef = useRef(null)
-
+  const alertTimerRef = useRef(null)
   function showAlert(type, message) {
-    setAlert({ type, message })
+    if (alertTimerRef.current) {
+      clearTimeout(alertTimerRef.current)
+    }
+
+    setAlert(null)
 
     setTimeout(() => {
-      setAlert(null)
-    }, 2200)
+      setAlert({ type, message })
+
+      alertTimerRef.current = setTimeout(() => {
+        setAlert(null)
+      }, 2200)
+    }, 20)
   }
 
   useEffect(() => {
@@ -267,37 +275,36 @@ export default function AdminSections() {
   }
 
   async function handleSave() {
-    console.log("SAVE CLICK", activeSection)
-  if (!activeSection) {
-    showAlert("error", "Раздел не выбран")
-    return
-  }
-
-  showAlert("warning", "Сохраняю изменения...")
-
-  try {
-    const response = await authFetch(
-      `/api/sections/${activeSection.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(activeSection),
-      }
-    )
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      throw new Error(errorText || "Ошибка сохранения")
+    if (!activeSection) {
+      showAlert("error", "Раздел не выбран")
+      return
     }
 
-    showAlert("success", "Раздел успешно сохранён")
-  } catch (error) {
-    console.error("SAVE ERROR:", error)
-    showAlert("error", "Не удалось сохранить раздел")
+    showAlert("warning", "Сохраняю изменения...")
+
+    try {
+      const response = await authFetch(
+        `/api/sections/${activeSection.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(activeSection),
+        }
+      )
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        throw new Error(errorText || "Ошибка сохранения")
+      }
+
+      showAlert("success", "Сохранено")
+    } catch (error) {
+      console.error("SAVE ERROR:", error)
+      showAlert("error", "Не удалось сохранить")
+    }
   }
-}
   if (loading) {
     return (
       <div className="text-2xl font-black text-[#12315c]">
@@ -331,7 +338,7 @@ export default function AdminSections() {
           </p>
 
           <h1 className="mt-3 text-3xl font-black leading-[1.04] text-[#12315c] md:text-4xl">
-            TEST ALERT SYSTEM
+            Редактор разделов сайта
           </h1>
 
           <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 md:text-base">
@@ -896,7 +903,7 @@ export default function AdminSections() {
             initial={{ opacity: 0, y: 25, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 25, scale: 0.96 }}
-            className={`fixed bottom-6 left-4 right-4 z-50 flex items-center justify-center gap-3 rounded-2xl px-5 py-4 font-black shadow-2xl md:bottom-8 md:left-auto md:right-8 md:w-fit ${
+            className={`fixed bottom-6 left-4 right-4 z-[9999] flex items-center justify-center gap-3 rounded-2xl px-5 py-4 font-black shadow-2xl md:bottom-8 md:left-auto md:right-8 md:w-fit ${
               alert.type === "success"
                 ? "bg-emerald-50 text-emerald-700"
                 : alert.type === "error"
