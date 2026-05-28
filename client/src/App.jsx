@@ -100,6 +100,7 @@ function SitePage() {
           className="min-h-screen overflow-x-hidden bg-[#eef7f7] text-[#12315c] transition-colors duration-500 dark:bg-[#071827] dark:text-white"
         >
           <Header />
+          <div className="h-[92px] md:h-[108px]" />
           <HeroSection />
           <Services />
           <Conditions />

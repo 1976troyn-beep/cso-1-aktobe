@@ -306,9 +306,9 @@ export default function Header() {
         transition={{
           duration: 0.7,
         }}
-        className="fixed inset-x-0 top-0 z-50 px-3 md:px-4"
+        className="fixed inset-x-0 top-0 z-[1000] px-3 pt-2 md:px-4 md:pt-3"
       >
-        <div className="mx-auto mt-3 flex max-w-7xl items-center justify-between rounded-[1.5rem] border border-white/70 bg-white/78 px-4 py-2.5 shadow-[0_18px_55px_rgba(15,23,42,0.12)] backdrop-blur-2xl transition-all duration-500 dark:border-white/10 dark:bg-[#081826]/82 dark:shadow-[0_20px_70px_rgba(0,0,0,0.45)] md:mt-4 md:rounded-[1.8rem] md:px-5 md:py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-[1.5rem] border border-white/70 bg-white/78 px-4 py-2.5 shadow-[0_18px_55px_rgba(15,23,42,0.12)] backdrop-blur-2xl transition-all duration-500 dark:border-white/10 dark:bg-[#081826]/82 dark:shadow-[0_20px_70px_rgba(0,0,0,0.45)] md:mt-4 md:rounded-[1.8rem] md:px-5 md:py-3">
           {/* LOGO */}
 
           <a
