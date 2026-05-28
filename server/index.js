@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const { createClient } = require("@supabase/supabase-js")
 require("dotenv").config()
-
+const WebSocket = require("ws")
 const pool = require("./pgdb")
 
 const app = express()
@@ -14,9 +14,13 @@ const SERVER_URL = process.env.SERVER_URL || `http://localhost:${PORT}`
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
+  process.env.SUPABASE_SERVICE_KEY,
+  {
+    realtime: {
+      transport: WebSocket,
+    },
+  }
 )
-
 app.use(cors())
 app.use(express.json())
 
