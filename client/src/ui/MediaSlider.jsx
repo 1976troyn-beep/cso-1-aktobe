@@ -114,7 +114,7 @@ export default function MediaSlider({
         }}
         dragElastic={0.08}
         onDragEnd={handleDragEnd}
-        className="relative h-[240px] touch-pan-y overflow-hidden sm:h-[280px]"
+        className="relative h-[260px] touch-pan-y overflow-hidden sm:h-[320px]"
       >
         {/* ONLY INITIAL LOAD */}
 
@@ -142,17 +142,23 @@ export default function MediaSlider({
                 }}
                 className="h-full w-full"
               >
-                <video
+               <video
+                  key={activeMedia.src}
                   src={activeMedia.src}
                   className="h-full w-full object-cover"
                   controls
+                  autoPlay
                   muted
+                  loop
                   playsInline
-                  preload="metadata"
+                  webkit-playsinline="true"
+                  preload="auto"
+                  poster={activeMedia.preview || activeMedia.src}
+                  onCanPlay={() =>
+                    setInitialLoaded(true)
+                  }
                   onLoadedData={() =>
-                    setInitialLoaded(
-                      true
-                    )
+                    setInitialLoaded(true)
                   }
                 />
 
