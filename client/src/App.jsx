@@ -90,36 +90,35 @@ function SitePage() {
       {loading ? (
         <LoadingScreen key="loader" />
       ) : (
-        <motion.main
-          key="site"
-          initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="min-h-screen overflow-x-hidden bg-[#eef7f7] text-[#12315c] transition-colors duration-500 dark:bg-[#071827] dark:text-white"
-        >
+        <div key="site" className="min-h-screen overflow-x-hidden bg-[#eef7f7] text-[#12315c] transition-colors duration-500 dark:bg-[#071827] dark:text-white">
           <Header />
 
-          <HeroSection />
-          <Services />
-          <Conditions />
-          <Rooms />
-          <DisabilityCare />
-          <Leadership />
-          <Specialists />
-          <News />
-          <SocialLinks />
-          <Documents />
-          <Reviews />
-          <Partners />
-          <Contacts />
-          <Footer />
-          <FloatingHotline />
-        </motion.main>
+          <motion.main
+            initial={{ opacity: 0, filter: "blur(10px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <HeroSection />
+            <Services />
+            <Conditions />
+            <Rooms />
+            <DisabilityCare />
+            <Leadership />
+            <Specialists />
+            <News />
+            <SocialLinks />
+            <Documents />
+            <Reviews />
+            <Partners />
+            <Contacts />
+            <Footer />
+            <FloatingHotline />
+          </motion.main>
+        </div>
       )}
     </AnimatePresence>
   )
 }
-
 function ProtectedAdmin() {
   const [isAuth, setIsAuth] = useState(() => {
     return Boolean(localStorage.getItem("admin-token"))
