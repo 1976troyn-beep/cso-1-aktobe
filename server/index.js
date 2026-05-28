@@ -1,10 +1,9 @@
 const express = require("express")
 const cors = require("cors")
 const multer = require("multer")
-const path = require("path")
-const fs = require("fs")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const { createClient } = require("@supabase/supabase-js")
 require("dotenv").config()
 
 const pool = require("./pgdb")
@@ -12,15 +11,14 @@ const pool = require("./pgdb")
 const app = express()
 const PORT = process.env.PORT || 4000
 const SERVER_URL = process.env.SERVER_URL || `http://localhost:${PORT}`
-const uploadsPath = path.join(__dirname, "uploads")
 
-if (!fs.existsSync(uploadsPath)) {
-  fs.mkdirSync(uploadsPath, { recursive: true })
-}
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY
+)
+
 app.use(cors())
 app.use(express.json())
-
-app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
 async function query(sql, params = []) {
   const result = await pool.query(sql, params)
@@ -82,18 +80,9 @@ function normalizeMedia(media) {
   return []
 }
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-   cb(null, uploadsPath)
-  },
-
-  filename: (req, file, cb) => {
-    const uniqueName = `${Date.now()}-${file.originalname}`
-    cb(null, uniqueName)
-  },
+const upload = multer({
+  storage: multer.memoryStorage(),
 })
-
-const upload = multer({ storage })
 
 function verifyAdmin(req, res, next) {
   const authHeader = req.headers.authorization
@@ -634,19 +623,59 @@ app.delete("/api/applications/:id", verifyAdmin, async (req, res) => {
 
 /* ===================== UPLOAD ===================== */
 
-app.post("/api/upload", verifyAdmin, upload.array("files"), (req, res) => {
-  const files = req.files.map((file) => ({
-    id: `${Date.now()}-${file.originalname}`,
+app.post("/api/upload", verifyAdmin, upload.array("files"), async (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({
+        message: "Файлы не выбраны",
+      })
+    }
 
-    type: file.mimetype.startsWith("video") ? "video" : "image",
+    const uploadedFiles = []
 
-    src: `${SERVER_URL}/uploads/${file.filename}`,
-    preview: `${SERVER_URL}/uploads/${file.filename}`,
+    for (const file of req.files) {
+      const safeName = file.originalname
+        .replace(/\s+/g, "-")
+        .replace(/[^a-zA-Z0-9а-яА-ЯёЁ._-]/g, "")
 
-    name: file.originalname,
-  }))
+      const fileName = `${Date.now()}-${safeName}`
 
-  res.json(files)
+      const { error } = await supabase.storage
+        .from("uploads")
+        .upload(fileName, file.buffer, {
+          contentType: file.mimetype,
+          upsert: false,
+        })
+
+      if (error) {
+        throw error
+      }
+
+      const { data } = supabase.storage
+        .from("uploads")
+        .getPublicUrl(fileName)
+
+      uploadedFiles.push({
+        id: fileName,
+
+        type: file.mimetype.startsWith("video") ? "video" : "image",
+
+        src: data.publicUrl,
+        preview: data.publicUrl,
+
+        name: file.originalname,
+      })
+    }
+
+    res.json(uploadedFiles)
+  } catch (error) {
+    console.error("UPLOAD ERROR:", error)
+
+    res.status(500).json({
+      message: "Ошибка загрузки файлов",
+      error: String(error),
+    })
+  }
 })
 
 /* ===================== ADMIN LOGIN ===================== */
