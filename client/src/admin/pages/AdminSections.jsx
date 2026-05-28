@@ -99,8 +99,10 @@ export default function AdminSections() {
   const [activeId, setActiveId] = useState("hero")
   const [alert, setAlert] = useState(null)
   const [loading, setLoading] = useState(true)
+
   const editorRef = useRef(null)
   const alertTimerRef = useRef(null)
+
   function showAlert(type, message) {
     if (alertTimerRef.current) {
       clearTimeout(alertTimerRef.current)
@@ -305,6 +307,7 @@ export default function AdminSections() {
       showAlert("error", "Не удалось сохранить")
     }
   }
+
   if (loading) {
     return (
       <div className="text-2xl font-black text-[#12315c]">
@@ -347,14 +350,41 @@ export default function AdminSections() {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleSave}
-          className="brand-gradient brand-shadow inline-flex w-fit items-center gap-2 rounded-full px-5 py-3 text-sm font-black text-white lg:px-6"
-        >
-          <Save size={17} />
-          Сохранить
-        </button>
+        <div className="flex w-full flex-col items-start gap-3 lg:w-fit lg:items-end">
+          <button
+            type="button"
+            onClick={handleSave}
+            className="brand-gradient brand-shadow inline-flex w-fit items-center gap-2 rounded-full px-5 py-3 text-sm font-black text-white lg:px-6"
+          >
+            <Save size={17} />
+            Сохранить
+          </button>
+
+          <AnimatePresence>
+            {alert && (
+              <motion.div
+                initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                className={`w-full rounded-2xl px-4 py-3 text-sm font-black shadow-xl lg:w-[280px] ${
+                  alert.type === "success"
+                    ? "bg-emerald-50 text-emerald-700"
+                    : alert.type === "error"
+                      ? "bg-red-50 text-red-600"
+                      : "bg-amber-50 text-amber-700"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  {alert.type === "success" && <CheckCircle2 size={18} />}
+                  {alert.type === "error" && <XCircle size={18} />}
+                  {alert.type === "warning" && <AlertTriangle size={18} />}
+
+                  <span>{alert.message}</span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
       <div className="mt-7 grid gap-5 lg:mt-8 lg:grid-cols-[0.35fr_1fr] lg:gap-6">
@@ -896,29 +926,6 @@ export default function AdminSections() {
           </div>
         </motion.div>
       </div>
-
-      <AnimatePresence>
-        {alert && (
-          <motion.div
-            initial={{ opacity: 0, y: 25, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 25, scale: 0.96 }}
-            className={`fixed bottom-6 left-4 right-4 z-[9999] flex items-center justify-center gap-3 rounded-2xl px-5 py-4 font-black shadow-2xl md:bottom-8 md:left-auto md:right-8 md:w-fit ${
-              alert.type === "success"
-                ? "bg-emerald-50 text-emerald-700"
-                : alert.type === "error"
-                  ? "bg-red-50 text-red-600"
-                  : "bg-amber-50 text-amber-700"
-            }`}
-          >
-            {alert.type === "success" && <CheckCircle2 />}
-            {alert.type === "error" && <XCircle />}
-            {alert.type === "warning" && <AlertTriangle />}
-
-            {alert.message}
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }
