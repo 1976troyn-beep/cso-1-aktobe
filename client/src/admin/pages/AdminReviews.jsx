@@ -17,23 +17,46 @@ export default function AdminReviews() {
   const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(true)
 
-  function loadReviews() {
+  async function loadReviews() {
     setLoading(true)
 
-    fetch(`${API_URL}/api/reviews`)
-      .then((res) => res.json())
-      .then((data) => {
-        setReviews(Array.isArray(data) ? data : [])
-        setLoading(false)
-      })
-      .catch((error) => {
-        console.error("Ошибка загрузки отзывов:", error)
-        setLoading(false)
-      })
+    try {
+      const response = await fetch(`${API_URL}/api/reviews`)
+      const data = await response.json()
+
+      setReviews(Array.isArray(data) ? data : [])
+    } catch (error) {
+      console.error("Ошибка загрузки отзывов:", error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
-    loadReviews()
+    let ignore = false
+
+    async function loadInitialReviews() {
+      try {
+        const response = await fetch(`${API_URL}/api/reviews`)
+        const data = await response.json()
+
+        if (!ignore) {
+          setReviews(Array.isArray(data) ? data : [])
+        }
+      } catch (error) {
+        console.error("Ошибка загрузки отзывов:", error)
+      } finally {
+        if (!ignore) {
+          setLoading(false)
+        }
+      }
+    }
+
+    loadInitialReviews()
+
+    return () => {
+      ignore = true
+    }
   }, [])
 
   async function updateReview(id, action) {
@@ -76,17 +99,17 @@ export default function AdminReviews() {
 
   return (
     <div>
-      <div className="flex items-start justify-between gap-6">
-        <div>
-          <p className="text-sm font-black uppercase tracking-[0.25em] text-[#05a99d]">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+        <div className="min-w-0">
+          <p className="text-xs font-black uppercase tracking-[0.25em] text-[#05a99d] sm:text-sm">
             Review moderation
           </p>
 
-          <h1 className="mt-3 text-4xl font-black text-[#12315c]">
+          <h1 className="mt-3 text-3xl font-black leading-tight text-[#12315c] sm:text-4xl">
             Модерация отзывов
           </h1>
 
-          <p className="mt-4 max-w-2xl text-slate-600">
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
             Новые отзывы не появляются на сайте автоматически. Сначала их нужно
             проверить и одобрить.
           </p>
@@ -95,7 +118,7 @@ export default function AdminReviews() {
         <button
           type="button"
           onClick={loadReviews}
-          className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-6 py-3 text-sm font-black text-[#12315c] shadow-xl transition hover:border-[#05a99d]/40 hover:bg-cyan-50"
+          className="inline-flex w-fit max-w-full shrink-0 items-center justify-center gap-2 rounded-full border border-cyan-200 bg-white px-5 py-3 text-sm font-black text-[#12315c] shadow-xl transition hover:border-[#05a99d]/40 hover:bg-cyan-50 sm:px-6 lg:self-start"
         >
           <RefreshCw size={17} />
           Обновить
@@ -103,7 +126,7 @@ export default function AdminReviews() {
       </div>
 
       {reviews.length === 0 ? (
-        <div className="glass-card mt-8 rounded-[1.8rem] p-8 text-center">
+        <div className="glass-card mt-6 rounded-[1.8rem] p-6 text-center sm:mt-8 sm:p-8">
           <MessageSquareText
             size={42}
             className="mx-auto text-[#05a99d]"
@@ -118,25 +141,25 @@ export default function AdminReviews() {
           </p>
         </div>
       ) : (
-        <div className="mt-8 grid gap-5">
+        <div className="mt-6 grid gap-4 sm:mt-8 sm:gap-5">
           {reviews.map((review, index) => (
             <motion.div
               key={review.id}
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.04 }}
-              className="glass-card rounded-[1.8rem] border border-cyan-100/70 p-5"
+              className="glass-card rounded-[1.5rem] border border-cyan-100/70 p-4 sm:rounded-[1.8rem] sm:p-5"
             >
               <div className="grid gap-5 xl:grid-cols-[1fr_220px] xl:items-start">
-                <div>
+                <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-3">
                     <div className="brand-gradient grid h-12 w-12 shrink-0 place-items-center rounded-full text-sm font-black text-white shadow-lg">
                       {String(review.name || "A").charAt(0).toUpperCase()}
                     </div>
 
-                    <div>
+                    <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-3">
-                        <h2 className="text-xl font-black text-[#12315c]">
+                        <h2 className="break-words text-lg font-black text-[#12315c] sm:text-xl">
                           {review.name}
                         </h2>
 
@@ -160,15 +183,15 @@ export default function AdminReviews() {
                         </span>
 
                         {review.phone && (
-                          <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-black text-[#12315c] ring-1 ring-slate-200">
+                          <span className="inline-flex max-w-full items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-black text-[#12315c] ring-1 ring-slate-200">
                             <Phone size={14} />
-                            {review.phone}
+                            <span className="break-all">{review.phone}</span>
                           </span>
                         )}
 
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-bold text-slate-500 ring-1 ring-slate-200">
+                        <span className="inline-flex max-w-full items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-bold text-slate-500 ring-1 ring-slate-200">
                           <CalendarDays size={14} />
-                          {review.created_at}
+                          <span className="break-words">{review.created_at}</span>
                         </span>
                       </div>
                     </div>
@@ -176,7 +199,7 @@ export default function AdminReviews() {
 
                   <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
-                  <p className="mt-5 max-w-4xl text-[15px] leading-8 text-slate-600">
+                  <p className="mt-5 max-w-4xl text-[15px] leading-7 text-slate-600 sm:leading-8">
                     {review.text}
                   </p>
                 </div>
@@ -225,3 +248,4 @@ export default function AdminReviews() {
     </div>
   )
 }
+
