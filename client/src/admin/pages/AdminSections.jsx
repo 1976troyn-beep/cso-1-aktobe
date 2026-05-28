@@ -123,8 +123,12 @@ export default function AdminSections() {
     fetch(`${API_URL}/api/sections`)
       .then((res) => res.json())
       .then((data) => {
-        setSections(data)
-        setActiveId(data[0]?.id || "hero")
+        const visibleSections = data.filter(
+          (section) => section.id !== "partners"
+        )
+
+        setSections(visibleSections)
+        setActiveId(visibleSections[0]?.id || "hero")
         setLoading(false)
       })
       .catch((error) => {
@@ -334,17 +338,17 @@ export default function AdminSections() {
 
   return (
     <div>
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <p className="text-xs font-black uppercase tracking-[0.24em] text-[#05a99d] md:text-sm">
             Content editor
           </p>
 
-          <h1 className="mt-3 text-3xl font-black leading-[1.04] text-[#12315c] md:text-4xl">
+          <h1 className="mt-2 text-3xl font-black leading-[1.04] text-[#12315c] md:text-4xl">
             Редактор разделов сайта
           </h1>
 
-          <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 md:text-base">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 md:text-base">
             Разделы расположены в том же порядке, что и на сайте.
             Медиа доступно только в визуальных разделах.
           </p>
@@ -366,7 +370,7 @@ export default function AdminSections() {
                 initial={{ opacity: 0, y: -8, scale: 0.96 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.96 }}
-                className={`w-full rounded-2xl px-4 py-3 text-sm font-black shadow-xl lg:w-[280px] ${
+                className={`w-full rounded-2xl px-4 py-3 text-sm font-black shadow-xl lg:w-[260px] ${
                   alert.type === "success"
                     ? "bg-emerald-50 text-emerald-700"
                     : alert.type === "error"
@@ -387,19 +391,19 @@ export default function AdminSections() {
         </div>
       </div>
 
-      <div className="mt-7 grid gap-5 lg:mt-8 lg:grid-cols-[0.35fr_1fr] lg:gap-6">
-        <div className="glass-card rounded-[1.5rem] p-4 lg:rounded-[1.6rem]">
+      <div className="mt-5 grid gap-4 lg:mt-6 lg:grid-cols-[0.32fr_1fr] lg:gap-5">
+        <div className="glass-card rounded-[1.5rem] p-3 lg:rounded-[1.6rem]">
           <h2 className="px-2 text-xs font-black uppercase tracking-[0.2em] text-slate-500 md:text-sm">
             Разделы
           </h2>
 
-          <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-1">
+          <div className="mt-3 grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-1">
             {sections.map((section) => (
               <button
                 key={section.id}
                 type="button"
                 onClick={() => selectSection(section.id)}
-                className={`rounded-2xl px-3 py-3 text-left transition md:px-4 ${
+                className={`rounded-2xl px-3 py-2.5 text-left transition md:px-4 ${
                   activeId === section.id
                     ? "brand-gradient text-white shadow-xl"
                     : "bg-white/70 text-slate-600 hover:bg-cyan-50"
@@ -428,7 +432,7 @@ export default function AdminSections() {
           key={activeSection.id}
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-card scroll-mt-24 rounded-[1.6rem] p-4 md:p-6 lg:rounded-[1.8rem]"
+          className="glass-card scroll-mt-24 rounded-[1.4rem] p-4 md:p-5 lg:rounded-[1.6rem]"
         >
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
@@ -436,7 +440,7 @@ export default function AdminSections() {
                 {activeSection.title}
               </h2>
 
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-xs text-slate-500">
                 {activeSection.subtitle}
               </p>
             </div>
@@ -446,7 +450,7 @@ export default function AdminSections() {
             </div>
           </div>
 
-          <div className="mt-6 grid gap-5">
+          <div className="mt-5 grid gap-3.5">
             <label>
               <span className="mb-2 block text-sm font-black text-[#12315c]">
                 Заголовок раздела
@@ -457,7 +461,7 @@ export default function AdminSections() {
                 onChange={(event) =>
                   updateField("heading", event.target.value)
                 }
-                className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
               />
             </label>
 
@@ -471,8 +475,8 @@ export default function AdminSections() {
                 onChange={(event) =>
                   updateField("text", event.target.value)
                 }
-                rows="4"
-                className="w-full resize-none rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                rows="3"
+                className="w-full resize-none rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
               />
             </label>
 
@@ -491,7 +495,7 @@ export default function AdminSections() {
                         event.target.value
                       )
                     }
-                    className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                    className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                   />
                 </label>
 
@@ -509,7 +513,7 @@ export default function AdminSections() {
                       )
                     }
                     rows="3"
-                    className="w-full resize-none rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                    className="w-full resize-none rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                   />
                 </label>
 
@@ -518,17 +522,17 @@ export default function AdminSections() {
                     Фото / видео главного экрана
                   </span>
 
-                  <label className="flex cursor-pointer flex-col items-center justify-center rounded-[1.5rem] border-2 border-dashed border-[#05a99d]/35 bg-white/70 p-8 text-center transition hover:bg-cyan-50">
+                  <label className="flex cursor-pointer flex-col items-center justify-center rounded-[1.25rem] border-2 border-dashed border-[#05a99d]/35 bg-white/70 p-4 text-center transition hover:bg-cyan-50 md:p-5">
                     <Upload
-                      size={30}
+                      size={24}
                       className="text-[#05a99d]"
                     />
 
-                    <span className="mt-3 font-black text-[#12315c]">
+                    <span className="mt-2 font-black text-[#12315c]">
                       Загрузить медиа
                     </span>
 
-                    <span className="mt-1 text-sm text-slate-500">
+                    <span className="mt-1 text-xs text-slate-500">
                       Первое фото/видео — фон, второе — карточка справа
                     </span>
 
@@ -545,7 +549,7 @@ export default function AdminSections() {
 
                   {getMediaGroup(activeSection, "root").length >
                     0 && (
-                    <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                       {getMediaGroup(
                         activeSection,
                         "root"
@@ -566,11 +570,11 @@ export default function AdminSections() {
 
             {isContactsSection && (
               <>
-                <div className="rounded-2xl bg-cyan-50 p-4 text-sm font-black text-[#0b5cab]">
+                <div className="rounded-2xl bg-cyan-50 p-3 text-sm font-black text-[#0b5cab]">
                   Контактная информация и режим работы
                 </div>
 
-                <div className="grid gap-5 md:grid-cols-2">
+                <div className="grid gap-3.5 md:grid-cols-2">
                   <label>
                     <span className="mb-2 block text-sm font-black text-[#12315c]">
                       Адрес учреждения
@@ -584,7 +588,7 @@ export default function AdminSections() {
                           event.target.value
                         )
                       }
-                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                     />
                   </label>
 
@@ -601,7 +605,7 @@ export default function AdminSections() {
                           event.target.value
                         )
                       }
-                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                     />
                   </label>
 
@@ -618,7 +622,7 @@ export default function AdminSections() {
                           event.target.value
                         )
                       }
-                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                     />
                   </label>
 
@@ -635,7 +639,7 @@ export default function AdminSections() {
                           event.target.value
                         )
                       }
-                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                     />
                   </label>
 
@@ -653,7 +657,7 @@ export default function AdminSections() {
                         )
                       }
                       placeholder="77070000000"
-                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                     />
                   </label>
 
@@ -671,7 +675,7 @@ export default function AdminSections() {
                         )
                       }
                       placeholder="77070000000"
-                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                     />
                   </label>
                 </div>
@@ -680,7 +684,7 @@ export default function AdminSections() {
                   Социальные сети
                 </div>
 
-                <div className="grid gap-5 md:grid-cols-2">
+                <div className="grid gap-3.5 md:grid-cols-2">
                   <label>
                     <span className="mb-2 block text-sm font-black text-[#12315c]">
                       Соцсеть 1 — название
@@ -695,7 +699,7 @@ export default function AdminSections() {
                         )
                       }
                       placeholder="Instagram"
-                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                     />
                   </label>
 
@@ -713,7 +717,7 @@ export default function AdminSections() {
                         )
                       }
                       placeholder="https://instagram.com"
-                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                     />
                   </label>
 
@@ -731,7 +735,7 @@ export default function AdminSections() {
                         )
                       }
                       placeholder="TikTok"
-                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                     />
                   </label>
 
@@ -749,7 +753,7 @@ export default function AdminSections() {
                         )
                       }
                       placeholder="https://tiktok.com"
-                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                     />
                   </label>
 
@@ -767,7 +771,7 @@ export default function AdminSections() {
                         )
                       }
                       placeholder="Telegram"
-                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                     />
                   </label>
 
@@ -785,7 +789,7 @@ export default function AdminSections() {
                         )
                       }
                       placeholder="https://telegram.org"
-                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                      className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                     />
                   </label>
                 </div>
@@ -794,7 +798,7 @@ export default function AdminSections() {
 
             {isGroupedSection && (
               <>
-                <div className="rounded-2xl bg-cyan-50 p-4 text-sm font-black text-[#0b5cab]">
+                <div className="rounded-2xl bg-cyan-50 p-3 text-sm font-black text-[#0b5cab]">
                   Карточки раздела
                 </div>
 
@@ -813,9 +817,9 @@ export default function AdminSections() {
                   return (
                     <div
                       key={groupKey}
-                      className="rounded-2xl border border-slate-200 bg-white/60 p-4"
+                      className="rounded-2xl border border-slate-200 bg-white/60 p-3.5"
                     >
-                      <h3 className="mb-4 text-lg font-black text-[#12315c]">
+                      <h3 className="mb-3 text-base font-black text-[#12315c]">
                         {label}
                       </h3>
 
@@ -836,11 +840,11 @@ export default function AdminSections() {
                               event.target.value
                             )
                           }
-                          className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                          className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                         />
                       </label>
 
-                      <label className="mt-4 block">
+                      <label className="mt-3 block">
                         <span className="mb-2 block text-sm font-black text-[#12315c]">
                           Описание / подробный текст
                         </span>
@@ -857,20 +861,20 @@ export default function AdminSections() {
                               event.target.value
                             )
                           }
-                          rows="4"
-                          className="w-full resize-none rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition focus:border-[#05a99d]"
+                          rows="3"
+                          className="w-full resize-none rounded-2xl border border-slate-200 bg-white/80 px-4 py-2.5 outline-none transition focus:border-[#05a99d]"
                         />
                       </label>
 
                       {!mediaDisabled && (
-                        <div className="mt-4">
+                        <div className="mt-3">
                           <span className="mb-2 block text-sm font-black text-[#12315c]">
                             Фото / видео этой карточки
                           </span>
 
-                          <label className="flex cursor-pointer flex-col items-center justify-center rounded-[1.3rem] border-2 border-dashed border-[#05a99d]/35 bg-white/70 p-6 text-center transition hover:bg-cyan-50">
+                          <label className="flex cursor-pointer flex-col items-center justify-center rounded-[1.2rem] border-2 border-dashed border-[#05a99d]/35 bg-white/70 p-4 text-center transition hover:bg-cyan-50">
                             <Upload
-                              size={26}
+                              size={22}
                               className="text-[#05a99d]"
                             />
 
@@ -894,7 +898,7 @@ export default function AdminSections() {
                           </label>
 
                           {groupMedia.length > 0 && (
-                            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                               {groupMedia.map((item) => (
                                 <MediaPreview
                                   key={item.id || item.src}
@@ -911,7 +915,7 @@ export default function AdminSections() {
                           )}
 
                           {groupMedia.length === 0 && (
-                            <div className="mt-4 flex items-center gap-3 rounded-2xl bg-cyan-50 p-4 text-sm font-bold text-[#0b5cab]">
+                            <div className="mt-3 flex items-center gap-2 rounded-2xl bg-cyan-50 p-3 text-sm font-bold text-[#0b5cab]">
                               <ImagePlus size={18} />
                               Медиа для карточки ещё не добавлено
                             </div>
@@ -936,26 +940,26 @@ function MediaPreview({ item, onRemove }) {
       {item.type === "video" ? (
         <video
           src={item.preview || item.src}
-          className="h-40 w-full object-cover"
+          className="h-28 w-full object-cover md:h-32"
           controls
         />
       ) : (
         <img
           src={item.preview || item.src}
           alt={item.name}
-          className="h-40 w-full object-cover"
+          className="h-28 w-full object-cover md:h-32"
         />
       )}
 
       <button
         type="button"
         onClick={onRemove}
-        className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-white/90 text-red-500 shadow-lg"
+        className="absolute right-2 top-2 grid h-8 w-8 place-items-center rounded-full bg-white/90 text-red-500 shadow-lg"
       >
-        <Trash2 size={17} />
+        <Trash2 size={16} />
       </button>
 
-      <div className="p-3">
+      <div className="p-2.5">
         <p className="truncate text-sm font-bold text-[#12315c]">
           {item.name}
         </p>
