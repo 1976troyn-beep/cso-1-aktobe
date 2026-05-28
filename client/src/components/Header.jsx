@@ -52,8 +52,47 @@ export default function Header() {
     useState(false)
 
   const [isDark, setIsDark] =
-    useState(false)
+    useState(() => {
+    if (typeof window === "undefined") {
+      return false
+    }
 
+    const savedTheme =
+      localStorage.getItem("theme")
+
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add(
+        "dark"
+      )
+
+      return true
+    }
+
+    if (savedTheme === "light") {
+      document.documentElement.classList.remove(
+        "dark"
+      )
+
+      return false
+    }
+
+    const isMobile =
+      window.innerWidth < 768
+
+    if (isMobile) {
+      document.documentElement.classList.add(
+        "dark"
+      )
+
+      return true
+    }
+
+    document.documentElement.classList.remove(
+      "dark"
+    )
+
+    return false
+  })
   const [isMobileOpen, setIsMobileOpen] =
     useState(false)
 
@@ -176,7 +215,10 @@ export default function Header() {
 
   setTimeout(() => {
     setIsDark(nextTheme)
-
+     localStorage.setItem(
+      "theme",
+      nextTheme ? "dark" : "light"
+    )
     if (nextTheme) {
       document.documentElement.classList.add(
         "dark"
@@ -197,7 +239,7 @@ export default function Header() {
       overlay.remove()
     }, 700)
   }, 420)
-}
+  }
 
   /* BODY LOCK */
 
