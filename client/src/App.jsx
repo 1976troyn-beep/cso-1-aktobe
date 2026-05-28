@@ -90,8 +90,12 @@ function SitePage() {
       {loading ? (
         <LoadingScreen key="loader" />
       ) : (
-        <div key="site" className="min-h-screen overflow-x-hidden bg-[#eef7f7] text-[#12315c] transition-colors duration-500 dark:bg-[#071827] dark:text-white">
+        <div
+          key="site"
+          className="min-h-screen overflow-x-hidden bg-[#eef7f7] text-[#12315c] transition-colors duration-500 dark:bg-[#071827] dark:text-white"
+        >
           <Header />
+          <FloatingHotline />
 
           <motion.main
             initial={{ opacity: 0, filter: "blur(10px)" }}
@@ -112,7 +116,6 @@ function SitePage() {
             <Partners />
             <Contacts />
             <Footer />
-            <FloatingHotline />
           </motion.main>
         </div>
       )}
