@@ -55,9 +55,9 @@ function LoadingScreen() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="mx-auto mb-5 grid h-28 w-28 place-items-center rounded-full bg-gradient-to-br from-[#18d5cc] via-[#1198e8] to-[#0b5cab] p-[7px]"
+          className="mx-auto mb-5 grid h-28 w-28 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-[#18d5cc] via-[#1198e8] to-[#0b5cab] p-[7px]"
         >
-          <div className="grid h-full w-full place-items-center rounded-full bg-white">
+          <div className="grid h-full w-full place-items-center overflow-hidden rounded-full bg-white">
             <motion.img
               src="/logo.png"
               alt="Logo"
@@ -67,7 +67,7 @@ function LoadingScreen() {
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="h-[90%] w-[90%] object-contain"
+              className="block h-[90%] w-[90%] rounded-full object-contain"
             />
           </div>
         </motion.div>
@@ -122,6 +122,7 @@ function SitePage() {
     </AnimatePresence>
   )
 }
+
 function ProtectedAdmin() {
   const [isAuth, setIsAuth] = useState(() => {
     return Boolean(localStorage.getItem("admin-token"))
