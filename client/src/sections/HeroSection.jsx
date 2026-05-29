@@ -186,7 +186,7 @@ export default function HeroSection() {
 
       <div className="pointer-events-none absolute left-[18%] top-[20%] hidden h-[420px] w-[520px] rounded-full bg-[#dff7f4]/22 blur-3xl transition-all duration-500 dark:bg-transparent lg:block" />
 
-      <div className="relative mx-auto grid min-h-[calc(100svh-6rem)] max-w-7xl items-center gap-8 px-6 pb-10 pt-2 md:min-h-screen md:gap-10 md:pb-12 md:pt-4 lg:-translate-y-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-0">
+      <div className="relative mx-auto grid min-h-[calc(100svh-6rem)] max-w-7xl items-center gap-8 px-6 pb-8 pt-2 md:min-h-screen md:gap-10 md:pb-12 md:pt-4 lg:-translate-y-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-0">
         <motion.div
           initial={{
             opacity: 0,
@@ -200,7 +200,7 @@ export default function HeroSection() {
             duration: 0.9,
             ease: "easeOut",
           }}
-          className="relative"
+          className="relative translate-y-8 sm:translate-y-6 md:translate-y-0"
         >
           <motion.div
             initial={{
@@ -218,17 +218,17 @@ export default function HeroSection() {
             }}
             className="relative max-w-[720px] pl-4"
           >
-            <div className="absolute left-0 top-1 h-[70px] w-[3px] rounded-full brand-gradient md:h-[74px]" />
+            <div className="absolute left-0 top-1 h-[74px] w-[3px] rounded-full brand-gradient" />
 
-            <p className="text-[16px] font-black uppercase leading-tight tracking-[0.16em] text-[#0b5cab] drop-shadow-sm dark:text-cyan-300 md:text-[20px]">
+            <p className="text-[17px] font-black uppercase leading-tight tracking-[0.18em] text-[#0b5cab] drop-shadow-sm dark:text-cyan-300 md:text-[20px]">
               {t.hero.topLine1}
             </p>
 
-            <p className="mt-1 text-[16px] font-black uppercase leading-tight tracking-[0.15em] text-[#12315c] drop-shadow-sm dark:text-white md:text-[20px]">
+            <p className="mt-1 text-[17px] font-black uppercase leading-tight tracking-[0.16em] text-[#12315c] drop-shadow-sm dark:text-white md:text-[20px]">
               {t.hero.topLine2}
             </p>
 
-            <p className="mt-3 text-[13px] font-black uppercase tracking-[0.07em] text-[#05a99d] md:text-[15px]">
+            <p className="mt-3 text-[13px] font-black uppercase tracking-[0.08em] text-[#05a99d] md:text-[15px]">
               {t.hero.centerName}
             </p>
 
@@ -251,7 +251,7 @@ export default function HeroSection() {
               duration: 0.7,
               ease: "easeOut",
             }}
-            className="mt-6 max-w-4xl text-[2.75rem] font-black leading-[0.94] tracking-[-0.04em] sm:text-5xl md:text-7xl"
+            className="mt-6 max-w-4xl text-[2.8rem] font-black leading-[0.93] tracking-[-0.04em] sm:text-5xl md:text-7xl"
           >
             <span className="brand-text-gradient block drop-shadow-[0_4px_12px_rgba(255,255,255,0.18)] dark:drop-shadow-[0_0_24px_rgba(5,169,157,0.16)]">
               {heading}
@@ -308,7 +308,7 @@ export default function HeroSection() {
               duration: 0.55,
               ease: "easeOut",
             }}
-            className="mt-8 grid max-w-2xl gap-3.5 sm:grid-cols-2 md:mt-10 md:gap-4"
+            className="mt-7 grid max-w-2xl gap-3.5 sm:grid-cols-2 md:mt-10 md:gap-4"
           >
             <motion.a
               whileHover={{
@@ -355,7 +355,7 @@ export default function HeroSection() {
               duration: 0.55,
               ease: "easeOut",
             }}
-            className="mt-7 grid max-w-[640px] gap-3 sm:grid-cols-3 md:mt-9"
+            className="mt-6 grid max-w-[640px] gap-3 sm:grid-cols-3 md:mt-9"
           >
             <StatCard
               value="24/7"
