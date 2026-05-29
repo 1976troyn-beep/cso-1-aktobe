@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
+import { createPortal } from "react-dom"
 import { useLanguage } from "../context/LanguageContext"
 
 import {
@@ -327,7 +328,7 @@ export default function Header() {
       )
   }, [navLinks])
 
-  return (
+  return createPortal(
     <>
       {/* TOP PROGRESS */}
 
@@ -348,13 +349,14 @@ export default function Header() {
         transition={{
           duration: 0.7,
         }}
-        className="left-0 right-0 top-0 z-[1000] px-3 pt-2 md:px-4 md:pt-3"
+        className="fixed left-0 right-0 top-0 z-[99990] px-3 pt-2 md:px-4 md:pt-3"
         style={{
           position: "fixed",
-          top: "env(safe-area-inset-top, 0px)",
+          top: "0px",
+          left: "0px",
+          right: "0px",
           transform: "translateZ(0)",
           WebkitTransform: "translateZ(0)",
-          willChange: "transform",
         }}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between rounded-[1.5rem] border border-white/70 bg-white/78 px-4 py-2.5 shadow-[0_18px_55px_rgba(15,23,42,0.12)] backdrop-blur-2xl transition-all duration-500 dark:border-white/10 dark:bg-[#081826]/82 dark:shadow-[0_20px_70px_rgba(0,0,0,0.45)] md:mt-4 md:rounded-[1.8rem] md:px-5 md:py-3">
@@ -598,7 +600,7 @@ export default function Header() {
                     false
                   )
                 }
-                className="fixed inset-0 z-[1001] bg-[#020817]/55 backdrop-blur-md lg:hidden"
+                className="fixed inset-0 z-[99991] bg-[#020817]/55 backdrop-blur-md lg:hidden"
               />
 
               {/* DRAWER */}
@@ -618,7 +620,7 @@ export default function Header() {
                   damping: 28,
                   stiffness: 240,
                 }}
-                className="fixed right-0 top-0 z-[1002] flex h-full w-[300px] flex-col overflow-hidden border-l border-white/10 bg-[#071827]/96 shadow-[0_0_90px_rgba(0,0,0,0.45)] backdrop-blur-2xl lg:hidden"
+                className="fixed right-0 top-0 z-[99992] flex h-full w-[300px] flex-col overflow-hidden border-l border-white/10 bg-[#071827]/96 shadow-[0_0_90px_rgba(0,0,0,0.45)] backdrop-blur-2xl lg:hidden"
               >
                 {/* TOP */}
 
@@ -861,6 +863,7 @@ export default function Header() {
           )}
         </AnimatePresence>
       </motion.header>
-    </>
+    </>,
+    document.body
   )
 }

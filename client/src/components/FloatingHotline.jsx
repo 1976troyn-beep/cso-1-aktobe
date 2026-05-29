@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { createPortal } from "react-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import {
   MessageCircle,
@@ -30,15 +31,15 @@ export default function FloatingHotline() {
     contacts?.card_4_text
   )
 
-  if (!whatsappPhone && !hotlinePhone) {
-    return null
-  }
+  const hasContacts = Boolean(
+    whatsappPhone || hotlinePhone
+  )
 
   const whatsappText = encodeURIComponent(
     "Здравствуйте, хочу получить консультацию."
   )
 
-  return (
+  return createPortal(
     <div
       className="
         fixed
@@ -49,8 +50,9 @@ export default function FloatingHotline() {
         gap-3
       "
       style={{
-        right: "calc(env(safe-area-inset-right, 0px) + 20px)",
-        bottom: "calc(env(safe-area-inset-bottom, 0px) + 24px)",
+        position: "fixed",
+        right: "max(20px, env(safe-area-inset-right))",
+        bottom: "max(24px, env(safe-area-inset-bottom))",
         transform: "translateZ(0)",
         WebkitTransform: "translateZ(0)",
       }}
@@ -132,6 +134,12 @@ export default function FloatingHotline() {
               </div>
 
               <div className="grid gap-3">
+                {!hasContacts && (
+                  <div className="rounded-2xl bg-cyan-50 px-4 py-3 text-sm font-bold text-[#0b5cab] dark:bg-white/5 dark:text-white">
+                    Контакты загружаются...
+                  </div>
+                )}
+
                 {whatsappPhone && (
                   <motion.a
                     whileHover={{
@@ -295,6 +303,7 @@ export default function FloatingHotline() {
           )}
         </motion.span>
       </motion.button>
-    </div>
+    </div>,
+    document.body
   )
 }
