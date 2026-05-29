@@ -82,7 +82,7 @@ export default function HeroSection() {
   return (
     <section
       id="top"
-      className="relative min-h-screen overflow-hidden pt-24 md:pt-32"
+      className="relative min-h-screen overflow-hidden pt-20 md:pt-32"
     >
       {backgroundMedia?.type === "video" ? (
         <motion.video
@@ -186,7 +186,7 @@ export default function HeroSection() {
 
       <div className="pointer-events-none absolute left-[18%] top-[20%] hidden h-[420px] w-[520px] rounded-full bg-[#dff7f4]/22 blur-3xl transition-all duration-500 dark:bg-transparent lg:block" />
 
-      <div className="relative mx-auto grid min-h-[calc(100vh-6rem)] max-w-7xl items-center gap-8 px-6 pb-10 pt-2 md:min-h-screen md:gap-10 md:pb-12 md:pt-4 lg:-translate-y-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-0">
+      <div className="relative mx-auto grid min-h-[85svh] max-w-7xl items-center gap-6 px-5 pb-8 pt-1 sm:px-6 md:min-h-screen md:gap-10 md:pb-12 md:pt-4 lg:-translate-y-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-0">
         <motion.div
           initial={{
             opacity: 0,
@@ -218,21 +218,21 @@ export default function HeroSection() {
             }}
             className="relative max-w-[720px] pl-4"
           >
-            <div className="absolute left-0 top-1 h-[74px] w-[3px] rounded-full brand-gradient" />
+            <div className="absolute left-0 top-1 h-[64px] w-[3px] rounded-full brand-gradient md:h-[74px]" />
 
-            <p className="text-[17px] font-black uppercase leading-tight tracking-[0.18em] text-[#0b5cab] drop-shadow-sm dark:text-cyan-300 md:text-[20px]">
+            <p className="text-[15px] font-black uppercase leading-tight tracking-[0.16em] text-[#0b5cab] drop-shadow-sm dark:text-cyan-300 sm:text-[16px] md:text-[20px]">
               {t.hero.topLine1}
             </p>
 
-            <p className="mt-1 text-[17px] font-black uppercase leading-tight tracking-[0.16em] text-[#12315c] drop-shadow-sm dark:text-white md:text-[20px]">
+            <p className="mt-1 text-[15px] font-black uppercase leading-tight tracking-[0.14em] text-[#12315c] drop-shadow-sm dark:text-white sm:text-[16px] md:text-[20px]">
               {t.hero.topLine2}
             </p>
 
-            <p className="mt-3 text-[13px] font-black uppercase tracking-[0.08em] text-[#05a99d] md:text-[15px]">
+            <p className="mt-2.5 text-[12px] font-black uppercase tracking-[0.07em] text-[#05a99d] md:text-[15px]">
               {t.hero.centerName}
             </p>
 
-            <p className="mt-2 max-w-2xl text-sm font-bold leading-6 text-[#12315c] dark:text-white/72">
+            <p className="mt-2 max-w-2xl text-[13px] font-bold leading-5 text-[#12315c] dark:text-white/72 sm:text-sm sm:leading-6">
               {t.hero.department}
             </p>
           </motion.div>
@@ -251,7 +251,7 @@ export default function HeroSection() {
               duration: 0.7,
               ease: "easeOut",
             }}
-            className="mt-6 max-w-4xl text-5xl font-black leading-[0.9] tracking-[-0.04em] md:text-7xl"
+            className="mt-5 max-w-4xl text-[3.15rem] font-black leading-[0.92] tracking-[-0.045em] sm:text-6xl md:text-7xl"
           >
             <span className="brand-text-gradient block drop-shadow-[0_4px_12px_rgba(255,255,255,0.18)] dark:drop-shadow-[0_0_24px_rgba(5,169,157,0.16)]">
               {heading}
@@ -272,7 +272,7 @@ export default function HeroSection() {
               duration: 0.6,
               ease: "easeOut",
             }}
-            className="mt-6 max-w-2xl text-base font-bold leading-7 text-[#12315c] dark:text-white/78 md:text-lg md:leading-8"
+            className="mt-4 max-w-2xl text-[15px] font-bold leading-6 text-[#12315c] dark:text-white/78 md:text-lg md:leading-8"
           >
             {text}
           </motion.p>
@@ -291,7 +291,7 @@ export default function HeroSection() {
               duration: 0.55,
               ease: "easeOut",
             }}
-            className="mt-7 h-[2px] w-52 origin-left rounded-full brand-gradient"
+            className="mt-6 h-[2px] w-44 origin-left rounded-full brand-gradient sm:w-52"
           />
 
           <motion.div
@@ -308,7 +308,7 @@ export default function HeroSection() {
               duration: 0.55,
               ease: "easeOut",
             }}
-            className="mt-8 grid max-w-2xl gap-4 sm:grid-cols-2 md:mt-10"
+            className="mt-6 grid max-w-2xl gap-3 sm:grid-cols-2 md:mt-9 md:gap-4"
           >
             <motion.a
               whileHover={{
@@ -319,7 +319,7 @@ export default function HeroSection() {
                 scale: 0.98,
               }}
               href="#contacts"
-              className="brand-gradient brand-shadow inline-flex items-center justify-center gap-3 rounded-full px-7 py-3.5 text-sm font-black text-white md:px-8 md:py-4"
+              className="brand-gradient brand-shadow inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3 text-sm font-black text-white md:px-8 md:py-4"
             >
               <CalendarDays size={18} />
               {t.hero.consultation}
@@ -334,7 +334,7 @@ export default function HeroSection() {
                 scale: 0.98,
               }}
               href="#services"
-              className="glass-card inline-flex items-center justify-center gap-3 rounded-full px-7 py-3.5 text-sm font-black text-[#12315c] dark:text-white md:px-8 md:py-4"
+              className="glass-card inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3 text-sm font-black text-[#12315c] dark:text-white md:px-8 md:py-4"
             >
               <Check size={18} />
               {t.hero.services}
@@ -355,7 +355,7 @@ export default function HeroSection() {
               duration: 0.55,
               ease: "easeOut",
             }}
-            className="mt-7 grid max-w-[640px] gap-3 sm:grid-cols-3 md:mt-9"
+            className="mt-6 grid max-w-[640px] gap-2.5 sm:grid-cols-3 md:mt-9 md:gap-3"
           >
             <StatCard
               value="24/7"
