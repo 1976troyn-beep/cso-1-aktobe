@@ -102,7 +102,7 @@ export default function MediaSlider({
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.08}
         onDragEnd={handleDragEnd}
-        className="relative h-[260px] touch-pan-y overflow-hidden sm:h-[320px]"
+        className="relative h-[420px] touch-pan-y overflow-hidden sm:h-[460px] lg:h-[390px]"
       >
         {!initialLoaded && hasMedia && (
           <div className="absolute inset-0 z-10 overflow-hidden bg-[#071827]">
@@ -181,7 +181,7 @@ export default function MediaSlider({
           </div>
         )}
 
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071827]/84 via-[#071827]/26 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071827]/92 via-[#071827]/42 to-transparent" />
 
         <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/6 via-transparent to-blue-500/6" />
@@ -215,7 +215,7 @@ export default function MediaSlider({
           </>
         )}
 
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-5 pt-12 text-white sm:p-7 sm:pt-16">
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-6 pt-24 text-white sm:p-7 sm:pt-20">
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
