@@ -514,7 +514,43 @@ img {
     color-scheme: light;
   }
 }
+/* ANDROID MOBILE COMPACT */
 
+@media (max-width: 480px) {
+  .glass-card {
+    border-radius: 1.2rem !important;
+  }
+
+  section {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  h2 {
+    font-size: clamp(1.9rem, 8vw, 2.7rem) !important;
+    line-height: 1.02 !important;
+  }
+
+  h3 {
+    font-size: 1rem !important;
+  }
+
+  p {
+    line-height: 1.55;
+  }
+
+  .rounded-\[2rem\],
+  .rounded-\[1\.8rem\],
+  .rounded-\[1\.6rem\],
+  .rounded-\[1\.5rem\] {
+    border-radius: 1.2rem !important;
+  }
+
+  .brand-shadow {
+    box-shadow:
+      0 10px 24px rgba(5, 169, 157, 0.16);
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
