@@ -42,8 +42,8 @@ export default function FloatingHotline() {
     <div
       className="
         fixed
-        right-4
-        bottom-4
+        right-5
+        bottom-5
         z-[9999]
         flex
         flex-col
@@ -248,21 +248,21 @@ export default function FloatingHotline() {
           brand-shadow
           relative
           grid
-          h-14
-          w-14
+          h-[68px]
+          w-[68px]
           place-items-center
           rounded-full
           text-white
-          shadow-[0_18px_50px_rgba(5,169,157,0.35)]
-          md:h-16
-          md:w-16
+          shadow-[0_20px_60px_rgba(5,169,157,0.40)]
+          md:h-[78px]
+          md:w-[78px]
         "
       >
         <motion.span
           animate={{
             boxShadow: [
               "0 0 0 0 rgba(5,169,157,0.34)",
-              "0 0 0 14px rgba(5,169,157,0)",
+              "0 0 0 18px rgba(5,169,157,0)",
               "0 0 0 0 rgba(5,169,157,0)",
             ],
           }}
@@ -291,9 +291,9 @@ export default function FloatingHotline() {
           className="relative z-10"
         >
           {isOpen ? (
-            <X size={25} />
+            <X size={30} />
           ) : (
-            <PhoneCall size={25} />
+            <PhoneCall size={30} />
           )}
         </motion.span>
       </motion.button>
