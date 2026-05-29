@@ -42,19 +42,17 @@ export default function FloatingHotline() {
     <div
       className="
         fixed
-        right-5
-        bottom-5
-        z-[9999]
+        z-[99999]
         flex
         flex-col
         items-end
         gap-3
-        md:right-6
-        md:bottom-6
       "
       style={{
-        paddingBottom:
-          "env(safe-area-inset-bottom)",
+        right: "calc(env(safe-area-inset-right, 0px) + 20px)",
+        bottom: "calc(env(safe-area-inset-bottom, 0px) + 24px)",
+        transform: "translateZ(0)",
+        WebkitTransform: "translateZ(0)",
       }}
     >
       <AnimatePresence>
@@ -82,7 +80,7 @@ export default function FloatingHotline() {
             className="
               glass-card
               relative
-              w-[300px]
+              w-[min(300px,calc(100vw-32px))]
               overflow-hidden
               rounded-[1.8rem]
               border
