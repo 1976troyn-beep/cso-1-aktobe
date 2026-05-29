@@ -5,12 +5,17 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: light;
+  background: #eef7f7;
 }
 
 body {
   margin: 0;
   overflow-x: hidden;
   background: #eef7f7;
+  color: #12315c;
+  color-scheme: light;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -37,6 +42,11 @@ svg {
   max-width: 100%;
 }
 
+img,
+video {
+  height: auto;
+}
+
 button,
 a,
 input,
@@ -45,12 +55,30 @@ select {
   -webkit-tap-highlight-color: transparent;
 }
 
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+input,
+textarea,
+select {
+  color-scheme: light;
+}
+
 button {
   cursor: pointer;
 }
 
 ::selection {
   background: rgba(5, 169, 157, 0.18);
+}
+
+.dark,
+.dark body {
+  color-scheme: dark;
 }
 
 .dark body {
@@ -301,6 +329,16 @@ h4 {
     overflow-x: hidden;
   }
 
+  body {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  h1,
+  h2 {
+    line-height: 1.04 !important;
+  }
+
   h2 {
     line-height: 1.02 !important;
   }
@@ -470,6 +508,13 @@ img {
     skewX(-14deg)
     scale(1.2);
 }
+@media (prefers-color-scheme: dark) {
+  html:not(.dark),
+  body {
+    color-scheme: light;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
