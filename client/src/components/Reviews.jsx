@@ -216,11 +216,11 @@ export default function Reviews() {
       })
 
       setSent(true)
-      setOpened(false)
 
       setTimeout(() => {
         setSent(false)
-      }, 3000)
+        setOpened(false)
+      }, 4000)
     } catch (error) {
       console.error(error)
       alert(error.message || t.reviews.error)
@@ -548,7 +548,7 @@ export default function Reviews() {
 
               {sent && (
                 <div className="mt-4 rounded-2xl bg-cyan-50 px-4 py-3 text-sm font-bold text-[#0b5cab]">
-                  {t.reviews.success}
+                  {t.reviews.success || "Отзыв успешно отправлен и появится после проверки администратора."}
                 </div>
               )}
 
