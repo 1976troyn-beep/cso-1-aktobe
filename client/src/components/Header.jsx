@@ -393,7 +393,9 @@ export default function Header() {
                 }}
               >
                 <span className="text-[#0b5cab] dark:text-cyan-300">
-                  {t.header.brandTitle}
+                  <span className="text-[#0b5cab] dark:text-cyan-300">
+                  ТЕСТ
+                </span>
                 </span>
               </h1>
 
