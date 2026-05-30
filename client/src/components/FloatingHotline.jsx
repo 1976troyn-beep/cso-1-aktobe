@@ -231,20 +231,15 @@ export default function FloatingHotline() {
         }
         initial={{
           opacity: 0,
-          scale: 0.9,
-          y: 18,
+          y: 12,
         }}
         animate={{
           opacity: 1,
-          scale: 1,
           y: 0,
         }}
-        whileHover={{
-          scale: 1.08,
-          y: -3,
-        }}
-        whileTap={{
-          scale: 0.94,
+        exit={{
+          opacity: 0,
+          y: 12,
         }}
         transition={{
           duration: 0.35,
@@ -265,35 +260,14 @@ export default function FloatingHotline() {
           md:w-[72px]
         "
       >
-        <motion.span
+      <motion.span
           animate={{
-            boxShadow: [
-              "0 0 0 0 rgba(5,169,157,0.34)",
-              "0 0 0 18px rgba(5,169,157,0)",
-              "0 0 0 0 rgba(5,169,157,0)",
-            ],
+            rotate: 0,
+            scale: isOpen ? 1.02 : 1,
           }}
           transition={{
-            duration: 2.4,
-            repeat: Infinity,
+            duration: 0.2,
             ease: "easeOut",
-          }}
-          className="absolute inset-0 rounded-full"
-        />
-
-        <motion.span
-          animate={{
-            rotate: isOpen
-              ? 0
-              : [0, -8, 8, -5, 5, 0],
-          }}
-          transition={{
-            duration: 1.7,
-            repeat: isOpen
-              ? 0
-              : Infinity,
-            repeatDelay: 2.6,
-            ease: "easeInOut",
           }}
           className="relative z-10"
         >
