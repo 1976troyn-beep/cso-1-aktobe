@@ -389,13 +389,11 @@ export default function Header() {
               <h1
                 className="truncate font-black leading-tight tracking-[-0.03em] md:text-[1.05rem]"
                 style={{
-                  fontSize: "0.72rem",
+                  fontSize: "0.62rem",
                 }}
               >
                 <span className="text-[#0b5cab] dark:text-cyan-300">
-                  <span className="text-[#0b5cab] dark:text-cyan-300">
-                  ТЕСТ
-                </span>
+                  {t.header.brandTitle}
                 </span>
               </h1>
 
