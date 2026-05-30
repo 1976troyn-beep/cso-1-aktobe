@@ -364,7 +364,7 @@ export default function Header() {
 
           <a
              href="#top"
-             className="flex min-w-0 flex-1 items-center gap-2.5 md:gap-3"
+            className="flex min-w-0 items-center gap-2.5 md:gap-3"
           >
             <motion.div
               whileHover={{
@@ -385,7 +385,7 @@ export default function Header() {
               </div>
             </motion.div>
 
-            <div className="min-w-0 leading-none">
+            <div className="min-w-0 max-w-[105px] leading-none">
               <h1
                 className="truncate font-black leading-tight tracking-[-0.03em] md:text-[1.05rem]"
                 style={{
