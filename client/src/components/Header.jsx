@@ -386,12 +386,14 @@ export default function Header() {
             </motion.div>
 
             <div className="min-w-0 leading-none">
-              <h1 className="truncate text-[0.68rem] font-black leading-tight tracking-[-0.03em] min-[390px]:text-[0.78rem] md:text-[1.05rem]">
+              <h1
+                className="truncate font-black leading-tight tracking-[-0.03em] md:text-[1.05rem]"
+                style={{
+                  fontSize: "0.72rem",
+                }}
+              >
                 <span className="text-[#0b5cab] dark:text-cyan-300">
-                  {
-                    t.header
-                      .brandTitle
-                  }
+                  {t.header.brandTitle}
                 </span>
               </h1>
 
