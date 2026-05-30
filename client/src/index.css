@@ -515,14 +515,14 @@ img {
   }
 }
 
-/* ANDROID / SMALL MOBILE COMPACT LAYER
-   Samsung A-series, Redmi, Oppo, Realme, small Chrome screens */
+
 
 @media (max-width: 430px) {
-  section {
-    padding-top: 2.8rem !important;
-    padding-bottom: 2.8rem !important;
+  main h1,
+  section h1 {
+    font-size: clamp(2rem, 8vw, 2.4rem) !important;
   }
+}
 
   h1 {
     font-size: clamp(2rem, 8vw, 2.4rem) !important;
