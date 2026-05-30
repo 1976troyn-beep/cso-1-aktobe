@@ -385,9 +385,9 @@ export default function Header() {
               </div>
             </motion.div>
 
-            <div className="min-w-0 max-w-[105px] leading-none">
+            <div className="min-w-0 max-w-[180px] leading-none">
               <h1
-                className="truncate font-black leading-tight tracking-[-0.03em] md:text-[1.05rem]"
+                className="whitespace-nowrap font-black leading-tight tracking-[-0.03em] md:text-[1.05rem]"
                 style={{
                   fontSize: "0.9rem",
                 }}
@@ -396,20 +396,6 @@ export default function Header() {
                   {t.header.brandTitle}
                 </span>
               </h1>
-
-              <p className="mt-1 hidden max-w-[155px] text-[0.72rem] font-semibold leading-[1.1] text-[#0b5cab]/80 dark:text-white/66 md:block">
-                {
-                  t.header
-                    .brandLine1
-                }
-
-                <br />
-
-                {
-                  t.header
-                    .brandLine2
-                }
-              </p>
             </div>
           </a>
 
