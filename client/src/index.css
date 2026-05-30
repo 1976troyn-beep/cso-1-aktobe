@@ -519,155 +519,65 @@ img {
    Samsung A-series, Redmi, Oppo, Realme, small Chrome screens */
 
 @media (max-width: 430px) {
-  html,
-  body {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-  }
-
   section {
-    padding-top: 4rem !important;
-    padding-bottom: 4rem !important;
-  }
-
-  .glass-card {
-    border-radius: 1.05rem !important;
-    box-shadow:
-      0 14px 38px rgba(18, 49, 92, 0.1) !important;
-  }
-
-  .brand-shadow {
-    box-shadow:
-      0 10px 24px rgba(5, 169, 157, 0.16) !important;
-  }
-
-  .brand-icon,
-  .brand-icon-soft {
-    width: 2.7rem !important;
-    height: 2.7rem !important;
-    border-radius: 0.95rem !important;
+    padding-top: 2.8rem !important;
+    padding-bottom: 2.8rem !important;
   }
 
   h1 {
-    line-height: 1.02 !important;
+    font-size: clamp(2rem, 8vw, 2.4rem) !important;
+    line-height: 0.98 !important;
   }
 
   h2 {
-    font-size: clamp(1.85rem, 8vw, 2.65rem) !important;
-    line-height: 1.02 !important;
+    font-size: clamp(1.55rem, 6vw, 2rem) !important;
+    line-height: 1.05 !important;
   }
 
   h3 {
-    font-size: 1rem !important;
-    line-height: 1.18 !important;
-  }
-
-  h4 {
     font-size: 0.95rem !important;
   }
 
   p {
-    line-height: 1.5 !important;
+    font-size: 0.92rem !important;
+    line-height: 1.45 !important;
   }
 
-  button,
-  a {
-    touch-action: manipulation;
+  .glass-card {
+    border-radius: 0.95rem !important;
+    padding: 12px !important;
   }
 
-  .rounded-\[2\.4rem\],
-  .rounded-\[2\.2rem\],
-  .rounded-\[2rem\],
-  .rounded-\[1\.9rem\],
-  .rounded-\[1\.8rem\],
-  .rounded-\[1\.7rem\],
-  .rounded-\[1\.6rem\],
-  .rounded-\[1\.5rem\],
-  .rounded-\[1\.4rem\],
-  .rounded-\[1\.3rem\] {
-    border-radius: 1.05rem !important;
-  }
-
-  .rounded-3xl {
-    border-radius: 1.15rem !important;
-  }
-
-  .rounded-2xl {
-    border-radius: 1rem !important;
-  }
-
-  .rounded-xl {
-    border-radius: 0.85rem !important;
-  }
-
-  .px-8 {
-    padding-left: 1.35rem !important;
-    padding-right: 1.35rem !important;
-  }
-
-  .px-7 {
-    padding-left: 1.25rem !important;
-    padding-right: 1.25rem !important;
-  }
-
-  .px-6 {
-    padding-left: 1.15rem !important;
-    padding-right: 1.15rem !important;
-  }
-
-  .py-8 {
-    padding-top: 1.35rem !important;
-    padding-bottom: 1.35rem !important;
-  }
-
-  .py-7 {
-    padding-top: 1.25rem !important;
-    padding-bottom: 1.25rem !important;
-  }
-
-  .py-6 {
-    padding-top: 1.15rem !important;
-    padding-bottom: 1.15rem !important;
-  }
-
-  .p-8 {
-    padding: 1.35rem !important;
-  }
-
-  .p-7 {
-    padding: 1.25rem !important;
-  }
-
-  .p-6 {
-    padding: 1.15rem !important;
-  }
-
-  .gap-8 {
-    gap: 1.35rem !important;
-  }
-
-  .gap-7 {
-    gap: 1.25rem !important;
+  .brand-icon,
+  .brand-icon-soft {
+    width: 2.2rem !important;
+    height: 2.2rem !important;
   }
 
   .gap-6 {
-    gap: 1.15rem !important;
+    gap: 0.8rem !important;
+  }
+
+  .gap-5 {
+    gap: 0.7rem !important;
   }
 
   .mt-16 {
-    margin-top: 3rem !important;
-  }
-
-  .mt-14 {
-    margin-top: 2.75rem !important;
+    margin-top: 2rem !important;
   }
 
   .mt-12 {
-    margin-top: 2.5rem !important;
+    margin-top: 1.5rem !important;
   }
 
   .mt-10 {
-    margin-top: 2.25rem !important;
+    margin-top: 1.25rem !important;
+  }
+
+  .rounded-\[1\.7rem\],
+  .rounded-\[1\.6rem\],
+  .rounded-\[1\.5rem\] {
+    border-radius: 0.95rem !important;
   }
 }
 
