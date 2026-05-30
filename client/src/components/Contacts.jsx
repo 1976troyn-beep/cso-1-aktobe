@@ -42,8 +42,10 @@ export default function Contacts() {
       : t.contacts.schedule
 
   const whatsappNumber = normalizePhone(
-    contacts?.card_3_text || "77070000000"
-  )
+  contacts?.card_3_text || "77070000000"
+)
+
+void whatsappNumber
 
   const twoGisUrl = `https://2gis.kz/aktobe/search/${encodeURIComponent(
     address
@@ -113,19 +115,9 @@ export default function Contacts() {
         throw new Error(data.message || "Ошибка отправки заявки")
       }
 
-      const whatsappMessage = `
-${t.contacts.whatsappTitle}
-
-${t.contacts.formName}: ${form.name}
-${t.contacts.formPhone}: ${form.phone}
-
-${t.contacts.formMessage}:
-${form.message}
-      `
-
-      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-        whatsappMessage
-      )}`
+     
+      
+     
 
       setSent(true)
 
@@ -135,9 +127,7 @@ ${form.message}
         message: "",
       })
 
-      setTimeout(() => {
-        window.location.href = whatsappUrl
-      }, 1200)
+      
 
       setTimeout(() => {
         setSent(false)
@@ -398,10 +388,9 @@ ${form.message}
 
               {sent && (
                 <div className="mt-4 rounded-2xl bg-cyan-50 px-4 py-3 text-sm font-bold text-[#0b5cab] dark:bg-cyan-400/10 dark:text-cyan-200">
-                  Заявка успешно отправлена. Сейчас откроется WhatsApp.
+                  Заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.
                 </div>
               )}
-
               <motion.button
                 whileHover={{
                   scale: 1.02,
