@@ -385,7 +385,7 @@ export default function Header() {
               </div>
             </motion.div>
 
-            <div className="min-w-0 max-w-[180px] leading-none">
+            <div className="min-w-0 max-w-[220px] leading-none">
               <h1
                 className="whitespace-nowrap font-black leading-tight tracking-[-0.03em] md:text-[1.05rem]"
                 style={{
@@ -396,6 +396,12 @@ export default function Header() {
                   {t.header.brandTitle}
                 </span>
               </h1>
+
+              <p className="mt-1 hidden text-[10px] leading-[1.15] text-slate-500 dark:text-white/60 md:block">
+                {t.header.brandLine1}
+                <br />
+                {t.header.brandLine2}
+              </p>
             </div>
           </a>
 
