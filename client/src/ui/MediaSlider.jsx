@@ -209,7 +209,7 @@ export default function MediaSlider({
               <ChevronRight size={28} strokeWidth={2.2} />
             </motion.button>
 
-            <div className="absolute right-3 top-3 z-20 rounded-full bg-black/35 px-2.5 py-1 text-[10px] font-black text-white backdrop-blur-md sm:right-4 sm:top-16">
+            <div className="absolute right-4 top-4 z-30 rounded-full bg-black/35 px-2.5 py-1 text-[10px] font-black text-white backdrop-blur-md">
               {activeIndex + 1} / {preparedMedia.length}
             </div>
           </>
