@@ -349,7 +349,7 @@ export default function Header() {
         transition={{
           duration: 0.7,
         }}
-        className="fixed left-0 right-0 top-0 z-[99990] px-3 pt-2 md:px-4 md:pt-3"
+        className="fixed left-0 right-0 top-0 z-[99990] px-2 pt-2 md:px-4 md:pt-3"
         style={{
           position: "fixed",
           top: "0px",
@@ -359,12 +359,12 @@ export default function Header() {
           WebkitTransform: "translateZ(0)",
         }}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-[1.5rem] border border-white/70 bg-white/78 px-4 py-2.5 shadow-[0_18px_55px_rgba(15,23,42,0.12)] backdrop-blur-2xl transition-all duration-500 dark:border-white/10 dark:bg-[#081826]/82 dark:shadow-[0_20px_70px_rgba(0,0,0,0.45)] md:mt-4 md:rounded-[1.8rem] md:px-5 md:py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-[1.25rem] border border-white/70 bg-white/78 px-3 py-2 shadow-[0_14px_42px_rgba(15,23,42,0.12)] backdrop-blur-2xl transition-all duration-500 dark:border-white/10 dark:bg-[#081826]/82 dark:shadow-[0_20px_70px_rgba(0,0,0,0.45)] md:mt-4 md:rounded-[1.8rem] md:px-5 md:py-3">
           {/* LOGO */}
 
           <a
             href="#top"
-            className="flex min-w-0 items-center gap-3"
+            className="flex min-w-0 items-center gap-2.5 md:gap-3"
           >
             <motion.div
               whileHover={{
@@ -374,7 +374,7 @@ export default function Header() {
               transition={{
                 duration: 0.25,
               }}
-              className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border-[3px] border-transparent bg-gradient-to-br from-[#05a99d] via-[#0b5cab] to-[#3ce6d8] p-[2px] shadow-[0_8px_30px_rgba(5,169,157,0.18)] md:h-15 md:w-15"
+              className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-[2px] border-transparent bg-gradient-to-br from-[#05a99d] via-[#0b5cab] to-[#3ce6d8] p-[2px] shadow-[0_8px_30px_rgba(5,169,157,0.18)] sm:h-11 sm:w-11 md:h-15 md:w-15"
             >
               <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-white">
                 <img
@@ -386,7 +386,7 @@ export default function Header() {
             </motion.div>
 
             <div className="min-w-0 leading-none">
-              <h1 className="truncate text-[0.95rem] font-black leading-tight tracking-[-0.02em] md:text-[1.05rem]">
+              <h1 className="max-w-[180px] truncate text-[0.88rem] font-black leading-tight tracking-[-0.02em] sm:max-w-[220px] sm:text-[0.95rem] md:text-[1.05rem]">
                 <span className="text-[#0b5cab] dark:text-cyan-300">
                   {
                     t.header
@@ -569,9 +569,9 @@ export default function Header() {
             onClick={() =>
               setIsMobileOpen(true)
             }
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-slate-200 bg-white/85 text-[#12315c] shadow-lg backdrop-blur transition hover:border-[#05a99d]/40 dark:border-white/10 dark:bg-[#0d2233] dark:text-white lg:hidden"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-[1rem] border border-slate-200 bg-white/85 text-[#12315c] shadow-lg backdrop-blur transition hover:border-[#05a99d]/40 dark:border-white/10 dark:bg-[#0d2233] dark:text-white sm:h-11 sm:w-11 lg:hidden"
           >
-            <Menu size={22} />
+            <Menu size={20} />
           </button>
         </div>
 

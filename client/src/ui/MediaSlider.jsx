@@ -95,14 +95,14 @@ export default function MediaSlider({
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ duration: 0.24 }}
-      className={`glass-card group overflow-hidden rounded-[2rem] ${className}`}
+      className={`group overflow-hidden rounded-[1.25rem] border border-white/65 bg-white/78 shadow-[0_18px_52px_rgba(18,49,92,0.12)] backdrop-blur-[18px] transition dark:border-white/10 dark:bg-[#081826]/82 dark:shadow-[0_20px_60px_rgba(0,0,0,0.35)] md:rounded-[2rem] ${className}`}
     >
       <motion.div
         drag={hasMultiple ? "x" : false}
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.08}
         onDragEnd={handleDragEnd}
-        className="relative h-[390px] touch-pan-y overflow-hidden"
+        className="relative h-[300px] touch-pan-y overflow-hidden sm:h-[340px] md:h-[390px]"
       >
         {!initialLoaded && hasMedia && (
           <div className="absolute inset-0 z-10 overflow-hidden bg-[#071827]">
@@ -209,24 +209,24 @@ export default function MediaSlider({
               <ChevronRight size={28} strokeWidth={2.2} />
             </motion.button>
 
-            <div className="absolute right-4 top-16 z-20 rounded-full bg-black/25 px-2.5 py-1 text-[10px] font-black text-white backdrop-blur-md">
+            <div className="absolute right-3 top-3 z-20 rounded-full bg-black/35 px-2.5 py-1 text-[10px] font-black text-white backdrop-blur-md sm:right-4 sm:top-16">
               {activeIndex + 1} / {preparedMedia.length}
             </div>
           </>
         )}
 
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-5 pt-12 text-white sm:p-7 sm:pt-16">
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-4 pt-10 text-white sm:p-7 sm:pt-16">
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.24, ease: "easeOut" }}
-            className="translate-y-2 sm:translate-y-3"
+            className="translate-y-1 sm:translate-y-3"
           >
-            <h3 className="text-[1.05rem] font-black leading-[1.08] sm:text-[1.25rem]">
+            <h3 className="text-[0.98rem] font-black leading-[1.08] sm:text-[1.25rem]">
               {title}
             </h3>
 
-            <p className="mt-2 line-clamp-3 text-[13px] leading-[1.45] text-white/82 sm:text-sm sm:leading-[1.5]">
+            <p className="mt-1.5 line-clamp-3 text-[12px] leading-[1.42] text-white/82 sm:text-sm sm:leading-[1.5]">
               {text}
             </p>
 

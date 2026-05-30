@@ -43,16 +43,17 @@ export default function FloatingHotline() {
     <div
       className="
         fixed
+        right-4
+        bottom-20
         z-[99999]
         flex
         flex-col
         items-end
         gap-3
+        md:right-6
+        md:bottom-6
       "
       style={{
-        position: "fixed",
-        right: "max(20px, env(safe-area-inset-right))",
-        bottom: "max(24px, env(safe-area-inset-bottom))",
         transform: "translateZ(0)",
         WebkitTransform: "translateZ(0)",
       }}
@@ -82,13 +83,13 @@ export default function FloatingHotline() {
             className="
               glass-card
               relative
-              w-[min(300px,calc(100vw-32px))]
+              w-[min(280px,calc(100vw-28px))]
               overflow-hidden
-              rounded-[1.8rem]
+              rounded-[1.3rem]
               border
               border-white/70
               bg-white/92
-              p-5
+              p-4
               shadow-[0_30px_80px_rgba(15,23,42,0.16)]
               backdrop-blur-xl
               dark:border-cyan-400/10
@@ -254,14 +255,14 @@ export default function FloatingHotline() {
           brand-shadow
           relative
           grid
-          h-[68px]
-          w-[68px]
+          h-[58px]
+          w-[58px]
           place-items-center
           rounded-full
           text-white
-          shadow-[0_20px_60px_rgba(5,169,157,0.40)]
-          md:h-[78px]
-          md:w-[78px]
+          shadow-[0_16px_46px_rgba(5,169,157,0.34)]
+          md:h-[72px]
+          md:w-[72px]
         "
       >
         <motion.span
@@ -297,9 +298,9 @@ export default function FloatingHotline() {
           className="relative z-10"
         >
           {isOpen ? (
-            <X size={30} />
+            <X size={25} />
           ) : (
-            <PhoneCall size={30} />
+            <PhoneCall size={25} />
           )}
         </motion.span>
       </motion.button>
