@@ -127,19 +127,21 @@ ${form.message}
         whatsappMessage
       )}`
 
-      window.open(whatsappUrl, "_blank")
-
       setSent(true)
-
-      setTimeout(() => {
-        setSent(false)
-      }, 5000)
 
       setForm({
         name: "",
         phone: "",
         message: "",
       })
+
+      setTimeout(() => {
+        window.location.href = whatsappUrl
+      }, 1200)
+
+      setTimeout(() => {
+        setSent(false)
+      }, 5000)
     } catch (error) {
       console.error(error)
 
@@ -396,7 +398,7 @@ ${form.message}
 
               {sent && (
                 <div className="mt-4 rounded-2xl bg-cyan-50 px-4 py-3 text-sm font-bold text-[#0b5cab] dark:bg-cyan-400/10 dark:text-cyan-200">
-                  Заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.
+                  Заявка успешно отправлена. Сейчас откроется WhatsApp.
                 </div>
               )}
 
