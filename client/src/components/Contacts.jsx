@@ -32,25 +32,18 @@ export default function Contacts() {
       ? contacts?.card_title || "г. Актобе, ул. Нефтяников 25"
       : t.contacts.address
 
-  const phone =
-    contacts?.card_text ||
-    "+7 (707) 000-00-00"
+  const phone = contacts?.card_text || "+7 (707) 000-00-00"
 
-  const email =
-    contacts?.card_1_text ||
-    "info@example.kz"
+  const email = contacts?.card_1_text || "info@example.kz"
 
   const schedule =
     language === "RU"
-      ? contacts?.card_2_text ||
-        "Ежедневно · 24/7"
+      ? contacts?.card_2_text || "Ежедневно · 24/7"
       : t.contacts.schedule
 
-  const whatsappNumber =
-    normalizePhone(
-      contacts?.card_3_text ||
-        "77070000000"
-    )
+  const whatsappNumber = normalizePhone(
+    contacts?.card_3_text || "77070000000"
+  )
 
   const twoGisUrl = `https://2gis.kz/aktobe/search/${encodeURIComponent(
     address
@@ -62,13 +55,11 @@ export default function Contacts() {
       title: t.contacts.phone,
       text: phone,
     },
-
     {
       icon: <Mail size={18} />,
       title: "Email",
       text: email,
     },
-
     {
       icon: <Clock size={18} />,
       title: t.contacts.workMode,
@@ -82,12 +73,11 @@ export default function Contacts() {
     message: "",
   })
 
-  const [isSending, setIsSending] =
-    useState(false)
+  const [isSending, setIsSending] = useState(false)
+  const [sent, setSent] = useState(false)
 
   function handleChange(event) {
-    const { name, value } =
-      event.target
+    const { name, value } = event.target
 
     setForm((prev) => ({
       ...prev,
@@ -101,35 +91,26 @@ export default function Contacts() {
     if (isSending) return
 
     setIsSending(true)
+    setSent(false)
 
     try {
-      const response = await fetch(
-        `${API_URL}/api/applications`,
-        {
-          method: "POST",
+      const response = await fetch(`${API_URL}/api/applications`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          full_name: form.name,
+          phone: form.phone,
+          email,
+          message: form.message,
+        }),
+      })
 
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-
-          body: JSON.stringify({
-            full_name: form.name,
-            phone: form.phone,
-            email,
-            message: form.message,
-          }),
-        }
-      )
-
-      const data =
-        await response.json()
+      const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(
-          data.message ||
-            "Ошибка отправки заявки"
-        )
+        throw new Error(data.message || "Ошибка отправки заявки")
       }
 
       const whatsappMessage = `
@@ -146,14 +127,13 @@ ${form.message}
         whatsappMessage
       )}`
 
-      window.open(
-        whatsappUrl,
-        "_blank"
-      )
+      window.open(whatsappUrl, "_blank")
 
-      alert(
-        "Заявка успешно отправлена"
-      )
+      setSent(true)
+
+      setTimeout(() => {
+        setSent(false)
+      }, 5000)
 
       setForm({
         name: "",
@@ -163,9 +143,7 @@ ${form.message}
     } catch (error) {
       console.error(error)
 
-      alert(
-        "Ошибка отправки заявки"
-      )
+      alert("Ошибка отправки заявки")
     } finally {
       setIsSending(false)
     }
@@ -274,65 +252,62 @@ ${form.message}
             {/* CONTACT INFO */}
 
             <div className="grid gap-3 md:gap-4">
-              {contactInfo.map(
-                (item, index) => (
-                  <motion.div
-                    key={item.title}
-                    initial={{
-                      opacity: 0,
-                      x: -20,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      x: 0,
-                    }}
-                    viewport={{
-                      once: true,
-                      amount: 0.18,
-                    }}
-                    transition={{
-                      duration: 0.4,
-                      delay:
-                        index * 0.05,
-                      ease: "easeOut",
-                    }}
-                    whileHover={{
-                      y: -4,
-                      scale: 1.006,
-                    }}
-                    className="glass-card group relative overflow-hidden rounded-[1.3rem] p-4 transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)] md:rounded-[1.5rem] md:p-5"
-                  >
-                    <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100">
-                      <div className="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-cyan-400/10 blur-3xl" />
+              {contactInfo.map((item, index) => (
+                <motion.div
+                  key={item.title}
+                  initial={{
+                    opacity: 0,
+                    x: -20,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    x: 0,
+                  }}
+                  viewport={{
+                    once: true,
+                    amount: 0.18,
+                  }}
+                  transition={{
+                    duration: 0.4,
+                    delay: index * 0.05,
+                    ease: "easeOut",
+                  }}
+                  whileHover={{
+                    y: -4,
+                    scale: 1.006,
+                  }}
+                  className="glass-card group relative overflow-hidden rounded-[1.3rem] p-4 transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)] md:rounded-[1.5rem] md:p-5"
+                >
+                  <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100">
+                    <div className="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-cyan-400/10 blur-3xl" />
+                  </div>
+
+                  <div className="relative z-10 flex items-center gap-3 md:gap-4">
+                    <motion.div
+                      whileHover={{
+                        scale: 1.05,
+                        rotate: 5,
+                      }}
+                      transition={{
+                        duration: 0.25,
+                      }}
+                      className="brand-icon grid h-10 w-10 shrink-0 place-items-center rounded-full text-white md:h-11 md:w-11"
+                    >
+                      {item.icon}
+                    </motion.div>
+
+                    <div>
+                      <h3 className="text-sm font-black text-[#12315c] dark:text-white">
+                        {item.title}
+                      </h3>
+
+                      <p className="mt-1 text-xs text-slate-600 dark:text-white/70 md:text-sm">
+                        {item.text}
+                      </p>
                     </div>
-
-                    <div className="relative z-10 flex items-center gap-3 md:gap-4">
-                      <motion.div
-                        whileHover={{
-                          scale: 1.05,
-                          rotate: 5,
-                        }}
-                        transition={{
-                          duration: 0.25,
-                        }}
-                        className="brand-icon grid h-10 w-10 shrink-0 place-items-center rounded-full text-white md:h-11 md:w-11"
-                      >
-                        {item.icon}
-                      </motion.div>
-
-                      <div>
-                        <h3 className="text-sm font-black text-[#12315c] dark:text-white">
-                          {item.title}
-                        </h3>
-
-                        <p className="mt-1 text-xs text-slate-600 dark:text-white/70 md:text-sm">
-                          {item.text}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                )
-              )}
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
 
@@ -378,13 +353,8 @@ ${form.message}
                   <input
                     name="name"
                     value={form.name}
-                    onChange={
-                      handleChange
-                    }
-                    placeholder={
-                      t.contacts
-                        .namePlaceholder
-                    }
+                    onChange={handleChange}
+                    placeholder={t.contacts.namePlaceholder}
                     required
                     className="w-full rounded-2xl border border-slate-200 bg-[#eef5fb] px-4 py-3 text-sm text-[#12315c] placeholder:text-slate-500 outline-none transition duration-300 focus:border-[#3ce6d8] focus:bg-white focus:shadow-[0_0_18px_rgba(60,230,216,0.18)] dark:border-cyan-400/10 dark:bg-[#16324d]/75 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-[#1a3d5d]/90 md:text-base"
                   />
@@ -399,9 +369,7 @@ ${form.message}
                   <input
                     name="phone"
                     value={form.phone}
-                    onChange={
-                      handleChange
-                    }
+                    onChange={handleChange}
                     placeholder="+7 (707) 000-00-00"
                     required
                     className="w-full rounded-2xl border border-slate-200 bg-[#eef5fb] px-4 py-3 text-sm text-[#12315c] placeholder:text-slate-500 outline-none transition duration-300 focus:border-[#3ce6d8] focus:bg-white focus:shadow-[0_0_18px_rgba(60,230,216,0.18)] dark:border-cyan-400/10 dark:bg-[#16324d]/75 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-[#1a3d5d]/90 md:text-base"
@@ -411,27 +379,26 @@ ${form.message}
 
               <label className="mt-4 block md:mt-5">
                 <span className="mb-2 flex items-center gap-2 text-sm font-black text-[#1bbce3]">
-                  <MessageSquareText
-                    size={16}
-                  />
+                  <MessageSquareText size={16} />
                   {t.contacts.formMessage}
                 </span>
 
                 <textarea
                   name="message"
                   value={form.message}
-                  onChange={
-                    handleChange
-                  }
-                  placeholder={
-                    t.contacts
-                      .messagePlaceholder
-                  }
+                  onChange={handleChange}
+                  placeholder={t.contacts.messagePlaceholder}
                   rows="5"
                   required
                   className="w-full resize-none rounded-2xl border border-slate-200 bg-[#eef5fb] px-4 py-3 text-sm text-[#12315c] placeholder:text-slate-500 outline-none transition duration-300 focus:border-[#3ce6d8] focus:bg-white focus:shadow-[0_0_18px_rgba(60,230,216,0.18)] dark:border-cyan-400/10 dark:bg-[#16324d]/75 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-[#1a3d5d]/90 md:text-base"
                 />
               </label>
+
+              {sent && (
+                <div className="mt-4 rounded-2xl bg-cyan-50 px-4 py-3 text-sm font-bold text-[#0b5cab] dark:bg-cyan-400/10 dark:text-cyan-200">
+                  Заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.
+                </div>
+              )}
 
               <motion.button
                 whileHover={{
@@ -447,9 +414,7 @@ ${form.message}
               >
                 <Send size={18} />
 
-                {isSending
-                  ? "Отправка..."
-                  : t.contacts.send}
+                {isSending ? "Отправка..." : t.contacts.send}
               </motion.button>
             </div>
           </motion.form>
