@@ -23,17 +23,10 @@ export default function FloatingHotline() {
 
   const contacts = getSection("contacts")
 
-  const whatsappPhone = normalizePhone(
-    contacts?.card_3_text
-  )
+  const whatsappPhone = normalizePhone(contacts?.card_3_text)
+  const hotlinePhone = normalizePhone(contacts?.card_4_text)
 
-  const hotlinePhone = normalizePhone(
-    contacts?.card_4_text
-  )
-
-  const hasContacts = Boolean(
-    whatsappPhone || hotlinePhone
-  )
+  const hasContacts = Boolean(whatsappPhone || hotlinePhone)
 
   const whatsappText = encodeURIComponent(
     "Здравствуйте, хочу получить консультацию."
@@ -54,30 +47,29 @@ export default function FloatingHotline() {
         md:bottom-6
       "
       style={{
-        transform: "translateZ(0)",
-        WebkitTransform: "translateZ(0)",
+        transform: "translate3d(0,0,0)",
+        WebkitTransform: "translate3d(0,0,0)",
+        backfaceVisibility: "hidden",
+        WebkitBackfaceVisibility: "hidden",
       }}
     >
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
             initial={{
               opacity: 0,
-              y: 16,
-              scale: 0.96,
+              y: 10,
             }}
             animate={{
               opacity: 1,
               y: 0,
-              scale: 1,
             }}
             exit={{
               opacity: 0,
-              y: 16,
-              scale: 0.96,
+              y: 10,
             }}
             transition={{
-              duration: 0.22,
+              duration: 0.18,
               ease: "easeOut",
             }}
             className="
@@ -90,25 +82,21 @@ export default function FloatingHotline() {
               border-white/70
               bg-white/92
               p-4
-              shadow-[0_30px_80px_rgba(15,23,42,0.16)]
+              shadow-[0_24px_60px_rgba(15,23,42,0.14)]
               backdrop-blur-xl
               dark:border-cyan-400/10
               dark:bg-[#071827]/88
-              dark:shadow-[0_35px_90px_rgba(0,0,0,0.38)]
+              dark:shadow-[0_30px_70px_rgba(0,0,0,0.34)]
             "
           >
             <div className="pointer-events-none absolute inset-0 hidden dark:block">
               <div className="absolute -left-12 -top-12 h-40 w-40 rounded-full bg-cyan-400/10 blur-3xl" />
-
               <div className="absolute bottom-0 right-0 h-44 w-44 rounded-full bg-blue-500/10 blur-3xl" />
             </div>
 
             <div className="relative z-10">
               <div className="mb-5 flex items-start gap-4">
-                <motion.div
-                  whileHover={{
-                    scale: 1.04,
-                  }}
+                <div
                   className="
                     brand-icon
                     grid
@@ -121,7 +109,7 @@ export default function FloatingHotline() {
                   "
                 >
                   <Headphones size={22} />
-                </motion.div>
+                </div>
 
                 <div>
                   <h3 className="text-lg font-black text-[#12315c] dark:text-white">
@@ -143,13 +131,7 @@ export default function FloatingHotline() {
 
                 {whatsappPhone && (
                   <motion.a
-                    whileHover={{
-                      y: -2,
-                      scale: 1.01,
-                    }}
-                    whileTap={{
-                      scale: 0.98,
-                    }}
+                    whileTap={{ scale: 0.98 }}
                     href={`https://wa.me/${whatsappPhone}?text=${whatsappText}`}
                     target="_blank"
                     rel="noreferrer"
@@ -175,13 +157,7 @@ export default function FloatingHotline() {
 
                 {hotlinePhone && (
                   <motion.a
-                    whileHover={{
-                      y: -2,
-                      scale: 1.01,
-                    }}
-                    whileTap={{
-                      scale: 0.98,
-                    }}
+                    whileTap={{ scale: 0.98 }}
                     href={`tel:+${hotlinePhone}`}
                     className="
                       inline-flex
@@ -222,27 +198,13 @@ export default function FloatingHotline() {
 
       <motion.button
         type="button"
-        onClick={() =>
-          setIsOpen((prev) => !prev)
-        }
-        aria-label={
-          t.hotline?.call ||
-          "Горячая линия"
-        }
-        initial={{
-          opacity: 0,
-          y: 12,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-        exit={{
-          opacity: 0,
-          y: 12,
+        onClick={() => setIsOpen((prev) => !prev)}
+        aria-label={t.hotline?.call || "Горячая линия"}
+        whileTap={{
+          scale: 0.96,
         }}
         transition={{
-          duration: 0.35,
+          duration: 0.18,
           ease: "easeOut",
         }}
         className="
@@ -260,22 +222,23 @@ export default function FloatingHotline() {
           md:w-[72px]
         "
       >
-      <motion.span
+        {!isOpen && (
+          <span className="pointer-events-none absolute inset-0 rounded-full bg-cyan-300/30 animate-ping" />
+        )}
+
+        <motion.span
           animate={{
-            rotate: 0,
-            scale: isOpen ? 1.02 : 1,
+            rotate: isOpen ? 0 : [0, -8, 8, -5, 5, 0],
           }}
           transition={{
-            duration: 0.2,
-            ease: "easeOut",
+            duration: 1.7,
+            repeat: isOpen ? 0 : Infinity,
+            repeatDelay: 2.6,
+            ease: "easeInOut",
           }}
           className="relative z-10"
         >
-          {isOpen ? (
-            <X size={25} />
-          ) : (
-            <PhoneCall size={25} />
-          )}
+          {isOpen ? <X size={25} /> : <PhoneCall size={25} />}
         </motion.span>
       </motion.button>
     </div>,
