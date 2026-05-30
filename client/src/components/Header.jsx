@@ -363,8 +363,8 @@ export default function Header() {
           {/* LOGO */}
 
           <a
-            href="#top"
-            className="flex min-w-0 items-center gap-2.5 md:gap-3"
+             href="#top"
+  className="flex min-w-0 flex-1 items-center gap-2.5 md:gap-3"
           >
             <motion.div
               whileHover={{
@@ -386,7 +386,7 @@ export default function Header() {
             </motion.div>
 
             <div className="min-w-0 leading-none">
-              <h1 className="max-w-[180px] truncate text-[0.88rem] font-black leading-tight tracking-[-0.02em] sm:max-w-[220px] sm:text-[0.95rem] md:text-[1.05rem]">
+              <h1 className="truncate text-[0.78rem] font-black leading-tight tracking-[-0.03em] min-[390px]:text-[0.88rem] md:text-[1.05rem]">
                 <span className="text-[#0b5cab] dark:text-cyan-300">
                   {
                     t.header
