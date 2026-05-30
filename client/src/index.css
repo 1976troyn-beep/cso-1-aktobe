@@ -522,10 +522,8 @@ img {
   section h1 {
     font-size: clamp(2rem, 8vw, 2.4rem) !important;
   }
-}
 
   h1 {
-    font-size: clamp(2rem, 8vw, 2.4rem) !important;
     line-height: 0.98 !important;
   }
 
