@@ -1,0 +1,598 @@
+{
+  "reviews": [
+    {
+      "id": 11,
+      "name": "Andrey",
+      "phone": "+7 (747) 113-75-39",
+      "text": "Бабушке очень понравилось",
+      "rating": 5,
+      "role": "Другое",
+      "approved": 1,
+      "created_at": "26.05.2026, 11:26"
+    },
+    {
+      "id": 10,
+      "name": "Прохоренко Андрей Юрьевич",
+      "phone": "+7 (747) 113-75-39",
+      "text": "Нас все устраивает",
+      "rating": 4,
+      "role": "Опекун",
+      "approved": 1,
+      "created_at": "26.05.2026, 11:25"
+    },
+    {
+      "id": 9,
+      "name": "Andrey Prokhorenko",
+      "phone": "+7 (747) 113-75-39",
+      "text": "Очень подходящие условие",
+      "rating": 5,
+      "role": "Родственник",
+      "approved": 1,
+      "created_at": "26.05.2026, 11:24"
+    },
+    {
+      "id": 8,
+      "name": "Andrey",
+      "phone": "+7 (747) 113-75-39",
+      "text": "Очень хорошие условие",
+      "rating": 5,
+      "role": "Посетитель",
+      "approved": 1,
+      "created_at": "26.05.2026, 11:23"
+    }
+  ],
+  "partners": [
+    {
+      "id": 7,
+      "title": "АО \"Казахтелеком\"",
+      "description": " это крупнейшая телекоммуникационная компания Казахстана, предоставляющая услуги фиксированной и мобильной связи, широкополосного доступа в интернет, цифрового телевидения (TV+)",
+      "link": "https://telecom.kz/ru/contacts/center",
+      "logo": "https://habrastorage.org/getpro/moikrug/uploads/company/893/507/558/logo/medium_a64327c39e3ecdbf3f98402d1ece7a1e.png",
+      "visible": 1,
+      "created_at": "2026-05-26 06:41:43.097227+00",
+      "updated_at": "2026-05-26T01:41:43.097Z"
+    },
+    {
+      "id": 8,
+      "title": "Apple Inc. ",
+      "description": " это американская технологическая корпорация, мировой лидер в производстве смартфонов iPhone, планшетов iPad, компьютеров Mac, часов Apple Watch и беспроводных наушников AirPods",
+      "link": "https://www.apple.com/",
+      "logo": "https://substackcdn.com/image/fetch/$s_!G1lk!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8ed3d547-94ff-48e1-9f20-8c14a7030a02_2000x2000.jpeg",
+      "visible": 1,
+      "created_at": "2026-05-26 06:44:40.087721+00",
+      "updated_at": "2026-05-26T01:44:40.087Z"
+    },
+    {
+      "id": 9,
+      "title": "Samsung Electronics",
+      "description": "транснациональная компания по производству электроники.",
+      "link": "https://www.samsung.com/kz_ru/?srsltid=AfmBOopCJnAa87CdVSMIwHNwp_HugZD4cPdK46u6Kt15d_RiQEXDS8OV",
+      "logo": "https://img.freepik.com/premium-photo/3d-render-samsung-logo-rendered-frosted-blue-glass-swaying-slightly-neon-blue-highlights-outlin_1020495-781445.jpg?semt=ais_hybrid&w=740&q=80",
+      "visible": 1,
+      "created_at": "2026-05-28 08:28:13.524004+00",
+      "updated_at": "2026-05-28T03:28:13.524Z"
+    }
+  ],
+  "sections": [
+    {
+      "id": "services",
+      "title": "Направления заботы",
+      "subtitle": "Основные услуги и поддержка",
+      "heading": "Комплексная поддержка каждый день",
+      "text": "Мы объединяем уход, безопасность, питание, медицинское наблюдение и социальную поддержку в единую систему заботы.",
+      "card_title": "",
+      "card_text": "",
+      "card_1_title": "Медицинское наблюдение",
+      "card_1_text": "Контроль самочувствия, приём лекарств и связь со специалистами.\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea",
+      "card_2_title": "Питание",
+      "card_2_text": "Сбалансированное меню с учётом возраста и состояния здоровья.",
+      "card_3_title": "Безопасность",
+      "card_3_text": "Спокойная среда, внимание персонала и круглосуточная поддержка.",
+      "card_4_title": "Доступная среда",
+      "card_4_text": "Условия для людей с ограниченной мобильностью и инвалидностью.",
+      "card_5_title": "Социальная поддержка",
+      "card_5_text": "Общение, занятия, помощь в адаптации и повседневной жизни.",
+      "card_6_title": "Индивидуальный уход",
+      "card_6_text": "План ухода под состояние, привычки и личные потребности человека.",
+      "media": [],
+      "updated_at": "2026-05-28 16:40:04.585637+00"
+    },
+    {
+      "id": "partners",
+      "title": "Партнёры",
+      "subtitle": "Партнёрские организации",
+      "heading": "",
+      "text": "",
+      "card_title": null,
+      "card_text": null,
+      "card_1_title": null,
+      "card_1_text": null,
+      "card_2_title": null,
+      "card_2_text": null,
+      "card_3_title": null,
+      "card_3_text": null,
+      "card_4_title": null,
+      "card_4_text": null,
+      "card_5_title": null,
+      "card_5_text": null,
+      "card_6_title": null,
+      "card_6_text": null,
+      "media": [],
+      "updated_at": "2026-05-24 17:48:05.042175+00"
+    },
+    {
+      "id": "documents",
+      "title": "Документы",
+      "subtitle": "Порядок оформления и правила",
+      "heading": "Оформление документов",
+      "text": "Здесь собраны основные правила, порядок оформления, посещений и необходимые документы для размещения.",
+      "card_title": "",
+      "card_text": "",
+      "card_1_title": "Порядок заселения",
+      "card_1_text": "Пошаговый список документов и действий перед размещением.",
+      "card_2_title": "Правила внутреннего распорядка",
+      "card_2_text": "Правила проживания, посещений, передачи вещей и режима дня.",
+      "card_3_title": "Договор и права",
+      "card_3_text": "Условия проживания, обязанности центра и права проживающих.",
+      "card_4_title": "Режим посещений",
+      "card_4_text": "График визитов, правила связи и передачи необходимых вещей.",
+      "card_5_title": "",
+      "card_5_text": "",
+      "card_6_title": "",
+      "card_6_text": "",
+      "media": {
+        "card_1": [
+          {
+            "id": "1779515579831-4444.mp4",
+            "src": "http://localhost:4000/uploads/1779515579815-4444.mp4",
+            "name": "4444.mp4",
+            "type": "video",
+            "preview": "http://localhost:4000/uploads/1779515579815-4444.mp4"
+          }
+        ]
+      },
+      "updated_at": "2026-05-25 11:27:11.710245+00"
+    },
+    {
+      "id": "reviews",
+      "title": "Отзывы",
+      "subtitle": "Отзывы с модерацией администратора",
+      "heading": "Отзывы родственников ",
+      "text": "На сайте публикуются только отзывы, подтверждённые администратором.",
+      "card_title": "",
+      "card_text": "",
+      "card_1_title": "Анонимный отзыв",
+      "card_1_text": "Спасибо сотрудникам за внимательное отношение, чистоту и спокойную атмосферу.",
+      "card_2_title": "Анонимный отзыв",
+      "card_2_text": "В центре уютно, персонал вежливый, условия проживания хорошие.",
+      "card_3_title": "Анонимный отзыв",
+      "card_3_text": "Понравилась организация ухода и отношение к пожилым людям.",
+      "card_4_title": "",
+      "card_4_text": "",
+      "card_5_title": "",
+      "card_5_text": "",
+      "card_6_title": "",
+      "card_6_text": "",
+      "media": {
+        "card_1": [
+          {
+            "id": "1779429112497-logo.1png.png",
+            "src": "http://localhost:4000/uploads/1779429112488-logo.1png.png",
+            "name": "logo.1png.png",
+            "type": "image",
+            "preview": "http://localhost:4000/uploads/1779429112488-logo.1png.png"
+          }
+        ]
+      },
+      "updated_at": "2026-05-25 11:27:11.943086+00"
+    },
+    {
+      "id": "contacts",
+      "title": "Контакты",
+      "subtitle": "Адрес, форма заявки и контакты",
+      "heading": "Связаться с центром",
+      "text": "Оставьте заявку, и сотрудник учреждения свяжется с вами для консультации.",
+      "card_title": "г. Актобе, ул. Нефтяников 25",
+      "card_text": "",
+      "card_1_title": "Email",
+      "card_1_text": "№ 1 ЦСО",
+      "card_2_title": "Режим работы",
+      "card_2_text": "Пн-Пт/ 9:00-18:00",
+      "card_3_title": "",
+      "card_3_text": "77471137539",
+      "card_4_title": "",
+      "card_4_text": "77076051519",
+      "card_5_title": "",
+      "card_5_text": "https://www.instagram.com/aktobe_cso1?igsh=YmZhdWpvMmxjcmoy",
+      "card_6_title": "",
+      "card_6_text": "",
+      "media": [],
+      "updated_at": "2026-05-26 11:39:32.99832+00"
+    },
+    {
+      "id": "specialists",
+      "title": "Специалисты",
+      "subtitle": "Карточки специалистов",
+      "heading": "Специалисты, которые каждый день рядом",
+      "text": "Наши специалисты помогают создавать спокойную, безопасную и внимательную среду для каждого опекаемого.",
+      "card_title": "",
+      "card_text": "",
+      "card_1_title": "Фамилия Имя",
+      "card_1_text": "Медицинский специалист. Контроль состояния здоровья и ежедневное наблюдение.",
+      "card_2_title": "Фамилия Имя",
+      "card_2_text": "Специалист по уходу. Помощь в быту, гигиене и повседневных процедурах.",
+      "card_3_title": "Фамилия Имя",
+      "card_3_text": "Социальный работник. Адаптация, общение и социальная поддержка.",
+      "card_4_title": "Фамилия Имя",
+      "card_4_text": "Реабилитационный специалист. Поддержка активности и восстановительных занятий.",
+      "card_5_title": "",
+      "card_5_text": "",
+      "card_6_title": "",
+      "card_6_text": "",
+      "media": {
+        "card_1": [
+          {
+            "id": "1779980216477-My-foto.jpeg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980216477-My-foto.jpeg",
+            "name": "My foto.jpeg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980216477-My-foto.jpeg"
+          }
+        ],
+        "card_2": [
+          {
+            "id": "1779980208160-My-foto.jpeg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980208160-My-foto.jpeg",
+            "name": "My foto.jpeg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980208160-My-foto.jpeg"
+          }
+        ],
+        "card_3": [
+          {
+            "id": "1779980199375-My-foto.jpeg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980199375-My-foto.jpeg",
+            "name": "My foto.jpeg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980199375-My-foto.jpeg"
+          }
+        ],
+        "card_4": [
+          {
+            "id": "1779980190763-My-foto.jpeg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980190763-My-foto.jpeg",
+            "name": "My foto.jpeg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980190763-My-foto.jpeg"
+          }
+        ]
+      },
+      "updated_at": "2026-05-28 14:57:04.828651+00"
+    },
+    {
+      "id": "conditions",
+      "title": "Условия",
+      "subtitle": "Условия проживания и ежедневного ухода",
+      "heading": "Среда, где спокойно, чисто и безопасно",
+      "text": "Мы создаём условия, в которых человек получает ежедневную поддержку, комфортное пространство и внимательное отношение персонала.",
+      "card_title": "",
+      "card_text": "",
+      "card_1_title": "Уютные комнаты",
+      "card_1_text": "Комфортные комнаты для спокойного проживания и отдыха.",
+      "card_2_title": "Ежедневный уход",
+      "card_2_text": "Помощь в быту, питании, гигиене и ежедневных процедурах.",
+      "card_3_title": "Безопасная среда",
+      "card_3_text": "Контроль, наблюдение и поддержка доступны каждый день.",
+      "card_4_title": "",
+      "card_4_text": "",
+      "card_5_title": "",
+      "card_5_text": "",
+      "card_6_title": "",
+      "card_6_text": "",
+      "media": {
+        "card_1": [
+          {
+            "id": "1779979675514-room4.jpg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979675514-room4.jpg",
+            "name": "room4.jpg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979675514-room4.jpg"
+          },
+          {
+            "id": "1779979687149-pansionat-s-reabilitatsiyey-posle-insulta-Zabota-4.jpg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979687149-pansionat-s-reabilitatsiyey-posle-insulta-Zabota-4.jpg",
+            "name": "pansionat-s-reabilitatsiyey-posle-insulta-Zabota-4.jpg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979687149-pansionat-s-reabilitatsiyey-posle-insulta-Zabota-4.jpg"
+          }
+        ],
+        "card_2": [
+          {
+            "id": "1779979705195-4-2.webp",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979705195-4-2.webp",
+            "name": "4-2.webp",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979705195-4-2.webp"
+          }
+        ],
+        "card_3": [
+          {
+            "id": "1779979722327-room1.jpg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979722327-room1.jpg",
+            "name": "room1.jpg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979722327-room1.jpg"
+          }
+        ]
+      },
+      "updated_at": "2026-05-28 14:48:54.626858+00"
+    },
+    {
+      "id": "news",
+      "title": "Новости",
+      "subtitle": "Фото, видео и текст новостей",
+      "heading": "Новости и события центра",
+      "text": "Здесь публикуются новости, мероприятия, фото и видео материалы учреждения.",
+      "card_title": "",
+      "card_text": "",
+      "card_1_title": "Новость центра",
+      "card_1_text": "Описание новости учреждения.",
+      "card_2_title": "Фотоновость",
+      "card_2_text": "Фотографии мероприятий и событий.",
+      "card_3_title": "Видео материал",
+      "card_3_text": "Видео материалы и репортажи.",
+      "card_4_title": "Объявление",
+      "card_4_text": "Важная информация и объявления центра.",
+      "card_5_title": "",
+      "card_5_text": "",
+      "card_6_title": "",
+      "card_6_text": "",
+      "media": {
+        "card_1": [
+          {
+            "id": "1779980250979-4444.mp4",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980250979-4444.mp4",
+            "name": "4444.mp4",
+            "type": "video",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980250979-4444.mp4"
+          }
+        ],
+        "card_2": [
+          {
+            "id": "1779980279728-tild3436-3164-4735-b461-306462363563__bek_0180_1.jpg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980279728-tild3436-3164-4735-b461-306462363563__bek_0180_1.jpg",
+            "name": "tild3436-3164-4735-b461-306462363563__bek_0180_1.jpg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980279728-tild3436-3164-4735-b461-306462363563__bek_0180_1.jpg"
+          }
+        ],
+        "card_3": [
+          {
+            "id": "1779980299427-05-.jpg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980299427-05-.jpg",
+            "name": "05-.jpg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980299427-05-.jpg"
+          }
+        ],
+        "card_4": [
+          {
+            "id": "1779980314035-IGRB13-1.jpg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980314035-IGRB13-1.jpg",
+            "name": "IGRB13-1.jpg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980314035-IGRB13-1.jpg"
+          }
+        ]
+      },
+      "updated_at": "2026-05-28 18:11:00.20553+00"
+    },
+    {
+      "id": "leadership",
+      "title": "Руководство",
+      "subtitle": "Карточки руководителей",
+      "heading": "Опытные и ответственные руководители",
+      "text": "Работа центра основана на профессиональном управлении, постоянном контроле и заботе.",
+      "card_title": "",
+      "card_text": "",
+      "card_1_title": "Фамилия Имя Отчество",
+      "card_1_text": "Директор центра. Общее управление и стратегический контроль.",
+      "card_2_title": "Фамилия Имя Отчество",
+      "card_2_text": "Заместитель директора. Координация персонала и ежедневных процессов.",
+      "card_3_title": "Фамилия Имя Отчество",
+      "card_3_text": "Заведующая Медицинским отделением. Контроль состояния и уход.",
+      "card_4_title": "Фамилия Имя Отчество",
+      "card_4_text": "Заместитель директора по Социальной работе. Поддержка и адаптация проживающих.",
+      "card_5_title": "",
+      "card_5_text": "",
+      "card_6_title": "",
+      "card_6_text": "",
+      "media": {
+        "card_1": [
+          {
+            "id": "1779980160643-My-foto.jpeg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980160643-My-foto.jpeg",
+            "name": "My foto.jpeg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980160643-My-foto.jpeg"
+          }
+        ],
+        "card_2": [
+          {
+            "id": "1779980154881-My-foto.jpeg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980154881-My-foto.jpeg",
+            "name": "My foto.jpeg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980154881-My-foto.jpeg"
+          }
+        ],
+        "card_3": [
+          {
+            "id": "1779980143912-My-foto.jpeg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980143912-My-foto.jpeg",
+            "name": "My foto.jpeg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980143912-My-foto.jpeg"
+          }
+        ],
+        "card_4": [
+          {
+            "id": "1779980137213-My-foto.jpeg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980137213-My-foto.jpeg",
+            "name": "My foto.jpeg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980137213-My-foto.jpeg"
+          }
+        ]
+      },
+      "updated_at": "2026-05-28 14:56:10.849281+00"
+    },
+    {
+      "id": "hero",
+      "title": "Главная",
+      "subtitle": "Главный экран сайта",
+      "heading": "Забота, безопасность и спокойная среда",
+      "text": "Круглосуточный уход, комфортные комнаты, медицинский контроль и индивидуальная поддержка.",
+      "card_title": "Индивидуальный план ухода",
+      "card_text": "Внимательный подход к каждому опекаемому.",
+      "card_1_title": "",
+      "card_1_text": "",
+      "card_2_title": "",
+      "card_2_text": "",
+      "card_3_title": "",
+      "card_3_text": "",
+      "card_4_title": "",
+      "card_4_text": "",
+      "card_5_title": "",
+      "card_5_text": "",
+      "card_6_title": "",
+      "card_6_text": "",
+      "media": [
+        {
+          "id": "1779979465047-1758097051_0_name_wisconsin_d9139dedb6.webp",
+          "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979465047-1758097051_0_name_wisconsin_d9139dedb6.webp",
+          "name": "1758097051_0_name_wisconsin_d9139dedb6.webp",
+          "type": "image",
+          "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979465047-1758097051_0_name_wisconsin_d9139dedb6.webp"
+        },
+        {
+          "id": "1779979483760-ddd",
+          "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979483760-ddd",
+          "name": "ddd",
+          "type": "image",
+          "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979483760-ddd"
+        }
+      ],
+      "updated_at": "2026-05-28 16:05:24.27582+00"
+    },
+    {
+      "id": "rooms",
+      "title": "Комнаты",
+      "subtitle": "Фото, описание и преимущества комнат",
+      "heading": "Пространство для комфорта и спокойствия",
+      "text": "Для безопасности, отдыха и повседневной жизни проживающих созданы необходимые условия.",
+      "card_title": "",
+      "card_text": "",
+      "card_1_title": "Основная комфортная комната",
+      "card_1_text": "Просторная, светлая и спокойная комната для ежедневного проживания.",
+      "card_2_title": "Медицинский уход",
+      "card_2_text": "Контроль, помощь и поддержка доступны каждый день.",
+      "card_3_title": "Зона отдыха",
+      "card_3_text": "Уютное пространство для общения и спокойного отдыха.",
+      "card_4_title": "",
+      "card_4_text": "",
+      "card_5_title": "",
+      "card_5_text": "",
+      "card_6_title": "",
+      "card_6_text": "",
+      "media": {
+        "card_1": [
+          {
+            "id": "1779980023476-feature4.jpg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980023476-feature4.jpg",
+            "name": "feature4.jpg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980023476-feature4.jpg"
+          }
+        ],
+        "card_2": [
+          {
+            "id": "1779980037316-room2.jpeg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980037316-room2.jpeg",
+            "name": "room2.jpeg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980037316-room2.jpeg"
+          }
+        ],
+        "card_3": [
+          {
+            "id": "1779980050756-room2.jpeg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980050756-room2.jpeg",
+            "name": "room2.jpeg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779980050756-room2.jpeg"
+          }
+        ]
+      },
+      "updated_at": "2026-05-28 17:41:45.260482+00"
+    },
+    {
+      "id": "disability",
+      "title": "Доступная среда",
+      "subtitle": "Поддержка людей с инвалидностью",
+      "heading": "Поддержка для людей с инвалидностью 1 и 2 группы",
+      "text": "Мы создаём безопасную, удобную и спокойную среду для людей с ограниченной мобильностью.",
+      "card_title": "",
+      "card_text": "",
+      "card_1_title": "Доступная среда",
+      "card_1_text": "Безопасное пространство с удобным передвижением и необходимыми условиями.",
+      "card_2_title": "Индивидуальная помощь",
+      "card_2_text": "Поддержка в быту, гигиене и ежедневных задачах.",
+      "card_3_title": "Реабилитация и наблюдение",
+      "card_3_text": "Контроль состояния и необходимая поддержка специалистов.",
+      "card_4_title": "",
+      "card_4_text": "",
+      "card_5_title": "",
+      "card_5_text": "",
+      "card_6_title": "",
+      "card_6_text": "",
+      "media": {
+        "card_1": [
+          {
+            "id": "1779979868205-29642a1d30cebf98734fb424b2b1316b_XL-500x397.jpg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979868205-29642a1d30cebf98734fb424b2b1316b_XL-500x397.jpg",
+            "name": "29642a1d30cebf98734fb424b2b1316b_XL-500x397.jpg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979868205-29642a1d30cebf98734fb424b2b1316b_XL-500x397.jpg"
+          }
+        ],
+        "card_2": [
+          {
+            "id": "1779979880668-5905faadb3acf926367f5a01577c805b.jpeg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979880668-5905faadb3acf926367f5a01577c805b.jpeg",
+            "name": "5905faadb3acf926367f5a01577c805b.jpeg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979880668-5905faadb3acf926367f5a01577c805b.jpeg"
+          }
+        ],
+        "card_3": [
+          {
+            "id": "1779979894940-pansionat-17.webp",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979894940-pansionat-17.webp",
+            "name": "pansionat-17.webp",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779979894940-pansionat-17.webp"
+          },
+          {
+            "id": "1779984228589-pansionat-s-reabilitatsiyey-posle-insulta-Zabota-4.jpg",
+            "src": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779984228589-pansionat-s-reabilitatsiyey-posle-insulta-Zabota-4.jpg",
+            "name": "pansionat-s-reabilitatsiyey-posle-insulta-Zabota-4.jpg",
+            "type": "image",
+            "preview": "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1779984228589-pansionat-s-reabilitatsiyey-posle-insulta-Zabota-4.jpg"
+          }
+        ]
+      },
+      "updated_at": "2026-05-28 16:04:22.001171+00"
+    }
+  ]
+}
