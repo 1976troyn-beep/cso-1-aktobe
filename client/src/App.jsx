@@ -72,11 +72,27 @@ function LoadingScreen() {
           </div>
         </motion.div>
 
-        <h1 className="text-2xl font-black">Загрузка сайта</h1>
+        <h1 className="text-xl font-bold md:text-2xl">
+          Загрузка сайта
+        </h1>
 
-        <p className="mt-2 text-sm font-bold text-slate-500 dark:text-white/60">
+        <p className="mt-2 text-xs font-medium text-slate-500 dark:text-white/60 md:text-sm">
           Подготавливаем разделы и данные...
         </p>
+
+        <div className="mx-auto mt-5 h-1 w-44 overflow-hidden rounded-full bg-slate-200 dark:bg-white/10">
+          <motion.div
+            className="h-full w-20 rounded-full bg-gradient-to-r from-cyan-400 to-blue-600"
+            animate={{
+              x: [-90, 180],
+            }}
+            transition={{
+              duration: 1.4,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        </div>
       </motion.div>
     </motion.div>
   )
@@ -147,3 +163,4 @@ export default function App() {
     </LanguageProvider>
   )
 }
+
