@@ -26,14 +26,14 @@ function MobileLeadershipDeck({ cards }) {
   }
 
   return (
-    <div className="block border-4 border-red-500 md:hidden">
-      <div className="relative mx-auto h-[560px] max-w-[360px]">
+    <div className="md:hidden">
+      <div className="relative mx-auto h-[500px] max-w-[320px]">
         {orderedCards.map((person, index) => {
           const isActive = index === 0
           const realIndex = getRealIndex(person)
 
-          const y = index * 34
-          const scale = 1 - index * 0.045
+          const y = index * 52
+          const scale = 1 - index * 0.06
           const rotate =
             index === 0
               ? 0
@@ -89,7 +89,7 @@ function MobileLeadershipDeck({ cards }) {
                   title={person.name}
                   text={person.text}
                   className={`
-                    [&>div]:h-[390px]
+                    [&>div]:h-[430px]
                     [&_h3]:text-[1.05rem]
                     [&_p]:mt-1.5
                     [&_p]:line-clamp-2
@@ -125,9 +125,7 @@ function MobileLeadershipDeck({ cards }) {
         ))}
       </div>
 
-      <p className="mt-3 text-center text-xs font-semibold text-slate-500 dark:text-white/55">
-        Нажмите на карточку сзади, чтобы открыть руководителя
-      </p>
+
     </div>
   )
 }
