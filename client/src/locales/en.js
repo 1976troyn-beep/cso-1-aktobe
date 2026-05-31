@@ -9,6 +9,7 @@ const en = {
       rooms: "Rooms",
       leadership: "Leadership",
       specialists: "Specialists",
+      news: "News",
       partners: "Partnership",
       documents: "Documents",
       reviews: "Reviews",

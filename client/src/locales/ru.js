@@ -9,6 +9,7 @@ const ru = {
       rooms: "Комнаты",
       leadership: "Руководство",
       specialists: "Специалисты",
+      news: "Новости",
       partners: "Сотрудничество",
       documents: "Документы",
       reviews: "Отзывы",

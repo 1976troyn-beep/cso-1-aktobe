@@ -9,6 +9,7 @@ const kz = {
       rooms: "Бөлмелер",
       leadership: "Басшылық",
       specialists: "Мамандар",
+      news: "Жаңалықтар",
       partners: "Ынтымақтастық",
       documents: "Құжаттар",
       reviews: "Пікірлер",
