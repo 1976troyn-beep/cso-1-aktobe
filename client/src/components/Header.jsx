@@ -364,8 +364,6 @@ export default function Header() {
           top: "0px",
           left: "0px",
           right: "0px",
-          transform: "translateZ(0)",
-          WebkitTransform: "translateZ(0)",
         }}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between rounded-[1.25rem] border border-white/70 bg-white/78 px-3 py-2 shadow-[0_14px_42px_rgba(15,23,42,0.12)] backdrop-blur-2xl transition-all duration-500 dark:border-white/10 dark:bg-[#081826]/82 dark:shadow-[0_20px_70px_rgba(0,0,0,0.45)] md:mt-4 md:rounded-[1.8rem] md:px-5 md:py-3">
@@ -623,13 +621,13 @@ export default function Header() {
                   damping: 28,
                   stiffness: 240,
                 }}
-                onClick={(event) =>
-                  event.stopPropagation()
-                }
-                onTouchMove={(event) =>
-                  event.stopPropagation()
-                }
-                className="fixed right-0 top-0 z-[99992] flex h-[100dvh] max-h-[100dvh] w-[300px] max-w-[86vw] flex-col overflow-hidden overscroll-contain border-l border-white/10 bg-[#071827]/96 shadow-[0_0_90px_rgba(0,0,0,0.45)] backdrop-blur-2xl lg:hidden"
+                className="fixed right-0 top-0 z-[99992] flex h-[100svh] max-h-[100svh] w-[300px] max-w-[86vw] flex-col overflow-y-auto overscroll-contain border-l border-white/10 bg-[#071827]/96 shadow-[0_0_90px_rgba(0,0,0,0.45)] backdrop-blur-2xl lg:hidden"
+                style={{
+                  height: "100svh",
+                  maxHeight: "100svh",
+                  WebkitOverflowScrolling: "touch",
+                  touchAction: "pan-y",
+                }}
               >
                 {/* TOP */}
 
@@ -688,13 +686,7 @@ export default function Header() {
 
                 {/* CONTENT */}
 
-                <div
-                  className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4"
-                  style={{
-                    WebkitOverflowScrolling: "touch",
-                    touchAction: "pan-y",
-                  }}
-                >
+                <div className="px-4 py-4">
                   {/* NAV */}
 
                   <div className="grid gap-2">
@@ -865,7 +857,7 @@ export default function Header() {
 
                 {/* FOOTER */}
 
-                <div className="border-t border-white/6 px-4 py-3">
+                <div className="shrink-0 border-t border-white/6 px-4 py-3">
                   <p className="text-[10px] leading-5 text-white/40">
                     {
                       t.header
