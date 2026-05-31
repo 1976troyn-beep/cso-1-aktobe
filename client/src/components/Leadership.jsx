@@ -26,7 +26,7 @@ function MobileLeadershipDeck({ cards }) {
   }
 
   return (
-    <div className="md:hidden">
+    <div className="mt-8 md:hidden">
       <div className="relative mx-auto h-[500px] max-w-[320px]">
         {orderedCards.map((person, index) => {
           const isActive = index === 0
@@ -45,7 +45,13 @@ function MobileLeadershipDeck({ cards }) {
             <motion.button
               key={person.key}
               type="button"
-              onClick={() => setActiveIndex(realIndex)}
+              onClick={() => {
+                if (isActive) {
+                  setActiveIndex((current) => (current + 1) % cards.length)
+                } else {
+                  setActiveIndex(realIndex)
+                }
+              }}
               initial={false}
               animate={{
                 y,
@@ -54,12 +60,15 @@ function MobileLeadershipDeck({ cards }) {
                 zIndex: 40 - index,
               }}
               whileTap={{
-                scale: isActive ? 0.99 : scale + 0.02,
+                y: isActive ? y - 10 : y - 8,
+                scale: isActive ? 1.035 : scale + 0.055,
+                rotate: 0,
               }}
               transition={{
                 type: "spring",
-                stiffness: 260,
-                damping: 24,
+                stiffness: 340,
+                damping: 22,
+                mass: 0.72,
               }}
               className={`
                 absolute
@@ -69,7 +78,7 @@ function MobileLeadershipDeck({ cards }) {
                 origin-top
                 text-left
                 transition
-                ${isActive ? "cursor-default" : "cursor-pointer"}
+                "cursor-pointer"
               `}
             >
               <div
