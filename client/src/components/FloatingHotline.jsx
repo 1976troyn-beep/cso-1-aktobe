@@ -37,7 +37,7 @@ export default function FloatingHotline() {
       className="
         fixed
         right-4
-        bottom-20
+        bottom-8
         z-[99999]
         flex
         flex-col
