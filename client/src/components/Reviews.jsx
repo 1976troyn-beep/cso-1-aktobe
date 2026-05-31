@@ -9,7 +9,6 @@ import {
   ChevronLeft,
   ChevronRight,
   ShieldCheck,
-  X,
   Users,
   CalendarDays,
 } from "lucide-react"
@@ -433,13 +432,7 @@ export default function Reviews() {
               exit={{ opacity: 0, y: -10 }}
               className="glass-card relative mt-4 rounded-[1.6rem] p-5"
             >
-              <button
-                type="button"
-                onClick={() => setOpened(false)}
-                className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-rose-50 hover:text-rose-500"
-              >
-                <X size={18} />
-              </button>
+              
 
               <div className="grid gap-4 md:grid-cols-2">
                 <label>
