@@ -245,30 +245,26 @@ export default function Header() {
   /* BODY LOCK */
 
   useEffect(() => {
-    if (!isMobileOpen) {
-      return
+    if (isMobileOpen) {
+      document.documentElement.style.overflow =
+        "hidden"
+
+      document.body.style.overflow =
+        "hidden"
+    } else {
+      document.documentElement.style.overflow =
+        ""
+
+      document.body.style.overflow =
+        ""
     }
 
-    const scrollY = window.scrollY
-
-    document.documentElement.style.overflow = "hidden"
-    document.body.style.overflow = "hidden"
-    document.body.style.position = "fixed"
-    document.body.style.top = `-${scrollY}px`
-    document.body.style.left = "0"
-    document.body.style.right = "0"
-    document.body.style.width = "100%"
-
     return () => {
-      document.documentElement.style.overflow = ""
-      document.body.style.overflow = ""
-      document.body.style.position = ""
-      document.body.style.top = ""
-      document.body.style.left = ""
-      document.body.style.right = ""
-      document.body.style.width = ""
+      document.documentElement.style.overflow =
+        ""
 
-      window.scrollTo(0, scrollY)
+      document.body.style.overflow =
+        ""
     }
   }, [isMobileOpen])
 
@@ -627,7 +623,13 @@ export default function Header() {
                   damping: 28,
                   stiffness: 240,
                 }}
-                className="fixed right-0 top-0 z-[99992] flex h-[100dvh] max-h-[100dvh] w-[300px] flex-col overflow-hidden overscroll-contain border-l border-white/10 bg-[#071827]/96 shadow-[0_0_90px_rgba(0,0,0,0.45)] backdrop-blur-2xl lg:hidden"
+                onClick={(event) =>
+                  event.stopPropagation()
+                }
+                onTouchMove={(event) =>
+                  event.stopPropagation()
+                }
+                className="fixed right-0 top-0 z-[99992] flex h-[100dvh] max-h-[100dvh] w-[300px] max-w-[86vw] flex-col overflow-hidden overscroll-contain border-l border-white/10 bg-[#071827]/96 shadow-[0_0_90px_rgba(0,0,0,0.45)] backdrop-blur-2xl lg:hidden"
               >
                 {/* TOP */}
 
@@ -686,7 +688,13 @@ export default function Header() {
 
                 {/* CONTENT */}
 
-                <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 [-webkit-overflow-scrolling:touch] touch-pan-y">
+                <div
+                  className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4"
+                  style={{
+                    WebkitOverflowScrolling: "touch",
+                    touchAction: "pan-y",
+                  }}
+                >
                   {/* NAV */}
 
                   <div className="grid gap-2">
