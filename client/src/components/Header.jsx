@@ -397,7 +397,7 @@ export default function Header() {
                 </span>
               </h1>
 
-              <p className="mt-1 hidden text-[10px] leading-[1.15] text-slate-500 dark:text-white/60 md:block">
+              <p className="mt-1 hidden text-[11px] font-bold leading-[1.2] text-[#05a99d] md:block">
                 {t.header.brandLine1}
                 <br />
                 {t.header.brandLine2}
