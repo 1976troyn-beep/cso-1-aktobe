@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { motion } from "framer-motion"
 import {
   BriefcaseBusiness,
@@ -11,6 +12,125 @@ import SkeletonCard from "../ui/SkeletonCard"
 
 import useSections from "../hooks/useSections"
 import { useLanguage } from "../context/LanguageContext"
+
+function MobileLeadershipDeck({ cards }) {
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const orderedCards = [
+    ...cards.slice(activeIndex),
+    ...cards.slice(0, activeIndex),
+  ]
+
+  function getRealIndex(card) {
+    return cards.findIndex((item) => item.key === card.key)
+  }
+
+  return (
+    <div className="block border-4 border-red-500 md:hidden">
+      <div className="relative mx-auto h-[560px] max-w-[360px]">
+        {orderedCards.map((person, index) => {
+          const isActive = index === 0
+          const realIndex = getRealIndex(person)
+
+          const y = index * 34
+          const scale = 1 - index * 0.045
+          const rotate =
+            index === 0
+              ? 0
+              : index % 2 === 0
+              ? 2.4
+              : -2.4
+
+          return (
+            <motion.button
+              key={person.key}
+              type="button"
+              onClick={() => setActiveIndex(realIndex)}
+              initial={false}
+              animate={{
+                y,
+                scale,
+                rotate,
+                zIndex: 40 - index,
+              }}
+              whileTap={{
+                scale: isActive ? 0.99 : scale + 0.02,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 260,
+                damping: 24,
+              }}
+              className={`
+                absolute
+                left-0
+                top-0
+                w-full
+                origin-top
+                text-left
+                transition
+                ${isActive ? "cursor-default" : "cursor-pointer"}
+              `}
+            >
+              <div
+                className={`
+                  rounded-[1.35rem]
+                  shadow-[0_22px_60px_rgba(15,23,42,0.16)]
+                  transition
+                  ${
+                    isActive
+                      ? "opacity-100"
+                      : "opacity-95 brightness-[0.92]"
+                  }
+                `}
+              >
+                <MediaSlider
+                  media={person.media}
+                  title={person.name}
+                  text={person.text}
+                  className={`
+                    [&>div]:h-[390px]
+                    [&_h3]:text-[1.05rem]
+                    [&_p]:mt-1.5
+                    [&_p]:line-clamp-2
+                    [&_p]:text-xs
+                    [&_p]:leading-5
+                    [&_.absolute.bottom-0]:p-4
+                    ${
+                      isActive
+                        ? ""
+                        : "[&>div]:h-[118px] [&_p]:hidden [&_.absolute.bottom-0]:p-3"
+                    }
+                  `}
+                />
+              </div>
+            </motion.button>
+          )
+        })}
+      </div>
+
+      <div className="mt-5 flex items-center justify-center gap-2">
+        {cards.map((person, index) => (
+          <button
+            key={person.key}
+            type="button"
+            onClick={() => setActiveIndex(index)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              activeIndex === index
+                ? "w-8 bg-[#05a99d]"
+                : "w-2 bg-slate-300 dark:bg-white/25"
+            }`}
+            aria-label={person.name}
+          />
+        ))}
+      </div>
+
+      <p className="mt-3 text-center text-xs font-semibold text-slate-500 dark:text-white/55">
+        Нажмите на карточку сзади, чтобы открыть руководителя
+      </p>
+    </div>
+  )
+}
 
 export default function Leadership() {
   const {
@@ -83,6 +203,8 @@ export default function Leadership() {
 
   const leadership = {
     director: {
+      key: "director",
+
       media:
         media.card_1 || [],
 
@@ -104,6 +226,8 @@ export default function Leadership() {
     },
 
     deputy: {
+      key: "deputy",
+
       media:
         media.card_2 || [],
 
@@ -125,6 +249,8 @@ export default function Leadership() {
     },
 
     medical: {
+      key: "medical",
+
       media:
         media.card_3 || [],
 
@@ -146,6 +272,8 @@ export default function Leadership() {
     },
 
     social: {
+      key: "social",
+
       media:
         media.card_4 || [],
 
@@ -166,6 +294,13 @@ export default function Leadership() {
               .text,
     },
   }
+
+  const leadershipCards = [
+    leadership.director,
+    leadership.deputy,
+    leadership.medical,
+    leadership.social,
+  ]
 
   return (
     <section
@@ -204,13 +339,17 @@ export default function Leadership() {
           <div className="grid gap-6">
             {loading ? (
               <>
-                <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+                <div className="md:hidden">
+                  <SkeletonCard height="h-[440px]" />
+                </div>
+
+                <div className="hidden gap-6 lg:grid lg:grid-cols-[1.15fr_0.85fr]">
                   <SkeletonCard height="h-[420px]" />
 
                   <SkeletonCard height="h-[420px]" />
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="hidden gap-6 md:grid md:grid-cols-2">
                   <SkeletonCard height="h-[320px]" />
 
                   <SkeletonCard height="h-[320px]" />
@@ -218,7 +357,9 @@ export default function Leadership() {
               </>
             ) : (
               <>
-                <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+                <MobileLeadershipDeck cards={leadershipCards} />
+
+                <div className="hidden gap-6 md:grid lg:grid-cols-[1.15fr_0.85fr]">
                   <motion.div
                     initial={{
                       opacity: 0,
@@ -305,7 +446,7 @@ export default function Leadership() {
                   </motion.div>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="hidden gap-6 md:grid md:grid-cols-2">
                   <motion.div
                     initial={{
                       opacity: 0,
