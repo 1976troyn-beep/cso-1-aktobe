@@ -19,6 +19,7 @@ import {
   BedDouble,
   UsersRound,
   UserRoundCheck,
+  Newspaper,
   FileText,
   MessageCircle,
   Phone,
@@ -153,6 +154,15 @@ export default function Header() {
           <UserRoundCheck
             size={18}
           />
+        ),
+      },
+
+      {
+        href: "#news",
+        label:
+          t.header.nav.news,
+        icon: (
+          <Newspaper size={18} />
         ),
       },
 
@@ -415,8 +425,9 @@ export default function Header() {
           {/* DESKTOP NAV */}
 
           <nav className="hidden items-center gap-4 lg:flex">
-            {navLinks.map(
-              (link) => {
+            {navLinks
+              .filter((link) => link.href !== "#news")
+              .map((link) => {
                 const isActive =
                   activeSection ===
                   link.href.replace(
@@ -456,6 +467,15 @@ export default function Header() {
           {/* DESKTOP ACTIONS */}
 
           <div className="hidden items-center gap-2.5 lg:flex">
+            <a
+              href="#news"
+              title={t.header.nav.news}
+              aria-label={t.header.nav.news}
+              className="brand-gradient grid h-11 w-11 place-items-center rounded-full text-white shadow-[0_8px_30px_rgba(5,169,157,0.25)] transition hover:scale-105"
+            >
+              <Newspaper size={18} />
+            </a>
+
             <button
               type="button"
               onClick={toggleTheme}
