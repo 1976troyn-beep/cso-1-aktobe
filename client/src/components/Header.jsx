@@ -576,6 +576,8 @@ export default function Header() {
           </button>
         </div>
 
+      </motion.header>
+
         {/* MOBILE MENU */}
 
         <AnimatePresence>
@@ -601,7 +603,7 @@ export default function Header() {
                     false
                   )
                 }
-                className="fixed inset-0 z-[99991] bg-[#020817]/55 backdrop-blur-md lg:hidden"
+                className="fixed inset-0 z-[100000] bg-[#020817]/55 backdrop-blur-md lg:hidden"
               />
 
               {/* DRAWER */}
@@ -621,13 +623,7 @@ export default function Header() {
                   damping: 28,
                   stiffness: 240,
                 }}
-                className="fixed right-0 top-0 z-[99992] flex h-[100svh] max-h-[100svh] w-[300px] max-w-[86vw] flex-col overflow-y-auto overscroll-contain border-l border-white/10 bg-[#071827]/96 shadow-[0_0_90px_rgba(0,0,0,0.45)] backdrop-blur-2xl lg:hidden"
-                style={{
-                  height: "100svh",
-                  maxHeight: "100svh",
-                  WebkitOverflowScrolling: "touch",
-                  touchAction: "pan-y",
-                }}
+                className="fixed bottom-0 right-0 top-0 z-[100001] flex h-[100dvh] max-h-[100dvh] w-[300px] max-w-[86vw] flex-col overflow-hidden border-l border-white/10 bg-[#071827]/96 shadow-[0_0_90px_rgba(0,0,0,0.45)] backdrop-blur-2xl lg:hidden"
               >
                 {/* TOP */}
 
@@ -686,7 +682,13 @@ export default function Header() {
 
                 {/* CONTENT */}
 
-                <div className="px-4 py-4">
+                <div
+                  className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-24 pt-4"
+                  style={{
+                    WebkitOverflowScrolling: "touch",
+                    touchAction: "pan-y",
+                  }}
+                >
                   {/* NAV */}
 
                   <div className="grid gap-2">
@@ -869,7 +871,7 @@ export default function Header() {
             </>
           )}
         </AnimatePresence>
-      </motion.header>
+
     </>,
     document.body
   )
