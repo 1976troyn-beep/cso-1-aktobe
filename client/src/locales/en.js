@@ -26,8 +26,8 @@ const en = {
   },
 
   hero: {
-    topLine1: "State",
-    topLine2: "social institution",
+    topLine1: "Communal",
+    topLine2: "Government agency",
 
     centerName: "Social Service Center No. 1",
 
