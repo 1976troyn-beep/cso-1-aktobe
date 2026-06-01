@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "lightningcss": "^1.32.0"
+  },
+  "dependencies": {
+    "browser-image-compression": "^2.0.2"
   }
 }

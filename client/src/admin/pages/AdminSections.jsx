@@ -11,7 +11,7 @@ import {
 } from "lucide-react"
 
 import authFetch from "../utils/authFetch"
-
+import imageCompression from "browser-image-compression"
 const API_URL = import.meta.env.VITE_API_URL
 
 const initialSections = [
@@ -176,11 +176,28 @@ export default function AdminSections() {
   }
 
   async function handleUpload(event, groupKey = "root") {
-    const files = Array.from(event.target.files || [])
-    if (files.length === 0) return
+  const files = Array.from(event.target.files || [])
+  if (files.length === 0) return
 
-    const formData = new FormData()
-    files.forEach((file) => formData.append("files", file))
+  const processedFiles = await Promise.all(
+    files.map(async (file) => {
+      if (!file.type.startsWith("image/")) {
+        return file
+      }
+
+      return await imageCompression(file, {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      })
+    })
+  )
+
+  const formData = new FormData()
+
+  processedFiles.forEach((file) => {
+    formData.append("files", file)
+  })
 
     try {
       const response = await authFetch("/api/upload", {
