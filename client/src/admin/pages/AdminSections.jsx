@@ -176,28 +176,65 @@ export default function AdminSections() {
   }
 
   async function handleUpload(event, groupKey = "root") {
-  const files = Array.from(event.target.files || [])
-  if (files.length === 0) return
+    const files = Array.from(event.target.files || [])
+    if (files.length === 0) return
 
-  const processedFiles = await Promise.all(
-    files.map(async (file) => {
-      if (!file.type.startsWith("image/")) {
-        return file
+    const MAX_IMAGE_SIZE_MB = 15
+    const MAX_VIDEO_SIZE_MB = 50
+
+    const invalidFile = files.find((file) => {
+      const sizeMB = file.size / 1024 / 1024
+
+      if (file.type.startsWith("image/")) {
+        return sizeMB > MAX_IMAGE_SIZE_MB
       }
 
-      return await imageCompression(file, {
-        maxSizeMB: 1,
-        maxWidthOrHeight: 1920,
-        useWebWorker: true,
-      })
+      if (file.type.startsWith("video/")) {
+        return sizeMB > MAX_VIDEO_SIZE_MB
+      }
+
+      return false
     })
-  )
 
-  const formData = new FormData()
+    if (invalidFile) {
+      const sizeMB = (
+        invalidFile.size /
+        1024 /
+        1024
+      ).toFixed(1)
 
-  processedFiles.forEach((file) => {
-    formData.append("files", file)
-  })
+      showAlert(
+        "error",
+        invalidFile.type.startsWith("video/")
+          ? `Видео "${invalidFile.name}" (${sizeMB} МБ) превышает лимит 50 МБ`
+          : `Фото "${invalidFile.name}" (${sizeMB} МБ) превышает лимит 15 МБ`
+      )
+
+      event.target.value = ""
+      return
+    }
+
+    showAlert("warning", "Подготавливаю файлы...")
+
+    const processedFiles = await Promise.all(
+      files.map(async (file) => {
+        if (!file.type.startsWith("image/")) {
+          return file
+        }
+
+        return await imageCompression(file, {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        })
+      })
+    )
+
+    const formData = new FormData()
+
+    processedFiles.forEach((file) => {
+      formData.append("files", file)
+    })
 
     try {
       const response = await authFetch("/api/upload", {
