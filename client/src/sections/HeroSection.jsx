@@ -139,7 +139,7 @@ export default function HeroSection() {
         </>
       )}
 
-      <div className="absolute inset-0 bg-white/28 transition-all duration-500 dark:bg-[#03111d]/66" />
+      <div className="absolute inset-0 bg-white/28 transition-all duration-500 dark:bg-[#03111d]/38" />
       <motion.div
         animate={{
           x: [0, 40, 0],
@@ -180,9 +180,9 @@ export default function HeroSection() {
         }}
         className="pointer-events-none absolute bottom-[-140px] left-1/2 h-[320px] w-[620px] -translate-x-1/2 rounded-full bg-cyan-200/14 blur-3xl dark:bg-cyan-400/6"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-white/8 via-white/6 to-cyan-100/12 transition-all duration-500 dark:from-[#071827]/5 dark:via-[#071827]/30 dark:to-[#071827]/92" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white/8 via-white/6 to-cyan-100/12 transition-all duration-500 dark:from-[#071827]/5 dark:via-[#071827]/24 dark:to-[#071827]/78" />
 
-      <div className="pointer-events-none absolute left-0 top-0 hidden h-full w-[56%] bg-gradient-to-r from-[#eef7f7]/72 via-[#eef7f7]/34 to-transparent transition-all duration-500 dark:w-[54%] dark:from-[#03111d]/82 dark:via-[#03111d]/34 dark:to-transparent lg:block" />
+      <div className="pointer-events-none absolute left-0 top-0 hidden h-full w-[56%] bg-gradient-to-r from-[#eef7f7]/72 via-[#eef7f7]/34 to-transparent transition-all duration-500 dark:w-[54%] dark:from-[#03111d]/50 dark:via-[#03111d]/34 dark:to-transparent lg:block" />
 
       <div className="pointer-events-none absolute left-[18%] top-[20%] hidden h-[420px] w-[520px] rounded-full bg-[#dff7f4]/22 blur-3xl transition-all duration-500 dark:bg-transparent lg:block" />
 
