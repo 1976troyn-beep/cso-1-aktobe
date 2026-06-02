@@ -2,29 +2,51 @@ import { useEffect, useState } from "react"
 
 const API_URL = import.meta.env.VITE_API_URL
 
+let cachedSections = null
+let sectionsRequest = null
+
 export default function useSections() {
-  const [sections, setSections] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [sections, setSections] = useState(
+    cachedSections || []
+  )
+
+  const [loading, setLoading] = useState(
+    !cachedSections
+  )
 
   useEffect(() => {
     let isMounted = true
 
     async function loadSections() {
       try {
-        const res = await fetch(
-          `${API_URL}/api/sections?ts=${Date.now()}`
-        )
+        if (!sectionsRequest) {
+          sectionsRequest = fetch(
+            `${API_URL}/api/sections`
+          )
+            .then((res) => {
+              if (!res.ok) {
+                throw new Error(
+                  `HTTP ${res.status}`
+                )
+              }
 
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`)
+              return res.json()
+            })
+            .then((data) => {
+              cachedSections =
+                Array.isArray(data)
+                  ? data
+                  : []
+
+              return cachedSections
+            })
         }
 
-        const data = await res.json()
+        const data =
+          await sectionsRequest
 
         if (isMounted) {
-          setSections(
-            Array.isArray(data) ? data : []
-          )
+          setSections(data)
           setLoading(false)
         }
       } catch (error) {
