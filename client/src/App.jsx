@@ -128,8 +128,8 @@ function SitePage() {
             <News />
             <SocialLinks />
             <Documents />
-            <Reviews />
             <Partners />
+            <Reviews />
             <Contacts />
             <Footer />
           </motion.main>

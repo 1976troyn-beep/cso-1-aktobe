@@ -167,25 +167,16 @@ export default function Header() {
       },
 
       {
-        href: "#partners",
-        label:
-          t.header.nav
-            .partners,
-        icon: (
-          <Handshake size={18} />
-        ),
+        href: "#documents",
+        label: t.header.nav.documents,
+        icon: <FileText size={18} />,
       },
 
       {
-        href: "#documents",
-        label:
-          t.header.nav
-            .documents,
-        icon: (
-          <FileText size={18} />
-        ),
+        href: "#partners",
+        label: t.header.nav.partners,
+        icon: <Handshake size={18} />,
       },
-
       {
         href: "#reviews",
         label:
