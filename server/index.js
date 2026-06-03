@@ -357,8 +357,7 @@ app.post("/api/reviews", async (req, res) => {
       ]
     )
     await sendTelegramMessage(
-        `📝 Новый отзыв на сайте
-
+        `💬 Новый отзыв на сайте
       Имя: ${name}
       Телефон: ${phone}
       Оценка: ${Number(rating) || 5}
