@@ -231,7 +231,7 @@ documents: {
         "Rules of residence, visits, transfer of belongings and daily routine.",
     },
     {
-      title: "Agreement and rights",
+      title: "List of documents",
       text:
         "Living conditions, center responsibilities and residents’ rights.",
     },

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   FileText,
-  ShieldCheck,
+  Files,
   CalendarDays,
   ClipboardList,
   ArrowRight,
@@ -18,7 +18,7 @@ import { useLanguage } from "../context/LanguageContext"
 const icons = [
   <ClipboardList size={20} />,
   <FileText size={20} />,
-  <ShieldCheck size={20} />,
+  <Files size={20} />,
   <CalendarDays size={20} />,
 ]
 
