@@ -186,7 +186,7 @@ export default function HeroSection() {
 
       <div className="pointer-events-none absolute left-[18%] top-[20%] hidden h-[420px] w-[520px] rounded-full bg-[#dff7f4]/22 blur-3xl transition-all duration-500 dark:bg-transparent lg:block" />
 
-      <div className="relative mx-auto grid min-h-[calc(100svh-6rem)] max-w-7xl items-center gap-8 px-6 pb-8 pt-2 md:min-h-screen md:gap-10 md:pb-12 md:pt-4 lg:-translate-y-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-0">
+      <div className="relative mx-auto grid min-h-[calc(100svh-6rem)] max-w-7xl items-center gap-8 px-6 pb-20 pt-2 md:min-h-screen md:gap-10 md:pb-12 md:pt-4 lg:-translate-y-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-0">
         <motion.div
           initial={{
             opacity: 0,
