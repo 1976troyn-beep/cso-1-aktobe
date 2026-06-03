@@ -45,7 +45,35 @@ const loginLimiter = rateLimit({
       "Слишком много попыток входа. Попробуйте позже.",
   },
 })
+const TELEGRAM_BOT_TOKEN =
+  process.env.TELEGRAM_BOT_TOKEN
 
+const TELEGRAM_CHAT_ID =
+  process.env.TELEGRAM_CHAT_ID
+
+async function sendTelegramMessage(text) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    return
+  }
+
+  try {
+    await fetch(
+      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text,
+        }),
+      }
+    )
+  } catch (error) {
+    console.error("TELEGRAM ERROR:", error)
+  }
+}
 async function query(sql, params = []) {
   const result = await pool.query(sql, params)
   return result.rows
@@ -328,7 +356,17 @@ app.post("/api/reviews", async (req, res) => {
         createdAt,
       ]
     )
+    await sendTelegramMessage(
+        `📝 Новый отзыв на сайте
 
+      Имя: ${name}
+      Телефон: ${phone}
+      Оценка: ${Number(rating) || 5}
+      Роль: ${role || "Посетитель"}
+
+      Текст:
+      ${text}`
+      )
     res.json({
       message: "Отзыв отправлен на модерацию",
     })
