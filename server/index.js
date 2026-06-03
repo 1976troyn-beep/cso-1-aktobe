@@ -649,6 +649,8 @@ app.delete("/api/applications/:id", verifyAdmin, async (req, res) => {
 
 /* ===================== UPLOAD ===================== */
 
+/* ===================== UPLOAD ===================== */
+
 app.post("/api/upload", verifyAdmin, upload.array("files"), async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {
@@ -683,12 +685,9 @@ app.post("/api/upload", verifyAdmin, upload.array("files"), async (req, res) => 
 
       uploadedFiles.push({
         id: fileName,
-
         type: file.mimetype.startsWith("video") ? "video" : "image",
-
         src: data.publicUrl,
         preview: data.publicUrl,
-
         name: file.originalname,
       })
     }
@@ -706,42 +705,48 @@ app.post("/api/upload", verifyAdmin, upload.array("files"), async (req, res) => 
 
 /* ===================== ADMIN LOGIN ===================== */
 
-app.post("/api/admin/login", async (req, res) => {
-  const { login, password } = req.body
+app.post(
+  "/api/admin/login",
+  loginLimiter,
+  async (req, res) => {
+    const { login, password } = req.body
 
-  if (!login || !password) {
-    return res.status(400).json({
-      message: "Введите логин и пароль",
-    })
-  }
-
-  const validLogin = login === process.env.ADMIN_LOGIN
-
-  const validPassword = await bcrypt.compare(
-    password,
-    process.env.ADMIN_PASSWORD
-  )
-
-  if (!validLogin || !validPassword) {
-    return res.status(401).json({
-      message: "Неверный логин или пароль",
-    })
-  }
-
-  const token = jwt.sign(
-    {
-      role: "admin",
-    },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: "7d",
+    if (!login || !password) {
+      return res.status(400).json({
+        message: "Введите логин и пароль",
+      })
     }
-  )
 
-  res.json({
-    token,
-  })
-})
+    const validLogin =
+      login === process.env.ADMIN_LOGIN
+
+    const validPassword =
+      await bcrypt.compare(
+        password,
+        process.env.ADMIN_PASSWORD
+      )
+
+    if (!validLogin || !validPassword) {
+      return res.status(401).json({
+        message: "Неверный логин или пароль",
+      })
+    }
+
+    const token = jwt.sign(
+      {
+        role: "admin",
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    )
+
+    res.json({
+      token,
+    })
+  }
+)
 
 /* ===================== START SERVER ===================== */
 
