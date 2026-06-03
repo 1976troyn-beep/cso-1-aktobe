@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken")
 const { createClient } = require("@supabase/supabase-js")
 require("dotenv").config()
 const WebSocket = require("ws")
+const helmet = require("helmet")
+const rateLimit = require("express-rate-limit")
 const pool = require("./pgdb")
 
 const app = express()
@@ -21,8 +23,28 @@ const supabase = createClient(
     },
   }
 )
-app.use(cors())
+app.use(helmet())
+
+app.use(
+  cors({
+    origin: [
+      "https://cso-1-aktobe.vercel.app",
+      "http://localhost:5173",
+    ],
+    credentials: true,
+  })
+)
+
 app.use(express.json())
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+
+  message: {
+    message:
+      "Слишком много попыток входа. Попробуйте позже.",
+  },
+})
 
 async function query(sql, params = []) {
   const result = await pool.query(sql, params)
