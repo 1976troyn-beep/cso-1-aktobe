@@ -1,5 +1,5 @@
-
-import { motion, AnimatePresence } from "framer-motion"
+import { createPortal } from "react-dom"
+import { AnimatePresence, motion } from "framer-motion"
 import { X } from "lucide-react"
 
 export default function VideoModal({
@@ -8,7 +8,7 @@ export default function VideoModal({
   poster,
   onClose,
 }) {
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && src && (
         <motion.div
@@ -44,6 +44,7 @@ export default function VideoModal({
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   )
 }
