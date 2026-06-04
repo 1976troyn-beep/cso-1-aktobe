@@ -455,7 +455,7 @@ disability: {
 
   benefits: [
     "Accessible environment",
-    "Medical monitoring",
+    "Medical observation",
     "Safety",
     "Social support",
   ],
