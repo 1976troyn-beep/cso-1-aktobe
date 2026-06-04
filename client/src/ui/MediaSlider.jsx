@@ -1,3 +1,4 @@
+import VideoModal from "./VideoModal"
 import { useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import {
@@ -27,7 +28,7 @@ export default function MediaSlider({
 
   const [activeIndex, setActiveIndex] = useState(0)
   const [initialLoaded, setInitialLoaded] = useState(false)
-
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
   const hasMedia = preparedMedia.length > 0
   const hasMultiple = preparedMedia.length > 1
   const activeMedia = preparedMedia[activeIndex]
@@ -61,16 +62,22 @@ export default function MediaSlider({
   }
 
   function openFullscreen() {
-    const video = videoRef.current
-    if (!video) return
+    if (window.innerWidth < 768) {
+      const video = videoRef.current
+      if (!video) return
 
-    if (video.requestFullscreen) {
-      video.requestFullscreen()
-    } else if (video.webkitEnterFullscreen) {
-      video.webkitEnterFullscreen()
-    } else if (video.webkitRequestFullscreen) {
-      video.webkitRequestFullscreen()
+      if (video.requestFullscreen) {
+        video.requestFullscreen()
+      } else if (video.webkitEnterFullscreen) {
+        video.webkitEnterFullscreen()
+      } else if (video.webkitRequestFullscreen) {
+        video.webkitRequestFullscreen()
+      }
+
+      return
     }
+
+    setIsVideoModalOpen(true)
   }
 
   const fadeVariants = {
@@ -251,6 +258,12 @@ export default function MediaSlider({
           </motion.div>
         </div>
       </motion.div>
+      <VideoModal
+        isOpen={isVideoModalOpen}
+        src={activeMedia?.src}
+        poster={activeMedia?.preview || activeMedia?.src}
+        onClose={() => setIsVideoModalOpen(false)}
+      />
     </motion.div>
   )
 }
