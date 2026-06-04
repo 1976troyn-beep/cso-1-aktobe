@@ -128,7 +128,7 @@ export default function Header() {
       },
 
       {
-        href: "#conditions",
+        href: "#rooms",
         label: t.header.nav.rooms,
         icon: (
           <BedDouble size={18} />
