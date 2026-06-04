@@ -183,7 +183,7 @@ export default function Conditions() {
   ]
 
   return (
-    <section className="relative overflow-hidden py-32">
+    <section id="conditions"className="relative overflow-hidden py-32">
       <div className="absolute inset-0 bg-white/55 transition-colors duration-500 dark:bg-transparent" />
 
       <div className="pointer-events-none absolute left-0 top-0 hidden h-80 w-80 rounded-full bg-cyan-400/0 blur-3xl dark:block dark:bg-cyan-400/6" />
