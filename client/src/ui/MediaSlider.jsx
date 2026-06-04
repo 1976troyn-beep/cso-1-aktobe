@@ -126,7 +126,7 @@ export default function MediaSlider({
                   ref={videoRef}
                   key={activeMedia.src}
                   src={activeMedia.src}
-                  className="!h-full !w-full object-cover"
+                  className="!h-full !w-full object-contain bg-black"
                   controls
                   autoPlay
                   muted
