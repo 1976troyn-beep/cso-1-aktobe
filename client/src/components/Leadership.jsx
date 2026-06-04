@@ -97,7 +97,6 @@ function MobileLeadershipDeck({ cards }) {
                   media={person.media}
                   title={person.name}
                   text={person.text}
-                  imagePosition="object-top"
                   className={`
                     [&>div]:h-[430px]
                     [&_h3]:text-[1.05rem]
@@ -406,7 +405,6 @@ export default function Leadership() {
                           .director
                           .text
                       }
-                      imagePosition="object-top"
                       className="[&>div]:h-[420px] [&_h3]:text-2xl [&_p]:mt-2 [&_p]:text-sm [&_p]:leading-6 [&_.absolute.bottom-0]:p-5"
                     />
                   </motion.div>
@@ -450,7 +448,6 @@ export default function Leadership() {
                           .deputy
                           .text
                       }
-                      imagePosition="object-top"
                       className="[&>div]:h-[420px] [&_h3]:text-xl [&_p]:mt-2 [&_p]:text-sm [&_p]:leading-6 [&_.absolute.bottom-0]:p-5"
                     />
                   </motion.div>
@@ -496,7 +493,6 @@ export default function Leadership() {
                           .medical
                           .text
                       }
-                      imagePosition="object-top"
                       className="[&>div]:h-[320px] [&_h3]:text-lg [&_p]:mt-1 [&_p]:text-xs [&_p]:leading-5 [&_.absolute.bottom-0]:p-4"
                     />
                   </motion.div>
@@ -540,7 +536,6 @@ export default function Leadership() {
                           .social
                           .text
                       }
-                      imagePosition="object-top"
                       className="[&>div]:h-[320px] [&_h3]:text-lg [&_p]:mt-1 [&_p]:text-xs [&_p]:leading-5 [&_.absolute.bottom-0]:p-4"
                     />
                   </motion.div>
