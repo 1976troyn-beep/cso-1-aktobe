@@ -1,644 +1,256 @@
-import { useState } from "react"
-import { motion } from "framer-motion"
+import { useRef, useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
 import {
-  BriefcaseBusiness,
-  Award,
-  ShieldCheck,
+  ChevronLeft,
+  ChevronRight,
+  ImagePlus,
+  Play,
+  Maximize2,
 } from "lucide-react"
 
-import SectionTitle from "../ui/SectionTitle"
-import MediaSlider from "../ui/MediaSlider"
-import SkeletonCard from "../ui/SkeletonCard"
+export default function MediaSlider({
+  images = [],
+  media,
+  title,
+  text,
+  className = "",
+}) {
+  const videoRef = useRef(null)
 
-import useSections from "../hooks/useSections"
-import { useLanguage } from "../context/LanguageContext"
+  const preparedMedia =
+    media && media.length > 0
+      ? media
+      : images.map((src) => ({
+          type: "image",
+          src,
+        }))
 
-function MobileLeadershipDeck({ cards }) {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [initialLoaded, setInitialLoaded] = useState(false)
 
-  const orderedCards = [
-    ...cards.slice(activeIndex),
-    ...cards.slice(0, activeIndex),
-  ]
+  const hasMedia = preparedMedia.length > 0
+  const hasMultiple = preparedMedia.length > 1
+  const activeMedia = preparedMedia[activeIndex]
 
-  function getRealIndex(card) {
-    return cards.findIndex((item) => item.key === card.key)
+  function goToSlide(index) {
+    setActiveIndex(index)
+  }
+
+  function prevSlide() {
+    setActiveIndex((current) =>
+      current === 0 ? preparedMedia.length - 1 : current - 1
+    )
+  }
+
+  function nextSlide() {
+    setActiveIndex((current) =>
+      current === preparedMedia.length - 1 ? 0 : current + 1
+    )
+  }
+
+  function handleDragEnd(_, info) {
+    if (!hasMultiple) return
+
+    if (info.offset.x < -45 || info.velocity.x < -420) {
+      nextSlide()
+    }
+
+    if (info.offset.x > 45 || info.velocity.x > 420) {
+      prevSlide()
+    }
+  }
+
+  function openFullscreen() {
+    const video = videoRef.current
+    if (!video) return
+
+    if (video.requestFullscreen) {
+      video.requestFullscreen()
+    } else if (video.webkitEnterFullscreen) {
+      video.webkitEnterFullscreen()
+    } else if (video.webkitRequestFullscreen) {
+      video.webkitRequestFullscreen()
+    }
+  }
+
+  const fadeVariants = {
+    initial: {
+      opacity: 0,
+      scale: 1.018,
+      filter: "blur(10px)",
+    },
+    animate: {
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+    },
+    exit: {
+      opacity: 0,
+      scale: 1.01,
+      filter: "blur(8px)",
+    },
   }
 
   return (
-    <div className="mt-8 md:hidden">
-      <div className="relative mx-auto h-[500px] max-w-[320px]">
-        {orderedCards.map((person, index) => {
-          const isActive = index === 0
-          const realIndex = getRealIndex(person)
-
-          const y = index * 52
-          const scale = 1 - index * 0.06
-          const rotate =
-            index === 0
-              ? 0
-              : index % 2 === 0
-              ? 2.4
-              : -2.4
-
-          return (
-            <motion.button
-              key={person.key}
-              type="button"
-              onClick={() => {
-                if (isActive) {
-                  setActiveIndex((current) => (current + 1) % cards.length)
-                } else {
-                  setActiveIndex(realIndex)
-                }
-              }}
-              initial={false}
-              animate={{
-                y,
-                scale,
-                rotate,
-                zIndex: 40 - index,
-              }}
-              whileTap={{
-                y: isActive ? y - 10 : y - 8,
-                scale: isActive ? 1.035 : scale + 0.055,
-                rotate: 0,
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 340,
-                damping: 22,
-                mass: 0.72,
-              }}
-              className={`
-                absolute
-                left-0
-                top-0
-                w-full
-                origin-top
-                text-left
-                transition
-                "cursor-pointer"
-              `}
-            >
-              <div
-                className={`
-                  rounded-[1.35rem]
-                  shadow-[0_22px_60px_rgba(15,23,42,0.16)]
-                  transition
-                  ${
-                    isActive
-                      ? "opacity-100"
-                      : "opacity-95 brightness-[0.92]"
-                  }
-                `}
-              >
-                <MediaSlider
-                  media={person.media}
-                  title={person.name}
-                  text={person.text}
-                  className={`
-                    [&>div]:h-[430px]
-                    [&_h3]:text-[1.05rem]
-                    [&_p]:mt-1.5
-                    [&_p]:line-clamp-2
-                    [&_p]:text-xs
-                    [&_p]:leading-5
-                    [&_.absolute.bottom-0]:p-4
-                    ${
-                      isActive
-                        ? ""
-                        : "[&>div]:h-[118px] [&_p]:hidden [&_.absolute.bottom-0]:p-3"
-                    }
-                  `}
-                />
-              </div>
-            </motion.button>
-          )
-        })}
-      </div>
-
-      <div className="mt-5 flex items-center justify-center gap-2">
-        {cards.map((person, index) => (
-          <button
-            key={person.key}
-            type="button"
-            onClick={() => setActiveIndex(index)}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              activeIndex === index
-                ? "w-8 bg-[#05a99d]"
-                : "w-2 bg-slate-300 dark:bg-white/25"
-            }`}
-            aria-label={person.name}
-          />
-        ))}
-      </div>
-
-
-    </div>
-  )
-}
-
-export default function Leadership() {
-  const {
-    getSection,
-    loading,
-  } = useSections()
-
-  const { t, language } =
-    useLanguage()
-
-  const leadershipSection =
-    getSection("leadership")
-
-  const media =
-    leadershipSection?.media || {}
-
-  const heading =
-    language === "RU"
-      ? leadershipSection?.heading ||
-        t.leadership.heading
-      : t.leadership.heading
-
-  const text =
-    language === "RU"
-      ? leadershipSection?.text ||
-        t.leadership.text
-      : t.leadership.text
-
-  const stats = [
-    {
-      icon: (
-        <BriefcaseBusiness size={18} />
-      ),
-
-      title:
-        t.leadership.stats[0]
-          .title,
-
-      text:
-        t.leadership.stats[0]
-          .text,
-    },
-
-    {
-      icon: <Award size={18} />,
-
-      title:
-        t.leadership.stats[1]
-          .title,
-
-      text:
-        t.leadership.stats[1]
-          .text,
-    },
-
-    {
-      icon: (
-        <ShieldCheck size={18} />
-      ),
-
-      title:
-        t.leadership.stats[2]
-          .title,
-
-      text:
-        t.leadership.stats[2]
-          .text,
-    },
-  ]
-
-  const leadership = {
-    director: {
-      key: "director",
-
-      media:
-        media.card_1 || [],
-
-      name:
-        language === "RU"
-          ? leadershipSection?.card_1_title ||
-            t.leadership.cards[0]
-              .name
-          : t.leadership.cards[0]
-              .name,
-
-      text:
-        language === "RU"
-          ? leadershipSection?.card_1_text ||
-            t.leadership.cards[0]
-              .text
-          : t.leadership.cards[0]
-              .text,
-    },
-
-    deputy: {
-      key: "deputy",
-
-      media:
-        media.card_2 || [],
-
-      name:
-        language === "RU"
-          ? leadershipSection?.card_2_title ||
-            t.leadership.cards[1]
-              .name
-          : t.leadership.cards[1]
-              .name,
-
-      text:
-        language === "RU"
-          ? leadershipSection?.card_2_text ||
-            t.leadership.cards[1]
-              .text
-          : t.leadership.cards[1]
-              .text,
-    },
-
-    medical: {
-      key: "medical",
-
-      media:
-        media.card_3 || [],
-
-      name:
-        language === "RU"
-          ? leadershipSection?.card_3_title ||
-            t.leadership.cards[2]
-              .name
-          : t.leadership.cards[2]
-              .name,
-
-      text:
-        language === "RU"
-          ? leadershipSection?.card_3_text ||
-            t.leadership.cards[2]
-              .text
-          : t.leadership.cards[2]
-              .text,
-    },
-
-    social: {
-      key: "social",
-
-      media:
-        media.card_4 || [],
-
-      name:
-        language === "RU"
-          ? leadershipSection?.card_4_title ||
-            t.leadership.cards[3]
-              .name
-          : t.leadership.cards[3]
-              .name,
-
-      text:
-        language === "RU"
-          ? leadershipSection?.card_4_text ||
-            t.leadership.cards[3]
-              .text
-          : t.leadership.cards[3]
-              .text,
-    },
-  }
-
-  const leadershipCards = [
-    leadership.director,
-    leadership.deputy,
-    leadership.medical,
-    leadership.social,
-  ]
-
-  return (
-    <section
-      id="leadership"
-      className="relative overflow-hidden bg-white/55 py-32"
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.24 }}
+      className={`group overflow-hidden rounded-[1.25rem] border border-white/65 bg-white/78 shadow-[0_18px_52px_rgba(18,49,92,0.12)] backdrop-blur-[18px] transition dark:border-white/10 dark:bg-[#081826]/82 dark:shadow-[0_20px_60px_rgba(0,0,0,0.35)] md:rounded-[2rem] ${className}`}
     >
-      <div className="mx-auto max-w-7xl px-6">
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 18,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.2,
-          }}
-          transition={{
-            duration: 0.45,
-            ease: "easeOut",
-          }}
-        >
-          <SectionTitle
-            badge={
-              t.leadership.badge
-            }
-            title={heading}
-            text={text}
-          />
-        </motion.div>
+      <motion.div
+        drag={hasMultiple ? "x" : false}
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.08}
+        onDragEnd={handleDragEnd}
+        className="relative h-[300px] touch-pan-y overflow-hidden sm:h-[340px] md:h-[390px]"
+      >
+        {!initialLoaded && hasMedia && (
+          <div className="absolute inset-0 z-10 overflow-hidden bg-[#071827]">
+            <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-cyan-400/5 to-transparent" />
+          </div>
+        )}
 
-        <div className="mt-16 grid gap-6 xl:grid-cols-[1.15fr_0.38fr]">
-          <div className="grid gap-6">
-            {loading ? (
-              <>
-                <div className="md:hidden">
-                  <SkeletonCard height="h-[440px]" />
+        {hasMedia ? (
+          <AnimatePresence mode="wait">
+            {activeMedia.type === "video" ? (
+              <motion.div
+                key={activeMedia.src}
+                variants={fadeVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.32, ease: "easeOut" }}
+                className="relative h-full w-full"
+              >
+                <video
+                  ref={videoRef}
+                  key={activeMedia.src}
+                  src={activeMedia.src}
+                  className="!h-full !w-full object-cover"
+                  controls
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  webkit-playsinline="true"
+                  preload="auto"
+                  poster={activeMedia.preview || activeMedia.src}
+                  onCanPlay={() => setInitialLoaded(true)}
+                  onLoadedData={() => setInitialLoaded(true)}
+                />
+
+                <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full bg-black/35 px-3 py-1 text-[10px] font-black text-white backdrop-blur-md">
+                  <Play size={11} />
+                  Видео
                 </div>
 
-                <div className="hidden gap-6 lg:grid lg:grid-cols-[1.15fr_0.85fr]">
-                  <SkeletonCard height="h-[420px]" />
-
-                  <SkeletonCard height="h-[420px]" />
-                </div>
-
-                <div className="hidden gap-6 md:grid md:grid-cols-2">
-                  <SkeletonCard height="h-[320px]" />
-
-                  <SkeletonCard height="h-[320px]" />
-                </div>
-              </>
+                <button
+                  type="button"
+                  onClick={openFullscreen}
+                  className="absolute left-4 top-4 z-30 grid h-10 w-10 place-items-center rounded-full bg-black/35 text-white backdrop-blur-md transition hover:bg-black/50"
+                >
+                  <Maximize2 size={17} />
+                </button>
+              </motion.div>
             ) : (
-              <>
-                <MobileLeadershipDeck cards={leadershipCards} />
-
-                <div className="hidden gap-6 md:grid lg:grid-cols-[1.15fr_0.85fr]">
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: 24,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    viewport={{
-                      once: true,
-                      amount: 0.18,
-                    }}
-                    transition={{
-                      duration: 0.45,
-                      ease: "easeOut",
-                    }}
-                    whileHover={{
-                      y: -4,
-                    }}
-                    className="transition-shadow duration-300 hover:shadow-[0_22px_60px_rgba(15,23,42,0.10)]"
-                  >
-                    <MediaSlider
-                      media={
-                        leadership
-                          .director
-                          .media
-                      }
-                      title={
-                        leadership
-                          .director
-                          .name
-                      }
-                      text={
-                        leadership
-                          .director
-                          .text
-                      }
-                      className="[&>div]:h-[420px] [&_h3]:text-2xl [&_p]:mt-2 [&_p]:text-sm [&_p]:leading-6 [&_.absolute.bottom-0]:p-5"
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: 24,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    viewport={{
-                      once: true,
-                      amount: 0.18,
-                    }}
-                    transition={{
-                      duration: 0.45,
-                      delay: 0.05,
-                      ease: "easeOut",
-                    }}
-                    whileHover={{
-                      y: -4,
-                    }}
-                    className="transition-shadow duration-300 hover:shadow-[0_22px_60px_rgba(15,23,42,0.10)]"
-                  >
-                    <MediaSlider
-                      media={
-                        leadership
-                          .deputy
-                          .media
-                      }
-                      title={
-                        leadership
-                          .deputy
-                          .name
-                      }
-                      text={
-                        leadership
-                          .deputy
-                          .text
-                      }
-                      className="[&>div]:h-[420px] [&_h3]:text-xl [&_p]:mt-2 [&_p]:text-sm [&_p]:leading-6 [&_.absolute.bottom-0]:p-5"
-                    />
-                  </motion.div>
-                </div>
-
-                <div className="hidden gap-6 md:grid md:grid-cols-2">
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: 22,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    viewport={{
-                      once: true,
-                      amount: 0.18,
-                    }}
-                    transition={{
-                      duration: 0.42,
-                      delay: 0.08,
-                      ease: "easeOut",
-                    }}
-                    whileHover={{
-                      y: -4,
-                    }}
-                    className="transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]"
-                  >
-                    <MediaSlider
-                      media={
-                        leadership
-                          .medical
-                          .media
-                      }
-                      title={
-                        leadership
-                          .medical
-                          .name
-                      }
-                      text={
-                        leadership
-                          .medical
-                          .text
-                      }
-                      className="[&>div]:h-[320px] [&_h3]:text-lg [&_p]:mt-1 [&_p]:text-xs [&_p]:leading-5 [&_.absolute.bottom-0]:p-4"
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: 22,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    viewport={{
-                      once: true,
-                      amount: 0.18,
-                    }}
-                    transition={{
-                      duration: 0.42,
-                      delay: 0.11,
-                      ease: "easeOut",
-                    }}
-                    whileHover={{
-                      y: -4,
-                    }}
-                    className="transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]"
-                  >
-                    <MediaSlider
-                      media={
-                        leadership
-                          .social
-                          .media
-                      }
-                      title={
-                        leadership
-                          .social
-                          .name
-                      }
-                      text={
-                        leadership
-                          .social
-                          .text
-                      }
-                      className="[&>div]:h-[320px] [&_h3]:text-lg [&_p]:mt-1 [&_p]:text-xs [&_p]:leading-5 [&_.absolute.bottom-0]:p-4"
-                    />
-                  </motion.div>
-                </div>
-              </>
+              <motion.img
+                key={activeMedia.src}
+                src={activeMedia.src}
+                alt={title}
+                variants={fadeVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.32, ease: "easeOut" }}
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+                draggable={false}
+                onDragStart={(event) => event.preventDefault()}
+                onLoad={() => setInitialLoaded(true)}
+                className="pointer-events-none !h-full !w-full select-none object-cover object-center transition-transform duration-700 group-hover:scale-[1.025]"
+              />
             )}
+          </AnimatePresence>
+        ) : (
+          <div className="brand-gradient flex h-full w-full flex-col items-center justify-center gap-3 text-white">
+            <ImagePlus size={50} className="opacity-80" />
+            <span className="text-xs font-bold text-white/75">
+              Медиа будет добавлено из админ-панели
+            </span>
           </div>
+        )}
 
-          <div className="grid gap-5">
-            {loading
-              ? Array.from({
-                  length: 3,
-                }).map(
-                  (_, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{
-                        opacity: 0,
-                        y: 10,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                      }}
-                      transition={{
-                        delay:
-                          index *
-                          0.04,
-                      }}
-                    >
-                      <SkeletonCard height="h-[170px]" />
-                    </motion.div>
-                  )
-                )
-              : stats.map(
-                  (
-                    item,
-                    index
-                  ) => (
-                    <motion.div
-                      key={item.title}
-                      initial={{
-                        opacity: 0,
-                        x: 22,
-                      }}
-                      whileInView={{
-                        opacity: 1,
-                        x: 0,
-                      }}
-                      viewport={{
-                        once: true,
-                        amount: 0.18,
-                      }}
-                      transition={{
-                        duration: 0.42,
-                        delay:
-                          index *
-                          0.04,
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071827]/90 via-[#071827]/36 to-transparent" />
 
-                        ease:
-                          "easeOut",
-                      }}
-                      whileHover={{
-                        y: -4,
-                        scale: 1.006,
-                      }}
-                      className="glass-card group rounded-[1.5rem] p-5 transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]"
-                    >
-                      <div className="flex items-start gap-4">
-                        <motion.div
-                          whileHover={{
-                            scale: 1.04,
-                          }}
-                          transition={{
-                            duration: 0.25,
-                          }}
-                          className="brand-icon grid h-11 w-11 shrink-0 place-items-center rounded-xl text-white"
-                        >
-                          {item.icon}
-                        </motion.div>
-
-                        <div>
-                          <h3 className="text-lg font-black text-[#12315c]">
-                            {
-                              item.title
-                            }
-                          </h3>
-
-                          <p className="mt-2 text-sm leading-6 text-slate-600">
-                            {
-                              item.text
-                            }
-                          </p>
-
-                          <div className="mt-4 h-[2px] w-10 rounded-full brand-gradient transition-all duration-500 group-hover:w-20" />
-                        </div>
-                      </div>
-                    </motion.div>
-                  )
-                )}
-          </div>
+        <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/6 via-transparent to-blue-500/6" />
         </div>
-      </div>
-    </section>
+
+        {hasMultiple && (
+          <>
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              type="button"
+              onClick={prevSlide}
+              className="absolute left-3 top-1/2 z-30 hidden -translate-y-1/2 rounded-full bg-black/10 p-1 text-white/55 backdrop-blur transition hover:bg-black/18 hover:text-cyan-300 md:block"
+            >
+              <ChevronLeft size={28} strokeWidth={2.2} />
+            </motion.button>
+
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              type="button"
+              onClick={nextSlide}
+              className="absolute right-3 top-1/2 z-30 hidden -translate-y-1/2 rounded-full bg-black/10 p-1 text-white/55 backdrop-blur transition hover:bg-black/18 hover:text-cyan-300 md:block"
+            >
+              <ChevronRight size={28} strokeWidth={2.2} />
+            </motion.button>
+
+            <div className="absolute right-4 top-4 z-30 rounded-full bg-black/35 px-2.5 py-1 text-[10px] font-black text-white backdrop-blur-md">
+              {activeIndex + 1} / {preparedMedia.length}
+            </div>
+          </>
+        )}
+
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-4 pt-10 text-white sm:p-7 sm:pt-16">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.24, ease: "easeOut" }}
+            className="translate-y-1 sm:translate-y-3"
+          >
+            <h3 className="text-[0.98rem] font-black leading-[1.08] sm:text-[1.25rem]">
+              {title}
+            </h3>
+
+            <p className="mt-1.5 line-clamp-3 text-[12px] leading-[1.42] text-white/82 sm:text-sm sm:leading-[1.5]">
+              {text}
+            </p>
+
+            {hasMultiple ? (
+              <div className="pointer-events-auto mt-4 flex gap-2 pb-1">
+                {preparedMedia.map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => goToSlide(index)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      activeIndex === index
+                        ? "w-7 bg-white"
+                        : "w-2 bg-white/34"
+                    }`}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="mt-5 mb-2 h-[2px] w-10 rounded-full bg-white/55 transition-all duration-500 group-hover:w-16" />
+            )}
+          </motion.div>
+        </div>
+      </motion.div>
+    </motion.div>
   )
 }
