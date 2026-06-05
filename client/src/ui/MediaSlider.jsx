@@ -217,9 +217,9 @@ export default function MediaSlider({
           <button
             type="button"
             onClick={() => setIsImageModalOpen(true)}
-            className="absolute left-4 top-4 z-30 hidden h-10 w-10 place-items-center rounded-full bg-black/35 text-white backdrop-blur-md transition hover:bg-black/50 md:grid"
+            className="absolute left-3 top-3 z-30 hidden h-8 w-8 place-items-center rounded-full bg-black/15 text-white/65 backdrop-blur-sm transition hover:bg-black/30 hover:text-white md:grid"
           >
-            <Maximize2 size={17} />
+            <Maximize2 size={13} />
           </button>
         )}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071827]/90 via-[#071827]/36 to-transparent" />
