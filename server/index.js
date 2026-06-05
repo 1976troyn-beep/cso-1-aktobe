@@ -786,7 +786,12 @@ app.post(
 )
 
 /* ===================== START SERVER ===================== */
-
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "ok",
+    uptime: process.uptime(),
+  })
+})
 app.listen(PORT, () => {
   console.log(`Server started: ${SERVER_URL}`)
 })
