@@ -213,7 +213,15 @@ export default function MediaSlider({
             </span>
           </div>
         )}
-
+        {enableImageModal && activeMedia?.type !== "video" && (
+          <button
+            type="button"
+            onClick={() => setIsImageModalOpen(true)}
+            className="absolute left-4 top-4 z-30 hidden h-10 w-10 place-items-center rounded-full bg-black/35 text-white backdrop-blur-md transition hover:bg-black/50 md:grid"
+          >
+            <Maximize2 size={17} />
+          </button>
+        )}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071827]/90 via-[#071827]/36 to-transparent" />
 
         <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">
