@@ -29,6 +29,7 @@ export default function MediaSlider({
   const [activeIndex, setActiveIndex] = useState(0)
   const [initialLoaded, setInitialLoaded] = useState(false)
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
+
   const hasMedia = preparedMedia.length > 0
   const hasMultiple = preparedMedia.length > 1
   const activeMedia = preparedMedia[activeIndex]
@@ -49,6 +50,17 @@ export default function MediaSlider({
     )
   }
 
+  function handleMediaTap() {
+    if (
+      typeof window !== "undefined" &&
+      window.innerWidth < 768 &&
+      hasMultiple &&
+      activeMedia?.type !== "video"
+    ) {
+      nextSlide()
+    }
+  }
+
   function handleDragEnd(_, info) {
     if (!hasMultiple) return
 
@@ -62,7 +74,7 @@ export default function MediaSlider({
   }
 
   function openFullscreen() {
-    if (window.innerWidth < 768) {
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
       const video = videoRef.current
       if (!video) return
 
@@ -80,23 +92,23 @@ export default function MediaSlider({
     setIsVideoModalOpen(true)
   }
 
-  const fadeVariants = {
-  initial: {
-    opacity: 1,
-    scale: 1,
-    filter: "blur(0px)",
-  },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    filter: "blur(0px)",
-  },
-  exit: {
-    opacity: 0,
-    scale: 1,
-    filter: "blur(0px)",
-  },
-}
+  const instantVariants = {
+    initial: {
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+    },
+    animate: {
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+    },
+    exit: {
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+    },
+  }
 
   return (
     <motion.div
@@ -109,6 +121,7 @@ export default function MediaSlider({
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.08}
         onDragEnd={handleDragEnd}
+        onClick={handleMediaTap}
         className="relative h-[300px] touch-pan-y overflow-hidden sm:h-[340px] md:h-[390px]"
       >
         {!initialLoaded && hasMedia && (
@@ -122,11 +135,11 @@ export default function MediaSlider({
             {activeMedia.type === "video" ? (
               <motion.div
                 key={activeMedia.src}
-                variants={fadeVariants}
+                variants={instantVariants}
                 initial="initial"
                 animate="animate"
                 exit="exit"
-               transition={{ duration: 0.12, ease: "linear" }}
+                transition={{ duration: 0, ease: "linear" }}
                 className="relative h-full w-full"
               >
                 <video
@@ -164,11 +177,11 @@ export default function MediaSlider({
                 key={activeMedia.src}
                 src={activeMedia.src}
                 alt={title}
-                variants={fadeVariants}
+                variants={instantVariants}
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                transition={{ duration: 0.12, ease: "linear" }}
+                transition={{ duration: 0, ease: "linear" }}
                 loading="lazy"
                 decoding="async"
                 fetchPriority="low"
@@ -243,7 +256,10 @@ export default function MediaSlider({
                   <button
                     key={index}
                     type="button"
-                    onClick={() => goToSlide(index)}
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      goToSlide(index)
+                    }}
                     className={`h-2 rounded-full transition-all duration-300 ${
                       activeIndex === index
                         ? "w-7 bg-white"
@@ -258,6 +274,7 @@ export default function MediaSlider({
           </motion.div>
         </div>
       </motion.div>
+
       <VideoModal
         isOpen={isVideoModalOpen}
         src={activeMedia?.src}
