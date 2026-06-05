@@ -8,6 +8,10 @@ export default function VideoModal({
   poster,
   onClose,
 }) {
+  if (typeof document === "undefined") {
+    return null
+  }
+
   return createPortal(
     <AnimatePresence>
       {isOpen && src && (
