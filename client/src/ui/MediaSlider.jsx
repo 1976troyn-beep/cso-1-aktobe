@@ -81,22 +81,22 @@ export default function MediaSlider({
   }
 
   const fadeVariants = {
-    initial: {
-      opacity: 0,
-      scale: 1.018,
-      filter: "blur(10px)",
-    },
-    animate: {
-      opacity: 1,
-      scale: 1,
-      filter: "blur(0px)",
-    },
-    exit: {
-      opacity: 0,
-      scale: 1.01,
-      filter: "blur(8px)",
-    },
-  }
+  initial: {
+    opacity: 1,
+    scale: 1,
+    filter: "blur(0px)",
+  },
+  animate: {
+    opacity: 1,
+    scale: 1,
+    filter: "blur(0px)",
+  },
+  exit: {
+    opacity: 0,
+    scale: 1,
+    filter: "blur(0px)",
+  },
+}
 
   return (
     <motion.div
@@ -118,7 +118,7 @@ export default function MediaSlider({
         )}
 
         {hasMedia ? (
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="sync" initial={false}>
             {activeMedia.type === "video" ? (
               <motion.div
                 key={activeMedia.src}
@@ -126,7 +126,7 @@ export default function MediaSlider({
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                transition={{ duration: 0.32, ease: "easeOut" }}
+               transition={{ duration: 0.12, ease: "linear" }}
                 className="relative h-full w-full"
               >
                 <video
@@ -168,7 +168,7 @@ export default function MediaSlider({
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                transition={{ duration: 0.32, ease: "easeOut" }}
+                transition={{ duration: 0.12, ease: "linear" }}
                 loading="lazy"
                 decoding="async"
                 fetchPriority="low"
