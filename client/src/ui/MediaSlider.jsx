@@ -1,3 +1,4 @@
+import ImageModal from "./ImageModal"
 import VideoModal from "./VideoModal"
 import { useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
@@ -15,6 +16,7 @@ export default function MediaSlider({
   title,
   text,
   className = "",
+  enableImageModal = false,
 }) {
   const videoRef = useRef(null)
 
@@ -28,7 +30,9 @@ export default function MediaSlider({
 
   const [activeIndex, setActiveIndex] = useState(0)
   const [initialLoaded, setInitialLoaded] = useState(false)
+
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
 
   const hasMedia = preparedMedia.length > 0
   const hasMultiple = preparedMedia.length > 1
@@ -166,7 +170,16 @@ export default function MediaSlider({
 
                 <button
                   type="button"
-                  onClick={openFullscreen}
+                  onClick={() => {
+                    if (activeMedia?.type === "video") {
+                      openFullscreen()
+                      return
+                    }
+
+                    if (enableImageModal && window.innerWidth >= 768) {
+                      setIsImageModalOpen(true)
+                    }
+                  }}
                   className="absolute left-4 top-4 z-30 grid h-10 w-10 place-items-center rounded-full bg-black/35 text-white backdrop-blur-md transition hover:bg-black/50"
                 >
                   <Maximize2 size={17} />
@@ -280,6 +293,17 @@ export default function MediaSlider({
         src={activeMedia?.src}
         poster={activeMedia?.preview || activeMedia?.src}
         onClose={() => setIsVideoModalOpen(false)}
+      />
+      <ImageModal
+        isOpen={isImageModalOpen}
+        images={preparedMedia.filter(
+          (item) => item.type !== "video"
+        )}
+        activeIndex={activeIndex}
+        title={title}
+        onClose={() => setIsImageModalOpen(false)}
+        onPrev={prevSlide}
+        onNext={nextSlide}
       />
     </motion.div>
   )

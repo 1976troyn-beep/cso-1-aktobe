@@ -341,6 +341,7 @@ export default function Conditions() {
                       text={
                         item.text
                       }
+                      enableImageModal={true}
                       className="[&>div]:h-[288px] [&_h3]:text-2xl [&_p]:mt-3 [&_p]:leading-7 [&_.absolute.bottom-0]:p-7"
                     />
                   </motion.div>

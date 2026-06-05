@@ -216,6 +216,7 @@ export default function DisabilityCare() {
                 disabilityCards[0]
                   .text
               }
+              enableImageModal={true}
               className="[&>div]:h-[320px] md:[&>div]:h-[560px]"
             />
           </motion.div>
@@ -260,6 +261,7 @@ export default function DisabilityCare() {
                     text={
                       item.text
                     }
+                    enableImageModal={true}
                     className="[&>div]:h-[240px] md:[&>div]:h-[267px]"
                   />
                 </motion.div>

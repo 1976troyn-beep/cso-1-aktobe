@@ -283,6 +283,7 @@ export default function Rooms() {
                   roomMedia[0]
                     .text
                 }
+                enableImageModal={true}
                 className="[&>div]:h-[560px]"
               />
             </motion.div>
@@ -335,6 +336,7 @@ export default function Rooms() {
                         text={
                           item.text
                         }
+                        enableImageModal={true}
                         className="[&>div]:h-[267px]"
                       />
                     </motion.div>
