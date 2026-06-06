@@ -256,18 +256,18 @@ export default function MediaSlider({
           </>
         )}
 
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-4 pt-10 text-white sm:p-7 sm:pt-16">
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-4 pt-4 text-white sm:p-5 sm:pt-8">
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.24, ease: "easeOut" }}
-            className="translate-y-1 sm:translate-y-3"
+            className="translate-y-0"
           >
-            <h3 className="text-[0.98rem] font-black leading-[1] sm:text-[1.25rem]">
+            <h3 className="text-[0.98rem] font-black leading-none sm:text-[1.15rem]">
               {title}
             </h3>
 
-            <p className="mt-1 line-clamp-3 text-[12px] leading-[1.28] text-white/82 sm:text-sm sm:leading-[1.32]">
+           <p className="mt-0.5 line-clamp-2 text-[12px] leading-[1.15] ...">
               {text}
             </p>
 
