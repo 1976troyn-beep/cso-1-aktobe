@@ -267,7 +267,7 @@ export default function MediaSlider({
               {title}
             </h3>
 
-            <p className="mt-2 line-clamp-2 text-[12px] leading-[1.15] text-white/82 sm:text-sm sm:leading-[1.18]">
+            <p className="mt-2 line-clamp-2 text-[12px] leading-[1.05] text-white/82 sm:text-sm sm:leading-[1.1]">
               {text}
             </p>
 
