@@ -63,11 +63,22 @@ export default function ImageModal({
               </>
             )}
 
-            <img
-              src={activeImage.src}
-              alt={title || ""}
-              className="max-h-[88vh] w-full object-contain"
-            />
+            <>
+              <div
+                className="absolute inset-0 scale-110 blur-3xl opacity-40"
+                style={{
+                  backgroundImage: `url(${activeImage.src})`,
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                }}
+              />
+
+              <img
+                src={activeImage.src}
+                alt={title || ""}
+                className="relative z-10 max-h-[88vh] w-full object-contain"
+              />
+            </>
           </motion.div>
         </motion.div>
       )}
