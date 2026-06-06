@@ -290,6 +290,7 @@ export default function News() {
                         item.title
                       }
                       text={item.text}
+                      enableImageModal={true}
                       className="[&>div]:h-[390px] [&_h3]:text-xl [&_p]:text-sm [&_p]:leading-6"
                     />
 
