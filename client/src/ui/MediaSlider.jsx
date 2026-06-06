@@ -189,9 +189,9 @@ export default function MediaSlider({
                       setIsImageModalOpen(true)
                     }
                   }}
-                  className="absolute left-4 top-4 z-30 grid h-10 w-10 place-items-center rounded-full bg-black/35 text-white backdrop-blur-md transition hover:bg-black/50"
+                  className="absolute left-3 top-3 z-30 hidden h-8 w-8 place-items-center rounded-full bg-black/15 text-white/65 backdrop-blur-sm transition hover:bg-black/30 hover:text-white md:grid"
                 >
-                  <Maximize2 size={17} />
+                  <Maximize2 size={13} />
                 </button>
               </motion.div>
             ) : (
