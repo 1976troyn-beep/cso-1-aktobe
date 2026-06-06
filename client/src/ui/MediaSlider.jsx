@@ -263,11 +263,11 @@ export default function MediaSlider({
             transition={{ duration: 0.24, ease: "easeOut" }}
             className="translate-y-0"
           >
-            <h3 className="text-[0.98rem] font-black leading-none sm:text-[1.15rem]">
+           <h3 className="text-[0.98rem] font-black leading-none sm:text-[1.15rem]">
               {title}
             </h3>
 
-           <p className="mt-0.5 line-clamp-2 text-[12px] leading-[1.15] ...">
+            <p className="mt-2 line-clamp-2 text-[12px] leading-[1.15] text-white/82 sm:text-sm sm:leading-[1.18]">
               {text}
             </p>
 
