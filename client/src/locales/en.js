@@ -273,15 +273,15 @@ leadership: {
   stats: [
     {
       title: "Experienced team",
-      text: "Professional team of specialists.",
+      text: "Specialists with many years of experience provide support, attention, and an individual approach to each resident.",
     },
     {
       title: "Quality care",
-      text: "Daily supervision and care.",
+      text: "Daily care, assistance with household chores, and the creation of comfortable conditions for a calm and safe life",
     },
     {
       title: "Reliability",
-      text: "A safe and stable environment.",
+      text: "Attentive attitude, assistance with everyday activities and creation of conditions for a dignified and peaceful life.",
     },
   ],
 },
