@@ -24,7 +24,7 @@ export default function ImageModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/75 p-5 backdrop-blur-md"
+          className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/55 p-5 backdrop-blur-md"
           onClick={onClose}
         >
           <motion.div
@@ -32,7 +32,7 @@ export default function ImageModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 18 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="relative flex max-h-[88vh] w-full max-w-6xl items-center justify-center overflow-hidden rounded-[1.6rem] border border-white/15 bg-black shadow-[0_35px_100px_rgba(0,0,0,0.7)]"
+            className="relative flex max-h-[88vh] w-full max-w-6xl items-center justify-center overflow-hidden rounded-[1.6rem] border border-white/15 bg-slate-900/60 shadow-[0_35px_100px_rgba(0,0,0,0.55)]"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -65,7 +65,7 @@ export default function ImageModal({
 
             <>
               <div
-                className="absolute inset-0 scale-110 blur-3xl opacity-25"
+                className="absolute inset-0 scale-125 blur-2xl opacity-70"
                 style={{
                   backgroundImage: `url(${activeImage.src})`,
                   backgroundPosition: "center",
