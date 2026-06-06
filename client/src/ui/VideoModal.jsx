@@ -27,7 +27,7 @@ export default function VideoModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.94, y: 20 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="relative w-full max-w-5xl overflow-hidden rounded-[1.6rem] border border-white/15 bg-black shadow-[0_35px_100px_rgba(0,0,0,0.65)]"
+            className="relative w-full max-w-5xl overflow-hidden rounded-[1.6rem] border border-white/15 bg-slate-900/60 shadow-[0_35px_100px_rgba(0,0,0,0.55)]"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -41,9 +41,19 @@ export default function VideoModal({
             <video
               src={src}
               poster={poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 h-full w-full scale-125 object-cover opacity-70 blur-2xl"
+            />
+
+            <video
+              src={src}
+              poster={poster}
               controls
               autoPlay
-              className="max-h-[82vh] w-full bg-black object-contain"
+              className="relative z-10 max-h-[82vh] w-full object-contain"
             />
           </motion.div>
         </motion.div>
