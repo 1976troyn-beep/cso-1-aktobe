@@ -407,7 +407,7 @@ export default function Leadership() {
                           .text
                       }
                       imagePosition="object-top"
-                      className="[&>div]:h-[420px] [&_h3]:text-2xl [&_p]:mt-2 [&_p]:text-sm [&_p]:leading-6 [&_.absolute.bottom-0]:p-5"
+                      className="[&>div]:h-[420px] [&_h3]:text-2xl [&_p]:mt-2 [&_p]:text-sm [&_p]:leading-[1.15] [&_.absolute.bottom-0]:p-5"
                     />
                   </motion.div>
 
