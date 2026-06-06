@@ -1,6 +1,6 @@
 import ImageModal from "./ImageModal"
 import VideoModal from "./VideoModal"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import {
   ChevronLeft,
@@ -37,7 +37,16 @@ export default function MediaSlider({
   const hasMedia = preparedMedia.length > 0
   const hasMultiple = preparedMedia.length > 1
   const activeMedia = preparedMedia[activeIndex]
+    useEffect(() => {
+    if (!preparedMedia.length) return
 
+    preparedMedia.forEach((item) => {
+      if (item?.type === "video" || !item?.src) return
+
+      const img = new Image()
+      img.src = item.src
+    })
+  }, [preparedMedia])
   function goToSlide(index) {
     setActiveIndex(index)
   }
