@@ -222,7 +222,7 @@ export default function MediaSlider({
             <Maximize2 size={13} />
           </button>
         )}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071827]/90 via-[#071827]/36 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-[#071827]/92 via-[#071827]/45 to-transparent" />
 
         <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/6 via-transparent to-blue-500/6" />
