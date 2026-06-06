@@ -65,7 +65,7 @@ export default function ImageModal({
 
             <>
               <div
-                className="absolute inset-0 scale-110 blur-3xl opacity-40"
+                className="absolute inset-0 scale-110 blur-3xl opacity-25"
                 style={{
                   backgroundImage: `url(${activeImage.src})`,
                   backgroundPosition: "center",
