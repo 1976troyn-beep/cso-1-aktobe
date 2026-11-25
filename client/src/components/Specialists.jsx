@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import {
-  Stethoscope,
+  ClipboardList,
   HeartPulse,
   UserRoundCheck,
   Activity,
@@ -129,7 +129,7 @@ function MobileSpecialistsDeck({ cards }) {
             className={`h-2 rounded-full transition-all duration-300 ${
               activeIndex === index
                 ? "w-8 bg-[#05a99d]"
-                : "w-2 bg-slate-300 dark:bg-white/25"
+                : "w-2 bg-slate-300 "
             }`}
             aria-label={person.name}
           />
@@ -152,27 +152,21 @@ export default function Specialists() {
   const media =
     specialistsSection?.media || {}
 
-  const heading =
-    language === "RU"
-      ? specialistsSection?.heading ||
-        t.specialists.heading
-      : t.specialists.heading
+  const heading = specialistsSection?.heading || t.specialists.heading
 
-  const text =
-    language === "RU"
-      ? specialistsSection?.text ||
-        t.specialists.text
-      : t.specialists.text
+  const text = specialistsSection?.text || t.specialists.text
 
   const directions = [
     {
       icon: (
-        <Stethoscope size={20} />
+        <ClipboardList size={20} />
       ),
 
-      title:
-        t.specialists
-          .directions[0],
+      title: language === "KZ"
+        ? "Кадрлық сүйемелдеу"
+        : language === "EN"
+          ? "HR Support"
+          : "Кадровое сопровождение",
     },
 
     {
@@ -213,21 +207,9 @@ export default function Specialists() {
       media:
         media.card_1 || [],
 
-      name:
-        language === "RU"
-          ? specialistsSection?.card_1_title ||
-            t.specialists.cards[0]
-              .name
-          : t.specialists.cards[0]
-              .name,
+      name: specialistsSection?.card_1_title || t.specialists.cards[0].name,
 
-      text:
-        language === "RU"
-          ? specialistsSection?.card_1_text ||
-            t.specialists.cards[0]
-              .text
-          : t.specialists.cards[0]
-              .text,
+      text: specialistsSection?.card_1_text || t.specialists.cards[0].text,
     },
 
     {
@@ -236,21 +218,9 @@ export default function Specialists() {
       media:
         media.card_2 || [],
 
-      name:
-        language === "RU"
-          ? specialistsSection?.card_2_title ||
-            t.specialists.cards[1]
-              .name
-          : t.specialists.cards[1]
-              .name,
+      name: specialistsSection?.card_2_title || t.specialists.cards[1].name,
 
-      text:
-        language === "RU"
-          ? specialistsSection?.card_2_text ||
-            t.specialists.cards[1]
-              .text
-          : t.specialists.cards[1]
-              .text,
+      text: specialistsSection?.card_2_text || t.specialists.cards[1].text,
     },
 
     {
@@ -259,21 +229,9 @@ export default function Specialists() {
       media:
         media.card_3 || [],
 
-      name:
-        language === "RU"
-          ? specialistsSection?.card_3_title ||
-            t.specialists.cards[2]
-              .name
-          : t.specialists.cards[2]
-              .name,
+      name: specialistsSection?.card_3_title || t.specialists.cards[2].name,
 
-      text:
-        language === "RU"
-          ? specialistsSection?.card_3_text ||
-            t.specialists.cards[2]
-              .text
-          : t.specialists.cards[2]
-              .text,
+      text: specialistsSection?.card_3_text || t.specialists.cards[2].text,
     },
 
     {
@@ -282,21 +240,9 @@ export default function Specialists() {
       media:
         media.card_4 || [],
 
-      name:
-        language === "RU"
-          ? specialistsSection?.card_4_title ||
-            t.specialists.cards[3]
-              .name
-          : t.specialists.cards[3]
-              .name,
+      name: specialistsSection?.card_4_title || t.specialists.cards[3].name,
 
-      text:
-        language === "RU"
-          ? specialistsSection?.card_4_text ||
-            t.specialists.cards[3]
-              .text
-          : t.specialists.cards[3]
-              .text,
+      text: specialistsSection?.card_4_text || t.specialists.cards[3].text,
     },
   ]
 
@@ -404,7 +350,7 @@ export default function Specialists() {
           </>
         )}
 
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-5 hidden gap-3 md:grid md:grid-cols-2 lg:grid-cols-4">
           {directions.map(
             (item, index) => (
               <motion.div
@@ -432,7 +378,7 @@ export default function Specialists() {
                   y: -4,
                   scale: 1.006,
                 }}
-                className="glass-card group flex items-center gap-4 rounded-[1.5rem] p-5 transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]"
+                className="brand-gradient group flex min-h-[68px] items-center gap-3 rounded-[1.25rem] px-4 py-3 text-white shadow-[0_12px_30px_rgba(5,169,157,0.12)] transition-shadow duration-300 hover:shadow-[0_16px_36px_rgba(15,23,42,0.16)]"
               >
                 <motion.div
                   whileHover={{
@@ -441,12 +387,12 @@ export default function Specialists() {
                   transition={{
                     duration: 0.25,
                   }}
-                  className="brand-icon grid h-11 w-11 shrink-0 place-items-center rounded-xl text-white"
+                  className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white/15 text-white"
                 >
                   {item.icon}
                 </motion.div>
 
-                <h3 className="font-black text-[#12315c]">
+                <h3 className="text-sm font-black leading-5 text-white">
                   {item.title}
                 </h3>
               </motion.div>

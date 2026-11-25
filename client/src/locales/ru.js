@@ -17,9 +17,6 @@ const ru = {
     },
 
     languageSettings: "Настройки языка",
-    themeSettings: "Тема сайта",
-    darkTheme: "Тёмная тема",
-    lightTheme: "Светлая тема",
 
     copyright:
       "© 2026 Государственное учреждение «Центр социального обслуживания №1».",

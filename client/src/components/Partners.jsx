@@ -219,7 +219,7 @@ export default function Partners() {
                   y: -3,
                   scale: 1.006,
                 }}
-                className="glass-card group rounded-[1.2rem] p-3 transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]"
+                className="brand-gradient group flex min-h-[68px] items-center rounded-[1.2rem] px-3 py-2.5 text-white shadow-[0_12px_28px_rgba(5,169,157,0.12)] transition-shadow duration-300 hover:shadow-[0_18px_40px_rgba(15,23,42,0.14)]"
               >
                 <div className="flex items-center gap-3">
                   <motion.div
@@ -229,17 +229,16 @@ export default function Partners() {
                     transition={{
                       duration: 0.25,
                     }}
-                    className="brand-icon grid h-9 w-9 shrink-0 place-items-center rounded-xl text-white"
+                    className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/15 text-white"
                   >
                     {item.icon}
                   </motion.div>
 
-                  <h3 className="text-sm font-black leading-5 text-[#12315c]">
+                  <h3 className="text-sm font-black leading-5 text-white">
                     {item.title}
                   </h3>
                 </div>
 
-                <div className="mt-3 h-[1.5px] w-7 rounded-full brand-gradient transition-all duration-500 group-hover:w-14" />
               </motion.article>
             )
           )}

@@ -128,7 +128,7 @@ function MobileLeadershipDeck({ cards }) {
             className={`h-2 rounded-full transition-all duration-300 ${
               activeIndex === index
                 ? "w-8 bg-[#05a99d]"
-                : "w-2 bg-slate-300 dark:bg-white/25"
+                : "w-2 bg-slate-300 "
             }`}
             aria-label={person.name}
           />
@@ -146,7 +146,7 @@ export default function Leadership() {
     loading,
   } = useSections()
 
-  const { t, language } =
+  const { t } =
     useLanguage()
 
   const leadershipSection =
@@ -155,17 +155,9 @@ export default function Leadership() {
   const media =
     leadershipSection?.media || {}
 
-  const heading =
-    language === "RU"
-      ? leadershipSection?.heading ||
-        t.leadership.heading
-      : t.leadership.heading
+  const heading = leadershipSection?.heading || t.leadership.heading
 
-  const text =
-    language === "RU"
-      ? leadershipSection?.text ||
-        t.leadership.text
-      : t.leadership.text
+  const text = leadershipSection?.text || t.leadership.text
 
   const stats = [
     {
@@ -216,21 +208,9 @@ export default function Leadership() {
       media:
         media.card_1 || [],
 
-      name:
-        language === "RU"
-          ? leadershipSection?.card_1_title ||
-            t.leadership.cards[0]
-              .name
-          : t.leadership.cards[0]
-              .name,
+      name: leadershipSection?.card_1_title || t.leadership.cards[0].name,
 
-      text:
-        language === "RU"
-          ? leadershipSection?.card_1_text ||
-            t.leadership.cards[0]
-              .text
-          : t.leadership.cards[0]
-              .text,
+      text: leadershipSection?.card_1_text || t.leadership.cards[0].text,
     },
 
     deputy: {
@@ -239,21 +219,9 @@ export default function Leadership() {
       media:
         media.card_2 || [],
 
-      name:
-        language === "RU"
-          ? leadershipSection?.card_2_title ||
-            t.leadership.cards[1]
-              .name
-          : t.leadership.cards[1]
-              .name,
+      name: leadershipSection?.card_2_title || t.leadership.cards[1].name,
 
-      text:
-        language === "RU"
-          ? leadershipSection?.card_2_text ||
-            t.leadership.cards[1]
-              .text
-          : t.leadership.cards[1]
-              .text,
+      text: leadershipSection?.card_2_text || t.leadership.cards[1].text,
     },
 
     medical: {
@@ -262,21 +230,9 @@ export default function Leadership() {
       media:
         media.card_3 || [],
 
-      name:
-        language === "RU"
-          ? leadershipSection?.card_3_title ||
-            t.leadership.cards[2]
-              .name
-          : t.leadership.cards[2]
-              .name,
+      name: leadershipSection?.card_3_title || t.leadership.cards[2].name,
 
-      text:
-        language === "RU"
-          ? leadershipSection?.card_3_text ||
-            t.leadership.cards[2]
-              .text
-          : t.leadership.cards[2]
-              .text,
+      text: leadershipSection?.card_3_text || t.leadership.cards[2].text,
     },
 
     social: {
@@ -285,21 +241,9 @@ export default function Leadership() {
       media:
         media.card_4 || [],
 
-      name:
-        language === "RU"
-          ? leadershipSection?.card_4_title ||
-            t.leadership.cards[3]
-              .name
-          : t.leadership.cards[3]
-              .name,
+      name: leadershipSection?.card_4_title || t.leadership.cards[3].name,
 
-      text:
-        language === "RU"
-          ? leadershipSection?.card_4_text ||
-            t.leadership.cards[3]
-              .text
-          : t.leadership.cards[3]
-              .text,
+      text: leadershipSection?.card_4_text || t.leadership.cards[3].text,
     },
   }
 

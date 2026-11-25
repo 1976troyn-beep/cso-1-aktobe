@@ -17,9 +17,6 @@ const en = {
     },
 
     languageSettings: "Language settings",
-    themeSettings: "Site theme",
-    darkTheme: "Dark theme",
-    lightTheme: "Light theme",
 
     copyright:
       "© 2026 State Institution “Social Service Center No. 1”.",

@@ -69,9 +69,9 @@ export default function FloatingHotline() {
           transition-all
           duration-200
           ease-out
-          dark:border-cyan-400/10
-          dark:bg-[#071827]/88
-          dark:shadow-[0_30px_70px_rgba(0,0,0,0.34)]
+          
+          
+          
           ${
             isOpen
               ? "pointer-events-auto translate-y-0 opacity-100"
@@ -88,7 +88,7 @@ export default function FloatingHotline() {
           willChange: "opacity, transform",
         }}
       >
-        <div className="pointer-events-none absolute inset-0 hidden dark:block">
+        <div className="pointer-events-none absolute inset-0 hidden ">
           <div className="absolute -left-12 -top-12 h-40 w-40 rounded-full bg-cyan-400/10 blur-3xl" />
           <div className="absolute bottom-0 right-0 h-44 w-44 rounded-full bg-blue-500/10 blur-3xl" />
         </div>
@@ -111,11 +111,11 @@ export default function FloatingHotline() {
             </div>
 
             <div>
-              <h3 className="text-lg font-black text-[#12315c] dark:text-white">
+              <h3 className="text-lg font-black text-[#12315c] ">
                 Горячая линия
               </h3>
 
-              <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-white/70">
+              <p className="mt-1 text-sm leading-6 text-slate-600 ">
                 Выберите удобный способ связи.
               </p>
             </div>
@@ -123,7 +123,7 @@ export default function FloatingHotline() {
 
           <div className="grid gap-3">
             {!hasContacts && (
-              <div className="rounded-2xl bg-cyan-50 px-4 py-3 text-sm font-bold text-[#0b5cab] dark:bg-white/5 dark:text-white">
+              <div className="rounded-2xl bg-cyan-50 px-4 py-3 text-sm font-bold text-[#0b5cab]  ">
                 Контакты загружаются...
               </div>
             )}
@@ -176,11 +176,11 @@ export default function FloatingHotline() {
                   transition
                   hover:border-[#05a99d]/30
                   hover:bg-[#05a99d]/5
-                  dark:border-white/10
-                  dark:bg-white/5
-                  dark:text-white
-                  dark:hover:border-cyan-400/20
-                  dark:hover:bg-cyan-500/10
+                  
+                  
+                  
+                  
+                  
                 "
               >
                 <PhoneCall size={18} />

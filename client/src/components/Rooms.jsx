@@ -179,7 +179,7 @@ export default function Rooms() {
       id="rooms"
       className="relative overflow-hidden py-32"
     >
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-[10px] sm:px-6">
         <motion.div
           initial={{
             opacity: 0,
@@ -346,7 +346,7 @@ export default function Rooms() {
           </div>
         )}
 
-        <div className="mt-7 grid gap-5 md:grid-cols-3">
+        <div className="mt-5 grid gap-3 md:grid-cols-3">
           {roomBenefits.map(
             (card, index) => (
               <motion.div
@@ -374,9 +374,9 @@ export default function Rooms() {
                   y: -4,
                   scale: 1.006,
                 }}
-                className="glass-card group rounded-[1.6rem] p-5 transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]"
+                className="brand-gradient group rounded-[1.4rem] p-4 text-white shadow-[0_12px_32px_rgba(5,169,157,0.12)] transition-shadow duration-300 hover:shadow-[0_18px_40px_rgba(5,169,157,0.20)]"
               >
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-3">
                   <motion.div
                     whileHover={{
                       scale: 1.04,
@@ -384,21 +384,20 @@ export default function Rooms() {
                     transition={{
                       duration: 0.25,
                     }}
-                    className="brand-icon grid h-12 w-12 shrink-0 place-items-center rounded-xl text-white"
+                    className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/15 text-white"
                   >
                     {card.icon}
                   </motion.div>
 
                   <div>
-                    <h3 className="text-xl font-black text-[#12315c]">
+                    <h3 className="text-base font-black leading-5 text-white">
                       {card.title}
                     </h3>
 
-                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                    <p className="mt-1.5 text-sm leading-5 text-white/85">
                       {card.text}
                     </p>
 
-                    <div className="mt-4 h-[2px] w-12 rounded-full brand-gradient transition-all duration-500 group-hover:w-20" />
                   </div>
                 </div>
               </motion.div>
@@ -427,7 +426,7 @@ export default function Rooms() {
             y: -3,
             scale: 1.005,
           }}
-          className="brand-gradient mt-7 flex items-center gap-4 rounded-[1.7rem] p-6 text-white shadow-[0_20px_60px_rgba(5,169,157,0.16)]"
+          className="brand-gradient mt-4 flex items-center gap-3 rounded-[1.4rem] p-4 text-white shadow-[0_16px_45px_rgba(5,169,157,0.14)]"
         >
           <motion.div
             whileHover={{
@@ -437,19 +436,14 @@ export default function Rooms() {
             transition={{
               duration: 0.25,
             }}
-            className="grid h-14 w-14 place-items-center rounded-2xl bg-white/15 backdrop-blur"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/15 backdrop-blur"
           >
-            <BedDouble size={30} />
+            <BedDouble size={24} />
           </motion.div>
 
-          <div>
-            <h3 className="text-2xl font-black">
-              24/7
-            </h3>
-
-            <p className="mt-1 text-sm text-white/80">
-              {t.rooms.bottomText}
-            </p>
+          <div className="min-w-0 text-sm leading-6 text-white md:whitespace-nowrap md:text-base">
+            <span className="font-black">24/7 — </span>
+            <span className="font-medium">{t.rooms.bottomText}</span>
           </div>
         </motion.div>
       </div>

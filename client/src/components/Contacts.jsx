@@ -154,13 +154,13 @@ ${form.message}
   return (
     <section
       id="contacts"
-      className="relative overflow-hidden bg-white/55 py-24 dark:bg-transparent md:py-28"
+      className="relative overflow-hidden bg-white/55 py-14 md:py-16"
     >
       {/* BACKGROUND */}
 
-      <div className="pointer-events-none absolute -left-24 top-12 h-56 w-56 rounded-full bg-cyan-400/10 blur-3xl dark:bg-cyan-400/6 md:top-20 md:h-72 md:w-72" />
+      <div className="pointer-events-none absolute -left-24 top-12 h-56 w-56 rounded-full bg-cyan-400/10 blur-3xl  md:top-20 md:h-72 md:w-72" />
 
-      <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl dark:bg-blue-500/8 md:h-96 md:w-96" />
+      <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl  md:h-96 md:w-96" />
 
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionTitle
@@ -169,10 +169,10 @@ ${form.message}
           text={t.contacts.text}
         />
 
-        <div className="mt-10 grid gap-5 lg:mt-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-7">
+        <div className="mt-8 grid items-start gap-4 lg:mt-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-5">
           {/* LEFT */}
 
-          <div className="grid gap-4 md:gap-5">
+          <div className="grid gap-3">
             {/* ADDRESS CARD */}
 
             <motion.div
@@ -196,7 +196,7 @@ ${form.message}
                 y: -4,
                 scale: 1.006,
               }}
-              className="glass-card group relative overflow-hidden rounded-[1.7rem] p-5 transition-shadow duration-300 hover:shadow-[0_24px_65px_rgba(15,23,42,0.11)] md:rounded-[2rem] md:p-6"
+              className="glass-card group relative overflow-hidden rounded-[1.5rem] p-4 transition-shadow duration-300 hover:shadow-[0_24px_65px_rgba(15,23,42,0.11)] md:p-5"
             >
               <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100">
                 <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-cyan-400/12 blur-3xl" />
@@ -205,10 +205,10 @@ ${form.message}
               </div>
 
               <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[1.7rem] md:rounded-[2rem]">
-                <div className="absolute -left-20 top-0 h-full w-24 rotate-12 bg-white/12 opacity-0 blur-2xl transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100 dark:bg-cyan-300/10" />
+                <div className="absolute -left-20 top-0 h-full w-24 rotate-12 bg-white/12 opacity-0 blur-2xl transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100 " />
               </div>
 
-              <div className="relative z-10 flex items-start gap-3 md:gap-4">
+              <div className="relative z-10 flex items-start gap-3">
                 <motion.div
                   whileHover={{
                     scale: 1.05,
@@ -217,17 +217,17 @@ ${form.message}
                   transition={{
                     duration: 0.25,
                   }}
-                  className="brand-icon grid h-12 w-12 shrink-0 place-items-center rounded-2xl text-white md:h-14 md:w-14"
+                  className="brand-icon grid h-10 w-10 shrink-0 place-items-center rounded-xl text-white"
                 >
-                  <MapPin size={24} />
+                  <MapPin size={20} />
                 </motion.div>
 
                 <div>
-                  <h3 className="text-lg font-black text-[#12315c] dark:text-white md:text-xl">
+                  <h3 className="text-base font-black text-[#12315c] md:text-lg">
                     {t.contacts.addressTitle}
                   </h3>
 
-                  <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-white/70 md:text-base md:leading-7">
+                  <p className="mt-1 text-sm leading-6 text-slate-600">
                     {address}
                   </p>
 
@@ -242,7 +242,7 @@ ${form.message}
                     href={twoGisUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-xs font-black text-[#12315c] transition hover:border-[#05a99d]/40 hover:bg-[#05a99d]/5 dark:border-white/10 dark:bg-white/5 dark:text-cyan-200 dark:hover:border-cyan-400/30 dark:hover:bg-cyan-500/10 md:mt-5 md:px-5 md:py-3 md:text-sm"
+                    className="mt-3 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-black text-[#12315c] transition hover:border-[#05a99d]/40 hover:bg-[#05a99d]/5"
                   >
                     <ExternalLink size={15} />
                     {t.contacts.openMap}
@@ -253,7 +253,7 @@ ${form.message}
 
             {/* CONTACT INFO */}
 
-            <div className="grid gap-3 md:gap-4">
+            <div className="grid gap-3">
               {contactInfo.map((item, index) => (
                 <motion.div
                   key={item.title}
@@ -278,13 +278,13 @@ ${form.message}
                     y: -4,
                     scale: 1.006,
                   }}
-                  className="glass-card group relative overflow-hidden rounded-[1.3rem] p-4 transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)] md:rounded-[1.5rem] md:p-5"
+                  className="glass-card group relative overflow-hidden rounded-[1.3rem] px-4 py-3 transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]"
                 >
                   <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100">
                     <div className="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-cyan-400/10 blur-3xl" />
                   </div>
 
-                  <div className="relative z-10 flex items-center gap-3 md:gap-4">
+                  <div className="relative z-10 flex items-center gap-3">
                     <motion.div
                       whileHover={{
                         scale: 1.05,
@@ -293,17 +293,17 @@ ${form.message}
                       transition={{
                         duration: 0.25,
                       }}
-                      className="brand-icon grid h-10 w-10 shrink-0 place-items-center rounded-full text-white md:h-11 md:w-11"
+                      className="brand-icon grid h-9 w-9 shrink-0 place-items-center rounded-full text-white"
                     >
                       {item.icon}
                     </motion.div>
 
                     <div>
-                      <h3 className="text-sm font-black text-[#12315c] dark:text-white">
+                      <h3 className="text-sm font-black text-[#12315c] ">
                         {item.title}
                       </h3>
 
-                      <p className="mt-1 text-xs text-slate-600 dark:text-white/70 md:text-sm">
+                      <p className="mt-1 text-xs text-slate-600  md:text-sm">
                         {item.text}
                       </p>
                     </div>
@@ -336,7 +336,7 @@ ${form.message}
             whileHover={{
               y: -3,
             }}
-            className="glass-card group relative overflow-hidden rounded-[1.7rem] border border-slate-200 bg-white/90 p-5 shadow-[0_25px_80px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-shadow duration-300 hover:shadow-[0_35px_90px_rgba(0,0,0,0.10)] dark:border-cyan-400/10 dark:bg-[#071827]/70 dark:shadow-[0_25px_80px_rgba(0,0,0,0.28)] md:rounded-[2rem] md:p-7"
+            className="glass-card group relative overflow-hidden self-start rounded-[1.5rem] border border-slate-200 bg-white/90 p-5 shadow-[0_25px_80px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-shadow duration-300 hover:shadow-[0_35px_90px_rgba(0,0,0,0.10)] md:p-6"
           >
             <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100">
               <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
@@ -345,7 +345,7 @@ ${form.message}
             </div>
 
             <div className="relative z-10">
-              <div className="grid gap-4 md:grid-cols-2 md:gap-5">
+              <div className="grid gap-3 md:grid-cols-2 md:gap-4">
                 <label className="block">
                   <span className="mb-2 flex items-center gap-2 text-sm font-black text-[#1bbce3]">
                     <User size={16} />
@@ -358,7 +358,7 @@ ${form.message}
                     onChange={handleChange}
                     placeholder={t.contacts.namePlaceholder}
                     required
-                    className="w-full rounded-2xl border border-slate-200 bg-[#eef5fb] px-4 py-3 text-sm text-[#12315c] placeholder:text-slate-500 outline-none transition duration-300 focus:border-[#3ce6d8] focus:bg-white focus:shadow-[0_0_18px_rgba(60,230,216,0.18)] dark:border-cyan-400/10 dark:bg-[#16324d]/75 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-[#1a3d5d]/90 md:text-base"
+                    className="w-full rounded-2xl border border-slate-200 bg-[#eef5fb] px-4 py-2.5 text-sm text-[#12315c] placeholder:text-slate-500 outline-none transition duration-300 focus:border-[#3ce6d8] focus:bg-white focus:shadow-[0_0_18px_rgba(60,230,216,0.18)]      md:text-base"
                   />
                 </label>
 
@@ -374,12 +374,12 @@ ${form.message}
                     onChange={handleChange}
                     placeholder="+7 (707) 000-00-00"
                     required
-                    className="w-full rounded-2xl border border-slate-200 bg-[#eef5fb] px-4 py-3 text-sm text-[#12315c] placeholder:text-slate-500 outline-none transition duration-300 focus:border-[#3ce6d8] focus:bg-white focus:shadow-[0_0_18px_rgba(60,230,216,0.18)] dark:border-cyan-400/10 dark:bg-[#16324d]/75 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-[#1a3d5d]/90 md:text-base"
+                    className="w-full rounded-2xl border border-slate-200 bg-[#eef5fb] px-4 py-2.5 text-sm text-[#12315c] placeholder:text-slate-500 outline-none transition duration-300 focus:border-[#3ce6d8] focus:bg-white focus:shadow-[0_0_18px_rgba(60,230,216,0.18)]      md:text-base"
                   />
                 </label>
               </div>
 
-              <label className="mt-4 block md:mt-5">
+              <label className="mt-3 block md:mt-4">
                 <span className="mb-2 flex items-center gap-2 text-sm font-black text-[#1bbce3]">
                   <MessageSquareText size={16} />
                   {t.contacts.formMessage}
@@ -390,14 +390,14 @@ ${form.message}
                   value={form.message}
                   onChange={handleChange}
                   placeholder={t.contacts.messagePlaceholder}
-                  rows="5"
+                  rows="3"
                   required
-                  className="w-full resize-none rounded-2xl border border-slate-200 bg-[#eef5fb] px-4 py-3 text-sm text-[#12315c] placeholder:text-slate-500 outline-none transition duration-300 focus:border-[#3ce6d8] focus:bg-white focus:shadow-[0_0_18px_rgba(60,230,216,0.18)] dark:border-cyan-400/10 dark:bg-[#16324d]/75 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-[#1a3d5d]/90 md:text-base"
+                  className="w-full resize-none rounded-2xl border border-slate-200 bg-[#eef5fb] px-4 py-2.5 text-sm text-[#12315c] placeholder:text-slate-500 outline-none transition duration-300 focus:border-[#3ce6d8] focus:bg-white focus:shadow-[0_0_18px_rgba(60,230,216,0.18)]      md:text-base"
                 />
               </label>
 
               {sent && (
-                <div className="mt-4 rounded-2xl bg-cyan-50 px-4 py-3 text-sm font-bold text-[#0b5cab] dark:bg-cyan-400/10 dark:text-cyan-200">
+                <div className="mt-4 rounded-2xl bg-cyan-50 px-4 py-3 text-sm font-bold text-[#0b5cab]  ">
                   Заявка успешно отправлена. Сейчас откроется WhatsApp.
                 </div>
               )}
@@ -411,7 +411,7 @@ ${form.message}
                 }}
                 type="submit"
                 disabled={isSending}
-                className="brand-gradient brand-shadow mt-5 inline-flex items-center gap-3 rounded-full px-6 py-3.5 text-sm font-black text-white transition duration-300 hover:shadow-[0_0_30px_rgba(60,230,216,0.35)] disabled:cursor-not-allowed disabled:opacity-60 md:mt-6 md:px-8 md:py-4"
+                className="brand-gradient brand-shadow mt-4 inline-flex items-center gap-3 rounded-full px-6 py-3 text-sm font-black text-white transition duration-300 hover:shadow-[0_0_30px_rgba(60,230,216,0.35)] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <Send size={18} />
 

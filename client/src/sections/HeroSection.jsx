@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 import { motion } from "framer-motion"
+import { Link } from "react-router-dom"
 import {
   CalendarDays,
   Check,
@@ -7,9 +8,10 @@ import {
   ShieldCheck,
   HeartHandshake,
   Accessibility,
+  FileText,
+  ArrowRight,
 } from "lucide-react"
 
-import StatCard from "../ui/StatCard"
 import useSections from "../hooks/useSections"
 import { useLanguage } from "../context/LanguageContext"
 
@@ -18,8 +20,6 @@ const EMPTY_MEDIA = []
 export default function HeroSection() {
   const { getSection } = useSections()
   const { t, language } = useLanguage()
-
-  const [heroLoaded, setHeroLoaded] = useState(false)
 
   const hero = getSection("hero")
 
@@ -56,33 +56,10 @@ export default function HeroSection() {
 
   const cardImage = heroMedia[1]?.src || "/care-card.jpg"
 
-  useEffect(() => {
-    if (backgroundMedia?.type !== "image") {
-      return
-    }
-
-    let mounted = true
-
-    const image = new Image()
-    image.src = backgroundMedia.src
-
-    image.onload = () => {
-      requestAnimationFrame(() => {
-        if (mounted) {
-          setHeroLoaded(true)
-        }
-      })
-    }
-
-    return () => {
-      mounted = false
-    }
-  }, [backgroundMedia])
-
   return (
     <section
       id="top"
-      className="relative min-h-screen overflow-hidden pt-24 md:pt-32"
+      className="relative min-h-screen overflow-hidden pt-24 md:pt-32 lg:[@media(max-height:900px)]:pt-32"
     >
       {backgroundMedia?.type === "video" ? (
         <motion.video
@@ -114,79 +91,21 @@ export default function HeroSection() {
         </motion.video>
       ) : (
         <>
-          <div className="absolute inset-0 bg-[#dfeeed] dark:bg-[#071827]" />
+          <div className="absolute inset-0 bg-[#dfeeed]" />
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              scale: 1.04,
-              filter: "blur(18px)",
-            }}
-            animate={{
-              opacity: heroLoaded ? 1 : 0,
-              scale: heroLoaded ? 1 : 1.04,
-              filter: heroLoaded ? "blur(0px)" : "blur(18px)",
-            }}
-            transition={{
-              duration: 1,
-              ease: "easeOut",
-            }}
-            className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: `url(${backgroundMedia.src})`,
-            }}
-          />
+          <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${backgroundMedia.src})` }} />
+          </div>
         </>
       )}
 
-      <div className="absolute inset-0 bg-white/28 transition-all duration-500 dark:bg-[#03111d]/38" />
-      <motion.div
-        animate={{
-          x: [0, 40, 0],
-          y: [0, -25, 0],
-          scale: [1, 1.08, 1],
-        }}
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute -left-24 top-[12%] h-[420px] w-[420px] rounded-full bg-cyan-300/16 blur-3xl dark:bg-cyan-400/10"
-      />
+      {/* Soft Premium: a calm, light backdrop for readable text.
+          The background photo/video remains fully managed by the admin panel. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-white/20" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#f3f8f6]/[0.57] via-[#f3f8f6]/[0.30] to-[#f3f8f6]/[0.12] lg:from-[#f3f8f6]/[0.65] lg:via-[#f3f8f6]/[0.29] lg:to-[#f3f8f6]/[0.10]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.06] via-transparent to-[#112d39]/[0.08]" />
 
-      <motion.div
-        animate={{
-          x: [0, -35, 0],
-          y: [0, 30, 0],
-          scale: [1, 1.12, 1],
-        }}
-        transition={{
-          duration: 22,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute right-[-120px] top-[22%] h-[460px] w-[460px] rounded-full bg-blue-300/14 blur-3xl dark:bg-blue-500/10"
-      />
-
-      <motion.div
-        animate={{
-          y: [0, -18, 0],
-          opacity: [0.22, 0.34, 0.22],
-        }}
-        transition={{
-          duration: 14,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute bottom-[-140px] left-1/2 h-[320px] w-[620px] -translate-x-1/2 rounded-full bg-cyan-200/14 blur-3xl dark:bg-cyan-400/6"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-white/8 via-white/6 to-cyan-100/12 transition-all duration-500 dark:from-[#071827]/5 dark:via-[#071827]/24 dark:to-[#071827]/78" />
-
-      <div className="pointer-events-none absolute left-0 top-0 hidden h-full w-[56%] bg-gradient-to-r from-[#eef7f7]/72 via-[#eef7f7]/34 to-transparent transition-all duration-500 dark:w-[54%] dark:from-[#03111d]/50 dark:via-[#03111d]/34 dark:to-transparent lg:block" />
-
-      <div className="pointer-events-none absolute left-[18%] top-[20%] hidden h-[420px] w-[520px] rounded-full bg-[#dff7f4]/22 blur-3xl transition-all duration-500 dark:bg-transparent lg:block" />
-
-      <div className="relative mx-auto grid min-h-[calc(100svh-6rem)] max-w-7xl items-center gap-8 px-6 pb-20 pt-2 md:min-h-screen md:gap-10 md:pb-12 md:pt-4 lg:-translate-y-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-0">
+      <div className="relative mx-auto grid min-h-[calc(100svh-6rem)] max-w-7xl items-center gap-8 px-6 pb-20 pt-2 md:min-h-screen md:gap-10 md:pb-12 md:pt-4 lg:-translate-y-8 lg:grid-cols-[1.05fr_0.95fr] lg:content-center lg:items-end lg:gap-x-12 lg:gap-y-7 lg:py-0 lg:[@media(max-height:900px)]:min-h-[calc(100svh-8rem)] lg:[@media(max-height:900px)]:translate-y-0 lg:[@media(max-height:900px)]:gap-x-6 lg:[@media(max-height:900px)]:pb-6">
         <motion.div
           initial={{
             opacity: 0,
@@ -220,11 +139,11 @@ export default function HeroSection() {
           >
             <div className="absolute left-0 top-1 h-[74px] w-[3px] rounded-full brand-gradient" />
 
-            <p className="text-[17px] font-black uppercase leading-tight tracking-[0.18em] text-[#0b5cab] drop-shadow-sm dark:text-cyan-300 md:text-[20px]">
+            <p className="text-[17px] font-black uppercase leading-tight tracking-[0.18em] text-[#0b5cab] drop-shadow-sm  md:text-[20px]">
               {t.hero.topLine1}
             </p>
 
-            <p className="mt-1 text-[17px] font-black uppercase leading-tight tracking-[0.16em] text-[#12315c] drop-shadow-sm dark:text-white md:text-[20px]">
+            <p className="mt-1 text-[17px] font-black uppercase leading-tight tracking-[0.16em] text-[#12315c] drop-shadow-sm  md:text-[20px]">
               {t.hero.topLine2}
             </p>
 
@@ -232,7 +151,7 @@ export default function HeroSection() {
               {t.hero.centerName}
             </p>
 
-            <p className="mt-2 max-w-2xl text-sm font-bold leading-6 text-[#12315c] dark:text-white/72">
+            <p className="mt-2 max-w-2xl text-sm font-bold leading-6 text-[#12315c] ">
               {t.hero.department}
             </p>
           </motion.div>
@@ -251,9 +170,9 @@ export default function HeroSection() {
               duration: 0.7,
               ease: "easeOut",
             }}
-            className="mt-6 max-w-4xl text-[2.8rem] font-black leading-[0.93] tracking-[-0.04em] sm:text-5xl md:text-7xl"
+            className="mt-6 max-w-4xl text-[2.8rem] font-black leading-[0.93] tracking-[-0.04em] sm:text-5xl md:text-7xl lg:[@media(max-height:900px)]:text-[clamp(2rem,4.1vw,3.5rem)] lg:[@media(max-height:900px)]:mt-3"
           >
-            <span className="brand-text-gradient block drop-shadow-[0_4px_12px_rgba(255,255,255,0.18)] dark:drop-shadow-[0_0_24px_rgba(5,169,157,0.16)]">
+            <span className="brand-text-gradient block drop-shadow-[0_4px_12px_rgba(255,255,255,0.18)]  ">
               {heading}
             </span>
           </motion.h1>
@@ -272,7 +191,7 @@ export default function HeroSection() {
               duration: 0.6,
               ease: "easeOut",
             }}
-            className="mt-5 max-w-2xl text-base font-bold leading-7 text-[#12315c] dark:text-white/78 md:text-lg md:leading-8"
+            className="mt-5 max-w-2xl text-base font-bold leading-7 text-[#12315c]  md:text-lg md:leading-8 lg:[@media(max-height:900px)]:mt-3 lg:[@media(max-height:900px)]:text-base lg:[@media(max-height:900px)]:leading-6"
           >
             {text}
           </motion.p>
@@ -291,7 +210,7 @@ export default function HeroSection() {
               duration: 0.55,
               ease: "easeOut",
             }}
-            className="mt-7 h-[2px] w-52 origin-left rounded-full brand-gradient"
+            className="mt-7 lg:[@media(max-height:900px)]:mt-3 h-[2px] w-52 origin-left rounded-full brand-gradient"
           />
 
           <motion.div
@@ -308,7 +227,7 @@ export default function HeroSection() {
               duration: 0.55,
               ease: "easeOut",
             }}
-            className="mt-7 grid max-w-2xl gap-3.5 sm:grid-cols-2 md:mt-10 md:gap-4"
+            className="mt-7 grid max-w-2xl gap-3.5 sm:grid-cols-2 md:mt-10 md:gap-4 lg:[@media(max-height:900px)]:mt-4"
           >
             <motion.a
               whileHover={{
@@ -319,7 +238,7 @@ export default function HeroSection() {
                 scale: 0.98,
               }}
               href="#contacts"
-              className="brand-gradient brand-shadow inline-flex items-center justify-center gap-3 rounded-full px-7 py-3.5 text-sm font-black text-white md:px-8 md:py-4"
+              className="brand-gradient brand-shadow inline-flex items-center justify-center gap-3 rounded-full px-7 py-3.5 text-sm font-black text-white md:px-8 md:py-4 lg:[@media(max-height:900px)]:px-4 lg:[@media(max-height:900px)]:py-3"
             >
               <CalendarDays size={18} />
               {t.hero.consultation}
@@ -334,46 +253,65 @@ export default function HeroSection() {
                 scale: 0.98,
               }}
               href="#services"
-              className="glass-card inline-flex items-center justify-center gap-3 rounded-full px-7 py-3.5 text-sm font-black text-[#12315c] dark:text-white md:px-8 md:py-4"
+              className="glass-card inline-flex items-center justify-center gap-3 rounded-full px-7 py-3.5 text-sm font-black text-[#12315c]  md:px-8 md:py-4 lg:[@media(max-height:900px)]:px-4 lg:[@media(max-height:900px)]:py-3"
             >
               <Check size={18} />
               {t.hero.services}
             </motion.a>
           </motion.div>
 
+          {/* Four matching cards directly beneath the hero buttons.
+              Desktop: one horizontal row. Tablet: two columns. Mobile: stacked. */}
           <motion.div
-            initial={{
-              opacity: 0,
-              y: 14,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              delay: 0.5,
-              duration: 0.55,
-              ease: "easeOut",
-            }}
-            className="mt-6 grid max-w-[640px] gap-3 sm:grid-cols-3 md:mt-9"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.55, ease: "easeOut" }}
+            className="mt-6 lg:[@media(max-height:900px)]:mt-3 grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-2"
           >
-            <StatCard
-              value="24/7"
-              text={t.hero.statCare}
-              icon={<HeartPulse size={20} />}
-            />
+            {[
+              { value: "24/7", text: t.hero.statCare, icon: <HeartPulse size={19} /> },
+              { value: "100%", text: t.hero.statSafety, icon: <ShieldCheck size={19} /> },
+              { value: "15+", text: t.hero.statSpecialists, icon: <HeartHandshake size={19} /> },
+            ].map((item) => (
+              <motion.div
+                key={item.value}
+                whileHover={{ y: -4, scale: 1.025, rotate: -0.35 }}
+                whileTap={{ scale: 0.985 }}
+                transition={{ type: "spring", stiffness: 420, damping: 22 }}
+                className="glass-card flex min-h-[76px] min-w-0 items-center gap-2 rounded-[1.2rem] px-3 py-3   "
+              >
+                <span className="brand-icon grid h-9 w-9 shrink-0 place-items-center rounded-full text-white">
+                  {item.icon}
+                </span>
+                <div className="min-w-0">
+                  <div className="text-lg font-black leading-tight text-[#12315c] ">
+                    {item.value}
+                  </div>
+                  <div className="mt-0.5 text-[11px] font-semibold leading-[1.25] text-[#12315c] ">
+                    {item.text}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
 
-            <StatCard
-              value="100%"
-              text={t.hero.statSafety}
-              icon={<ShieldCheck size={20} />}
-            />
-
-            <StatCard
-              value="15+"
-              text={t.hero.statSpecialists}
-              icon={<HeartHandshake size={20} />}
-            />
+            <Link
+              to="/official"
+              aria-label={language === "KZ" ? "Ресми ақпарат" : language === "EN" ? "Official information" : "Официальная информация"}
+              className="brand-gradient relative flex min-h-[76px] min-w-0 items-center gap-2 rounded-[1.2rem] px-3 py-3 text-white lg:hidden shadow-[0_10px_26px_rgba(11,92,171,0.20)] transition-transform duration-200 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+            >
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/40 bg-white/15">
+                <FileText size={19} />
+              </span>
+              <div className="min-w-0 flex-1 pr-1">
+                <div className="text-[13px] font-black leading-tight">
+                  {language === "KZ" ? "Бөлімдер" : language === "EN" ? "Sections" : "Разделы"}
+                </div>
+                <div className="mt-0.5 text-[11px] font-semibold leading-[1.25] text-white/90">
+                  {language === "KZ" ? "Ақпарат және құжаттар" : language === "EN" ? "Information and documents" : "Информация и документы"}
+                </div>
+              </div>
+              <ArrowRight size={15} className="absolute right-2 top-2 opacity-90" aria-hidden="true" />
+            </Link>
           </motion.div>
         </motion.div>
 
@@ -406,7 +344,7 @@ export default function HeroSection() {
               y: -5,
               scale: 1.01,
             }}
-            className="relative ml-auto max-w-[500px] overflow-hidden rounded-[2.2rem] border border-white/20 bg-transparent shadow-[0_35px_80px_rgba(15,23,42,0.22)] dark:border-white/10 dark:bg-[#081826] dark:shadow-[0_35px_80px_rgba(15,23,42,0.35)]"
+            className="relative ml-auto max-w-[500px] overflow-hidden rounded-[2.2rem] border border-white/20 bg-transparent shadow-[0_35px_80px_rgba(15,23,42,0.22)]   "
           >
             <motion.img
               initial={{
@@ -429,10 +367,10 @@ export default function HeroSection() {
               loading="eager"
               decoding="async"
               fetchPriority="high"
-              className="h-[330px] w-full object-cover brightness-[0.97] dark:brightness-[0.92]"
+              className="h-[330px] lg:[@media(max-height:900px)]:h-[clamp(180px,32vh,280px)] w-full object-cover brightness-[0.97] "
             />
 
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/78 via-black/36 to-transparent p-7 text-white dark:from-[#04111d] dark:via-[#04111d]/48">
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/78 via-black/36 to-transparent p-7 lg:[@media(max-height:900px)]:p-4 text-white  ">
               <div className="flex items-end gap-4">
                 <motion.div
                   whileHover={{
@@ -456,6 +394,27 @@ export default function HeroSection() {
             </div>
           </motion.div>
 
+          {/* Desktop official sections link: directly below the care photo,
+              exactly the same width as the photo card. */}
+          <Link
+            to="/official"
+            aria-label={language === "KZ" ? "Бөлімдер: ақпарат және құжаттар" : language === "EN" ? "Sections: information and documents" : "Разделы: информация и документы"}
+            className="brand-gradient relative ml-auto mt-6 lg:[@media(max-height:900px)]:mt-3 flex min-h-[76px] w-full max-w-[500px] items-center gap-3 rounded-[1.2rem] px-5 py-3 text-white shadow-[0_10px_26px_rgba(11,92,171,0.20)] transition-transform duration-200 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+          >
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/40 bg-white/15">
+              <FileText size={20} />
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="text-[16px] font-black leading-tight">
+                {language === "KZ" ? "Бөлімдер" : language === "EN" ? "Sections" : "Разделы"}
+              </div>
+              <div className="mt-1 text-[12px] font-semibold leading-tight text-white/90">
+                {language === "KZ" ? "Ақпарат және құжаттар" : language === "EN" ? "Information and documents" : "Информация и документы"}
+              </div>
+            </div>
+            <ArrowRight size={19} className="shrink-0" aria-hidden="true" />
+          </Link>
+
           <motion.div
             initial={{
               opacity: 0,
@@ -474,9 +433,9 @@ export default function HeroSection() {
               scale: 1.03,
               rotate: 2,
             }}
-            className="absolute -top-20 right-8 z-20"
+            className="absolute -top-20 right-8 z-20 lg:[@media(max-height:900px)]:-top-10"
           >
-            <div className="h-42 w-42 overflow-hidden rounded-full border-[5px] border-transparent bg-gradient-to-br from-[#05a99d] via-[#0b5cab] to-[#3ce6d8] p-[4px] shadow-[0_15px_55px_rgba(5,169,157,0.22)]">
+            <div className="h-42 w-42 lg:[@media(max-height:900px)]:h-28 lg:[@media(max-height:900px)]:w-28 overflow-hidden rounded-full border-[5px] border-transparent bg-gradient-to-br from-[#05a99d] via-[#0b5cab] to-[#3ce6d8] p-[4px] shadow-[0_15px_55px_rgba(5,169,157,0.22)]">
               <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-white">
                 <img
                   src="/logo.png"
@@ -489,6 +448,8 @@ export default function HeroSection() {
             </div>
           </motion.div>
         </motion.div>
+
+
       </div>
     </section>
   )

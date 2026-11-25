@@ -19,7 +19,7 @@ export default function StatCard({ value, text, icon }) {
       </div>
 
       <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[1.7rem]">
-        <div className="absolute -left-12 top-0 h-full w-20 rotate-12 bg-white/12 opacity-0 blur-2xl transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100 dark:bg-cyan-300/10" />
+        <div className="absolute -left-12 top-0 h-full w-20 rotate-12 bg-white/12 opacity-0 blur-2xl transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100 " />
       </div>
 
       <div className="relative flex items-center gap-4">
@@ -37,7 +37,7 @@ export default function StatCard({ value, text, icon }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.05, duration: 0.45 }}
-            className="text-2xl font-black leading-none tracking-tight text-[#12315c] dark:bg-gradient-to-r dark:from-[#58b4ff] dark:to-[#3ce6d8] dark:bg-clip-text dark:text-transparent dark:drop-shadow-[0_0_16px_rgba(5,169,157,0.18)]"
+            className="text-2xl font-black leading-none tracking-tight text-[#12315c]      "
           >
             {value}
           </motion.div>
@@ -47,7 +47,7 @@ export default function StatCard({ value, text, icon }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1, duration: 0.45 }}
-            className="mt-1 text-sm leading-5 text-slate-600 dark:text-white/72"
+            className="mt-1 text-sm leading-5 text-slate-600 "
           >
             {text}
           </motion.p>

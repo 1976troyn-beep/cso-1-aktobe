@@ -1,6 +1,8 @@
+
 import { useState } from "react"
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:4000"
 
 export default function AdminLogin({ onLogin }) {
   const [form, setForm] = useState({
@@ -26,24 +28,43 @@ export default function AdminLogin({ onLogin }) {
     setLoading(true)
 
     try {
-      const response = await fetch(`${API_URL}/api/admin/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      })
+      const response = await fetch(
+        `${API_URL}/api/admin/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        }
+      )
 
-      const data = await response.json()
+      const responseText = await response.text()
+
+      let data
+
+      try {
+        data = JSON.parse(responseText)
+      } catch {
+        throw new Error(
+          `Сервер вернул некорректный ответ (HTTP ${response.status}). Проверьте адрес API.`
+        )
+      }
 
       if (!response.ok) {
         throw new Error(data.message || "Ошибка входа")
       }
 
+      if (!data.token) {
+        throw new Error(
+          "Сервер не вернул токен авторизации"
+        )
+      }
+
       localStorage.setItem("admin-token", data.token)
       onLogin()
     } catch (error) {
-      setError(error.message)
+      setError(error.message || "Не удалось выполнить вход")
     } finally {
       setLoading(false)
     }
@@ -55,7 +76,9 @@ export default function AdminLogin({ onLogin }) {
         onSubmit={handleSubmit}
         className="w-full max-w-md rounded-[2rem] border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-xl"
       >
-        <h1 className="text-3xl font-black">Вход в админ-панель</h1>
+        <h1 className="text-3xl font-black">
+          Вход в админ-панель
+        </h1>
 
         <p className="mt-2 text-sm text-white/60">
           Введите логин и пароль администратора.
@@ -67,6 +90,7 @@ export default function AdminLogin({ onLogin }) {
             value={form.login}
             onChange={handleChange}
             placeholder="Логин"
+            autoComplete="username"
             className="rounded-2xl border border-white/10 bg-[#10283d] px-4 py-3 text-white outline-none transition focus:border-cyan-300"
             required
           />
@@ -77,6 +101,7 @@ export default function AdminLogin({ onLogin }) {
             value={form.password}
             onChange={handleChange}
             placeholder="Пароль"
+            autoComplete="current-password"
             className="rounded-2xl border border-white/10 bg-[#10283d] px-4 py-3 text-white outline-none transition focus:border-cyan-300"
             required
           />

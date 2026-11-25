@@ -9,24 +9,31 @@ import {
   Phone,
   UserRound,
   CalendarDays,
+  Clock3,
+  AlertCircle,
 } from "lucide-react"
 
 const API_URL = import.meta.env.VITE_API_URL
+const gradientClass = "bg-gradient-to-r from-[#0b5cab] via-[#078fb4] to-[#05a99d]"
 
 export default function AdminReviews() {
   const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [busyId, setBusyId] = useState(null)
 
   async function loadReviews() {
     setLoading(true)
-
+    setError("")
     try {
-      const response = await fetch(`${API_URL}/api/reviews`)
+      const response = await fetch(`${API_URL}/api/reviews`, { headers: { Authorization: `Bearer ${localStorage.getItem("admin-token")}` } })
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
       const data = await response.json()
-
-      setReviews(Array.isArray(data) ? data : [])
-    } catch (error) {
-      console.error("Ошибка загрузки отзывов:", error)
+      if (!Array.isArray(data)) throw new Error("Некорректный ответ сервера")
+      setReviews(data)
+    } catch (err) {
+      console.error("Ошибка загрузки отзывов:", err)
+      setError("Не удалось загрузить отзывы. Проверьте подключение к серверу.")
     } finally {
       setLoading(false)
     }
@@ -34,218 +41,175 @@ export default function AdminReviews() {
 
   useEffect(() => {
     let ignore = false
-
     async function loadInitialReviews() {
       try {
-        const response = await fetch(`${API_URL}/api/reviews`)
+        const response = await fetch(`${API_URL}/api/reviews`, { headers: { Authorization: `Bearer ${localStorage.getItem("admin-token")}` } })
+        if (!response.ok) throw new Error(`HTTP ${response.status}`)
         const data = await response.json()
-
-        if (!ignore) {
-          setReviews(Array.isArray(data) ? data : [])
-        }
-      } catch (error) {
-        console.error("Ошибка загрузки отзывов:", error)
+        if (!Array.isArray(data)) throw new Error("Некорректный ответ сервера")
+        if (!ignore) setReviews(data)
+      } catch (err) {
+        console.error("Ошибка загрузки отзывов:", err)
+        if (!ignore) setError("Не удалось загрузить отзывы. Проверьте подключение к серверу.")
       } finally {
-        if (!ignore) {
-          setLoading(false)
-        }
+        if (!ignore) setLoading(false)
       }
     }
-
-    loadInitialReviews()
-
-    return () => {
-      ignore = true
-    }
+    void loadInitialReviews()
+    return () => { ignore = true }
   }, [])
 
   async function updateReview(id, action) {
-    const token = localStorage.getItem("admin-token")
-
-    await fetch(`${API_URL}/api/reviews/${id}/${action}`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-
-    loadReviews()
+    if (busyId !== null) return
+    setBusyId(id)
+    setError("")
+    try {
+      const token = localStorage.getItem("admin-token")
+      const response = await fetch(`${API_URL}/api/reviews/${id}/${action}`, {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      await loadReviews()
+    } catch (err) {
+      console.error("Ошибка изменения отзыва:", err)
+      setError("Сервер не подтвердил изменение отзыва. Попробуйте ещё раз.")
+    } finally {
+      setBusyId(null)
+    }
   }
 
   async function deleteReview(id) {
-    const confirmDelete = confirm("Удалить отзыв без восстановления?")
-
-    if (!confirmDelete) return
-
-    const token = localStorage.getItem("admin-token")
-
-    await fetch(`${API_URL}/api/reviews/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-
-    loadReviews()
+    if (busyId !== null) return
+    if (!window.confirm("Удалить отзыв без восстановления?")) return
+    setBusyId(id)
+    setError("")
+    try {
+      const token = localStorage.getItem("admin-token")
+      const response = await fetch(`${API_URL}/api/reviews/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      await loadReviews()
+    } catch (err) {
+      console.error("Ошибка удаления отзыва:", err)
+      setError("Сервер не подтвердил удаление отзыва. Попробуйте ещё раз.")
+    } finally {
+      setBusyId(null)
+    }
   }
 
-  if (loading) {
-    return (
-      <div className="text-2xl font-black text-[#12315c]">
-        Загрузка отзывов...
-      </div>
-    )
-  }
+  const pending = reviews.filter((review) => !review.approved).length
+  const published = reviews.length - pending
 
   return (
-    <div>
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-        <div className="min-w-0">
-          <p className="text-xs font-black uppercase tracking-[0.25em] text-[#05a99d] sm:text-sm">
-            Review moderation
-          </p>
-
-          <h1 className="mt-3 text-3xl font-black leading-tight text-[#12315c] sm:text-4xl">
-            Модерация отзывов
-          </h1>
-
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
-            Новые отзывы не появляются на сайте автоматически. Сначала их нужно
-            проверить и одобрить.
-          </p>
+    <div className="min-w-0 text-[#12315c]">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#05a99d]">REVIEWS CMS</p>
+          <h1 className="mt-1 text-2xl font-black leading-tight sm:text-3xl">Модерация отзывов</h1>
+          <p className="mt-1 text-xs text-slate-500 sm:text-sm">Проверка отзывов перед публикацией на сайте.</p>
         </div>
-
         <button
           type="button"
           onClick={loadReviews}
-          className="inline-flex w-fit max-w-full shrink-0 items-center justify-center gap-2 rounded-full border border-cyan-200 bg-white px-5 py-3 text-sm font-black text-[#12315c] shadow-xl transition hover:border-[#05a99d]/40 hover:bg-cyan-50 sm:px-6 lg:self-start"
+          disabled={loading || busyId !== null}
+          className="inline-flex items-center gap-2 rounded-xl border border-cyan-200 bg-white px-4 py-2.5 text-xs font-bold text-[#0b5cab] shadow-sm transition hover:bg-cyan-50 disabled:opacity-50"
         >
-          <RefreshCw size={17} />
+          <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
           Обновить
         </button>
       </div>
 
-      {reviews.length === 0 ? (
-        <div className="glass-card mt-6 rounded-[1.8rem] p-6 text-center sm:mt-8 sm:p-8">
-          <MessageSquareText
-            size={42}
-            className="mx-auto text-[#05a99d]"
-          />
-
-          <h2 className="mt-4 text-2xl font-black text-[#12315c]">
-            Отзывов пока нет
-          </h2>
-
-          <p className="mt-2 text-slate-600">
-            Когда пользователь отправит отзыв с сайта, он появится здесь.
-          </p>
+      <div className="mb-4 grid grid-cols-3 gap-2 sm:gap-3">
+        <div className="rounded-2xl border border-cyan-100 bg-white p-3 shadow-sm">
+          <div className="flex items-center gap-2 text-xs font-bold text-slate-500"><MessageSquareText size={15} /> Всего</div>
+          <p className="mt-1 text-2xl font-black">{reviews.length}</p>
         </div>
-      ) : (
-        <div className="mt-6 grid gap-4 sm:mt-8 sm:gap-5">
-          {reviews.map((review, index) => (
-            <motion.div
-              key={review.id}
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.04 }}
-              className="glass-card rounded-[1.5rem] border border-cyan-100/70 p-4 sm:rounded-[1.8rem] sm:p-5"
-            >
-              <div className="grid gap-5 xl:grid-cols-[1fr_220px] xl:items-start">
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <div className="brand-gradient grid h-12 w-12 shrink-0 place-items-center rounded-full text-sm font-black text-white shadow-lg">
-                      {String(review.name || "A").charAt(0).toUpperCase()}
+        <div className="rounded-2xl border border-cyan-100 bg-white p-3 shadow-sm">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#0b5cab]"><Clock3 size={15} /> Ожидают</div>
+          <p className="mt-1 text-2xl font-black">{pending}</p>
+        </div>
+        <div className="rounded-2xl border border-cyan-100 bg-white p-3 shadow-sm">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#047e76]"><CheckCircle2 size={15} /> Опубликованы</div>
+          <p className="mt-1 text-2xl font-black">{published}</p>
+        </div>
+      </div>
+
+      {error && (
+        <div role="alert" className="mb-4 flex items-start gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
+          <AlertCircle size={18} className="mt-0.5 shrink-0" /> {error}
+        </div>
+      )}
+
+      <section className="rounded-2xl border border-cyan-100 bg-white p-3 shadow-[0_12px_35px_rgba(18,49,92,0.06)] sm:p-4">
+        <div className="mb-3 flex items-center justify-between gap-2 rounded-xl bg-gradient-to-r from-[#eaf4ff] to-[#e6fbf6] px-3 py-2.5">
+          <div className="flex items-center gap-2 text-xs font-black"><MessageSquareText size={16} className="text-[#0b5cab]" /> Список отзывов</div>
+          <span className="rounded-full bg-white px-3 py-1 text-[11px] font-black text-[#0b5cab]">Всего: {reviews.length}</span>
+        </div>
+
+        {loading ? (
+          <div className="flex items-center justify-center gap-2 py-12 text-sm text-slate-500"><RefreshCw size={18} className="animate-spin" /> Загрузка отзывов...</div>
+        ) : reviews.length === 0 ? (
+          <div className="rounded-xl border border-dashed border-slate-200 px-4 py-10 text-center text-sm text-slate-500">
+            {error ? "Список отзывов недоступен." : "Отзывов пока нет. Новые отзывы появятся здесь."}
+          </div>
+        ) : (
+          <div className="grid gap-3">
+            {reviews.map((review, index) => (
+              <motion.article
+                key={review.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2, delay: Math.min(index * 0.025, 0.2) }}
+                className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm"
+              >
+                <div className="flex flex-wrap items-start justify-between gap-3 border-b border-slate-100 bg-gradient-to-r from-[#f0f8ff] to-[#ecfbf8] px-3 py-3 sm:px-4">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <div className={`${gradientClass} grid h-9 w-9 shrink-0 place-items-center rounded-xl text-sm font-black text-white`}>
+                      {String(review.name || "А").charAt(0).toUpperCase()}
                     </div>
-
                     <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-3">
-                        <h2 className="break-words text-lg font-black text-[#12315c] sm:text-xl">
-                          {review.name}
-                        </h2>
-
-                        <span
-                          className={`rounded-full border px-4 py-2 text-xs font-black ${
-                            review.approved
-                              ? "border-[#05a99d]/20 bg-[#05a99d]/10 text-[#047e76]"
-                              : "border-[#0b5cab]/15 bg-[#0b5cab]/8 text-[#0b5cab]"
-                          }`}
-                        >
-                          {review.approved
-                            ? "Опубликован"
-                            : "Ожидает проверки"}
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h2 className="break-words text-sm font-black">{review.name || "Без имени"}</h2>
+                        <span className={`rounded-full px-2.5 py-1 text-[10px] font-black ${review.approved ? "bg-emerald-100 text-emerald-700" : "bg-blue-100 text-blue-700"}`}>
+                          {review.approved ? "Опубликован" : "Ожидает проверки"}
                         </span>
                       </div>
-
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        <span className="inline-flex items-center gap-2 rounded-full bg-cyan-50 px-4 py-2 text-xs font-black text-[#0b5cab]">
-                          <UserRound size={14} />
-                          {review.role || "Посетитель"}
-                        </span>
-
-                        {review.phone && (
-                          <span className="inline-flex max-w-full items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-black text-[#12315c] ring-1 ring-slate-200">
-                            <Phone size={14} />
-                            <span className="break-all">{review.phone}</span>
-                          </span>
-                        )}
-
-                        <span className="inline-flex max-w-full items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-bold text-slate-500 ring-1 ring-slate-200">
-                          <CalendarDays size={14} />
-                          <span className="break-words">{review.created_at}</span>
-                        </span>
+                      <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-slate-500">
+                        <span className="inline-flex items-center gap-1"><UserRound size={12} /> {review.role || "Посетитель"}</span>
+                        {review.phone && <span className="inline-flex items-center gap-1 break-all"><Phone size={12} /> {review.phone}</span>}
+                        {review.created_at && <span className="inline-flex items-center gap-1"><CalendarDays size={12} /> {review.created_at}</span>}
                       </div>
                     </div>
                   </div>
-
-                  <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-
-                  <p className="mt-5 max-w-4xl text-[15px] leading-7 text-slate-600 sm:leading-8">
-                    {review.text}
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-3 xl:justify-end">
-                  {!review.approved && (
+                  <div className="flex flex-wrap gap-2">
                     <button
                       type="button"
-                      onClick={() =>
-                        updateReview(review.id, "approve")
-                      }
-                      className="inline-flex items-center gap-2 rounded-full border border-[#05a99d]/25 bg-[#05a99d]/10 px-5 py-3 text-sm font-black text-[#047e76] transition hover:bg-[#05a99d]/15"
+                      disabled={busyId !== null || loading}
+                      onClick={() => updateReview(review.id, review.approved ? "hide" : "approve")}
+                      className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-bold transition disabled:opacity-50 ${review.approved ? "border border-cyan-200 bg-white text-[#0b5cab] hover:bg-cyan-50" : `${gradientClass} text-white shadow-sm hover:opacity-90`}`}
                     >
-                      <CheckCircle2 size={17} />
-                      Одобрить
+                      {review.approved ? <EyeOff size={15} /> : <CheckCircle2 size={15} />}
+                      {review.approved ? "Скрыть" : "Одобрить"}
                     </button>
-                  )}
-
-                  {review.approved && (
                     <button
                       type="button"
-                      onClick={() =>
-                        updateReview(review.id, "hide")
-                      }
-                      className="inline-flex items-center gap-2 rounded-full border border-[#0b5cab]/20 bg-[#0b5cab]/8 px-5 py-3 text-sm font-black text-[#0b5cab] transition hover:bg-[#0b5cab]/12"
+                      disabled={busyId !== null || loading}
+                      onClick={() => deleteReview(review.id)}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-rose-100 bg-rose-50 px-3 py-2 text-xs font-bold text-rose-600 transition hover:bg-rose-100 disabled:opacity-50"
                     >
-                      <EyeOff size={17} />
-                      Скрыть
+                      <Trash2 size={15} /> Удалить
                     </button>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={() => deleteReview(review.id)}
-                    className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-white px-5 py-3 text-sm font-black text-rose-500 transition hover:bg-rose-50"
-                  >
-                    <Trash2 size={17} />
-                    Удалить
-                  </button>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      )}
+                <p className="whitespace-pre-wrap break-words px-3 py-3 text-sm leading-6 text-slate-700 sm:px-4">{review.text}</p>
+              </motion.article>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   )
 }
-

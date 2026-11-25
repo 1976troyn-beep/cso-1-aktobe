@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { createPortal } from "react-dom"
 import { useLanguage } from "../context/LanguageContext"
+import AccessibilityPanel from "./AccessibilityPanel"
 
 import {
   motion,
@@ -13,8 +14,6 @@ import {
   ChevronDown,
   Menu,
   X,
-  Moon,
-  Sun,
   Home,
   BedDouble,
   UsersRound,
@@ -24,6 +23,7 @@ import {
   MessageCircle,
   Phone,
   Handshake,
+  ScanEye,
 } from "lucide-react"
 
 const languages = [
@@ -50,51 +50,11 @@ export default function Header() {
   const { language, setLanguage, t } =
     useLanguage()
 
+  const [isAccessibilityOpen, setIsAccessibilityOpen] = useState(false)
+
   const [isLangOpen, setIsLangOpen] =
     useState(false)
 
-  const [isDark, setIsDark] =
-    useState(() => {
-    if (typeof window === "undefined") {
-      return false
-    }
-
-    const savedTheme =
-      localStorage.getItem("theme")
-
-    if (savedTheme === "dark") {
-      document.documentElement.classList.add(
-        "dark"
-      )
-
-      return true
-    }
-
-    if (savedTheme === "light") {
-      document.documentElement.classList.remove(
-        "dark"
-      )
-
-      return false
-    }
-
-    const isMobile =
-      window.innerWidth < 768
-
-    if (isMobile) {
-      document.documentElement.classList.add(
-        "dark"
-      )
-
-      return true
-    }
-
-    document.documentElement.classList.remove(
-      "dark"
-    )
-
-    return false
-  })
   const [isMobileOpen, setIsMobileOpen] =
     useState(false)
 
@@ -157,14 +117,6 @@ export default function Header() {
         ),
       },
 
-      {
-        href: "#news",
-        label:
-          t.header.nav.news,
-        icon: (
-          <Newspaper size={18} />
-        ),
-      },
 
       {
         href: "#documents",
@@ -189,6 +141,15 @@ export default function Header() {
       },
 
       {
+        href: "#news",
+        label:
+          t.header.nav.news,
+        icon: (
+          <Newspaper size={18} />
+        ),
+      },
+
+      {
         href: "#contacts",
         label:
           t.header.nav
@@ -201,47 +162,12 @@ export default function Header() {
     [t]
   )
 
-  function toggleTheme() {
-  const overlay = document.createElement("div")
-
-  overlay.className =
-    "theme-transition-overlay"
-
-  document.body.appendChild(overlay)
-
-  requestAnimationFrame(() => {
-    overlay.classList.add("theme-transition-overlay-active")
-  })
-
-  const nextTheme = !isDark
-
-  setTimeout(() => {
-    setIsDark(nextTheme)
-     localStorage.setItem(
-      "theme",
-      nextTheme ? "dark" : "light"
-    )
-    if (nextTheme) {
-      document.documentElement.classList.add(
-        "dark"
-      )
-    } else {
-      document.documentElement.classList.remove(
-        "dark"
-      )
-    }
-  }, 140)
-
-  setTimeout(() => {
-    overlay.classList.remove(
-      "theme-transition-overlay-active"
-    )
-
-    setTimeout(() => {
-      overlay.remove()
-    }, 700)
-  }, 420)
-  }
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1280px)")
+    const closeMenu = () => { if (desktop.matches) setIsMobileOpen(false) }
+    desktop.addEventListener("change", closeMenu)
+    return () => desktop.removeEventListener("change", closeMenu)
+  }, [])
 
   /* BODY LOCK */
 
@@ -340,6 +266,12 @@ export default function Header() {
 
   return createPortal(
     <>
+      <AccessibilityPanel
+        open={isAccessibilityOpen}
+        onClose={() => setIsAccessibilityOpen(false)}
+        language={language}
+      />
+
       {/* TOP PROGRESS */}
 
       <motion.div
@@ -367,12 +299,12 @@ export default function Header() {
           right: "0px",
         }}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-[1.25rem] border border-white/70 bg-white/78 px-3 py-2 shadow-[0_14px_42px_rgba(15,23,42,0.12)] backdrop-blur-2xl transition-all duration-500 dark:border-white/10 dark:bg-[#081826]/82 dark:shadow-[0_20px_70px_rgba(0,0,0,0.45)] md:mt-4 md:rounded-[1.8rem] md:px-5 md:py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-[1.25rem] border border-white/70 bg-white/78 px-3 py-2 shadow-[0_14px_42px_rgba(15,23,42,0.12)] backdrop-blur-2xl transition-all duration-500    md:mt-4 xl:max-[1536px]:mt-0 md:rounded-[1.8rem] md:px-5 md:py-3">
           {/* LOGO */}
 
           <a
              href="#top"
-            className="flex min-w-0 items-center gap-2.5 md:gap-3"
+            className="flex min-w-0 items-center gap-2.5 md:gap-3 xl:shrink-0"
           >
             <motion.div
               whileHover={{
@@ -400,7 +332,7 @@ export default function Header() {
                   fontSize: "0.9rem",
                 }}
               >
-                <span className="text-[#0b5cab] dark:text-cyan-300">
+                <span className="text-[#0b5cab] ">
                   {t.header.brandTitle}
                 </span>
               </h1>
@@ -415,7 +347,7 @@ export default function Header() {
 
           {/* DESKTOP NAV */}
 
-          <nav className="hidden items-center gap-4 lg:flex">
+          <nav className="hidden items-center gap-2 xl:flex 2xl:gap-4">
             {navLinks
               .filter((link) => link.href !== "#news")
               .map((link) => {
@@ -434,10 +366,10 @@ export default function Header() {
                     href={
                       link.href
                     }
-                    className={`relative pb-2 text-[0.82rem] font-semibold transition ${
+                    className={`relative whitespace-nowrap pb-2 text-[0.75rem] 2xl:text-[0.82rem] font-semibold transition ${
                       isActive
                         ? "text-[#05a99d]"
-                        : "text-slate-700 hover:text-[#05a99d] dark:text-white/72"
+                        : "text-slate-700 hover:text-[#05a99d] "
                     }`}
                   >
                     {link.label}
@@ -457,7 +389,17 @@ export default function Header() {
 
           {/* DESKTOP ACTIONS */}
 
-          <div className="hidden items-center gap-2.5 lg:flex">
+          <div className="hidden shrink-0 items-center gap-2 xl:flex 2xl:gap-2.5">
+            <button
+              type="button"
+              onClick={() => setIsAccessibilityOpen(true)}
+              title={language === "KZ" ? "Нашар көретіндерге арналған нұсқа" : language === "EN" ? "Accessibility settings" : "Версия для слабовидящих"}
+              aria-label={language === "KZ" ? "Нашар көретіндерге арналған нұсқа" : language === "EN" ? "Accessibility settings" : "Версия для слабовидящих"}
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#05a99d]/40 bg-white/90 text-[#078da0] shadow-lg transition hover:scale-105 hover:bg-cyan-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#05a99d]  "
+            >
+              <ScanEye size={21} aria-hidden="true" />
+            </button>
+
             <a
               href="#news"
               title={t.header.nav.news}
@@ -467,18 +409,6 @@ export default function Header() {
               <Newspaper size={18} />
             </a>
 
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white/85 text-[#12315c] shadow-lg backdrop-blur transition hover:border-[#05a99d]/40 dark:border-white/10 dark:bg-[#0d2233] dark:text-white"
-            >
-              {isDark ? (
-                <Sun size={18} />
-              ) : (
-                <Moon size={18} />
-              )}
-            </button>
-
             <div className="relative">
               <button
                 type="button"
@@ -487,7 +417,7 @@ export default function Header() {
                     !isLangOpen
                   )
                 }
-                className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-4 py-3 text-sm font-semibold text-[#12315c] shadow-lg backdrop-blur transition hover:border-[#05a99d]/50 dark:border-white/10 dark:bg-[#0d2233] dark:text-white"
+                className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-4 py-3 text-sm font-semibold text-[#12315c] shadow-lg backdrop-blur transition hover:border-[#05a99d]/50   "
               >
                 <span>
                   {
@@ -532,7 +462,7 @@ export default function Header() {
                     transition={{
                       duration: 0.18,
                     }}
-                    className="absolute right-0 top-14 w-44 overflow-hidden rounded-2xl border border-white/10 bg-[#0b1d2b]/96 p-2 shadow-2xl backdrop-blur-xl"
+                    className="absolute right-0 top-14 w-44 overflow-hidden rounded-2xl border border-white/10 bg-white/96 p-2 shadow-2xl backdrop-blur-xl"
                   >
                     {languages.map(
                       (
@@ -552,7 +482,7 @@ export default function Header() {
                               false
                             )
                           }}
-                          className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium text-white/82 transition hover:bg-white/6"
+                          className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium text-[#12315c] transition hover:bg-slate-100"
                         >
                           <span>
                             {
@@ -581,7 +511,7 @@ export default function Header() {
             onClick={() =>
               setIsMobileOpen(true)
             }
-            className="grid h-10 w-10 shrink-0 place-items-center rounded-[1rem] border border-slate-200 bg-white/85 text-[#12315c] shadow-lg backdrop-blur transition hover:border-[#05a99d]/40 dark:border-white/10 dark:bg-[#0d2233] dark:text-white sm:h-11 sm:w-11 lg:hidden"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-[1rem] border border-slate-200 bg-white/85 text-[#12315c] shadow-lg backdrop-blur transition hover:border-[#05a99d]/40    sm:h-11 sm:w-11 xl:hidden"
           >
             <Menu size={20} />
           </button>
@@ -614,7 +544,7 @@ export default function Header() {
                     false
                   )
                 }
-                className="fixed inset-0 z-[100000] bg-[#020817]/55 backdrop-blur-md lg:hidden"
+                className="fixed inset-0 z-[100000] bg-[#020817]/55 backdrop-blur-md xl:hidden"
               />
 
               {/* DRAWER */}
@@ -634,7 +564,7 @@ export default function Header() {
                   damping: 28,
                   stiffness: 240,
                 }}
-                className="fixed bottom-0 right-0 top-0 z-[100001] flex h-[100dvh] max-h-[100dvh] w-[300px] max-w-[86vw] flex-col overflow-hidden border-l border-white/10 bg-[#071827]/96 shadow-[0_0_90px_rgba(0,0,0,0.45)] backdrop-blur-2xl lg:hidden"
+                className="fixed bottom-0 right-0 top-0 z-[100001] flex h-[100dvh] max-h-[100dvh] w-[300px] max-w-[86vw] flex-col overflow-hidden border-l border-slate-200 bg-white/96 shadow-[0_0_90px_rgba(0,0,0,0.45)] backdrop-blur-2xl xl:hidden"
               >
                 {/* TOP */}
 
@@ -694,7 +624,7 @@ export default function Header() {
                 {/* CONTENT */}
 
                 <div
-                  className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-24 pt-4"
+                  className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 pb-5 pt-3 max-[850px]:pb-3 max-[850px]:pt-2"
                   style={{
                     WebkitOverflowScrolling: "touch",
                     touchAction: "pan-y",
@@ -702,7 +632,7 @@ export default function Header() {
                 >
                   {/* NAV */}
 
-                  <div className="grid gap-2">
+                  <div className="grid gap-1 max-[850px]:gap-0.5">
                     {navLinks.map(
                       (
                         link,
@@ -741,17 +671,17 @@ export default function Header() {
                                 false
                               )
                             }
-                            className={`group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm transition ${
+                            className={`group flex min-h-[44px] items-center gap-3 rounded-xl px-3 py-1.5 text-[13px] transition max-[850px]:min-h-[40px] max-[850px]:py-1 ${
                               isActive
-                                ? "bg-cyan-500/10 font-bold text-cyan-300"
-                                : "bg-white/5 font-medium text-white/82 hover:bg-white/[0.07]"
+                                ? "bg-cyan-50 font-bold text-[#0b5cab]"
+                                : "bg-slate-50 font-medium text-[#12315c] hover:bg-cyan-50"
                             }`}
                           >
                             <span
-                              className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl transition ${
+                              className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg transition ${
                                 isActive
                                   ? "brand-gradient text-white shadow-[0_0_20px_rgba(5,169,157,0.28)]"
-                                  : "bg-[#0d2233] text-cyan-300 group-hover:bg-[#12314d]"
+                                  : "bg-gradient-to-br from-[#0b5cab]/10 to-[#05a99d]/20 text-[#0b5cab] group-hover:from-[#0b5cab] group-hover:to-[#05a99d] group-hover:text-white"
                               }`}
                             >
                               {
@@ -772,8 +702,8 @@ export default function Header() {
 
                   {/* LANG */}
 
-                  <div className="mt-5 rounded-[1.5rem] border border-white/6 bg-white/5 p-3">
-                    <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-300/75">
+                  <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-3 max-[850px]:mt-2 max-[850px]:p-2.5">
+                    <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#0b5cab]">
                       {
                         t.header
                           .languageSettings
@@ -803,7 +733,7 @@ export default function Header() {
                               className={`rounded-2xl px-2 py-2 text-xs font-semibold transition ${
                                 isActive
                                   ? "brand-gradient text-white shadow-[0_0_20px_rgba(5,169,157,0.25)]"
-                                  : "bg-[#0d2233] text-white/82"
+                                  : "bg-white text-[#12315c]"
                               }`}
                             >
                               <span className="block text-base">
@@ -824,54 +754,26 @@ export default function Header() {
                     </div>
                   </div>
 
-                  {/* THEME */}
-
-                  <div className="mt-3 rounded-[1.5rem] border border-white/6 bg-white/5 p-3">
-                    <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-300/75">
-                      {
-                        t.header
-                          .themeSettings
-                      }
-                    </p>
-
-                    <button
-                      type="button"
-                      onClick={
-                        toggleTheme
-                      }
-                      className="flex w-full items-center justify-between rounded-2xl bg-[#0d2233] px-3 py-3 text-xs font-medium text-white transition hover:bg-[#12314d]"
-                    >
-                      <span>
-                        {isDark
-                          ? t.header
-                              .darkTheme
-                          : t.header
-                              .lightTheme}
-                      </span>
-
-                      <span className="grid h-8 w-8 place-items-center rounded-xl bg-cyan-500/10 text-cyan-300">
-                        {isDark ? (
-                          <Sun
-                            size={
-                              16
-                            }
-                          />
-                        ) : (
-                          <Moon
-                            size={
-                              16
-                            }
-                          />
-                        )}
-                      </span>
-                    </button>
-                  </div>
+                  {/* ACCESSIBILITY — BELOW LANGUAGES */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsMobileOpen(false)
+                      setIsAccessibilityOpen(true)
+                    }}
+                    className="mt-3 flex min-h-[44px] w-full items-center gap-3 rounded-xl max-[850px]:mt-2 border border-[#05a99d]/25 bg-cyan-50 px-3 py-2 text-left text-[13px] font-bold text-[#0b5cab] transition hover:bg-cyan-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#05a99d]"
+                  >
+                    <span className="brand-gradient grid h-8 w-8 shrink-0 place-items-center rounded-lg text-white">
+                      <ScanEye size={19} aria-hidden="true" />
+                    </span>
+                    {language === "KZ" ? "Нашар көретіндерге арналған нұсқа" : language === "EN" ? "Accessibility settings" : "Версия для слабовидящих"}
+                  </button>
                 </div>
 
                 {/* FOOTER */}
 
-                <div className="shrink-0 border-t border-white/6 px-4 py-3">
-                  <p className="text-[10px] leading-5 text-white/40">
+                <div className="shrink-0 border-t border-slate-200 bg-white/95 px-3 py-2">
+                  <p className="break-words text-[11px]! leading-[15px]! text-slate-500">
                     {
                       t.header
                         .copyright
