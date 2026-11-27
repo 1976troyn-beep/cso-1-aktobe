@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import {
@@ -11,222 +11,105 @@ import {
   FileText,
   ArrowRight,
 } from "lucide-react"
-
 import useSections from "../hooks/useSections"
 import { useLanguage } from "../context/LanguageContext"
-
 const EMPTY_MEDIA = []
-
+const LOCAL_BACKGROUND_SOURCE = "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1780642757336-blob"
+const LOCAL_CARD_SOURCE = "https://uiwvbwhpxywctdqonypj.supabase.co/storage/v1/object/public/uploads/1780642785164-ddd"
+function ReadyImage({ src, className, alt = "", ...props }) {
+  const [ready, setReady] = useState(false)
+  return <img src={src} alt={alt} {...props} onLoad={() => setReady(true)} className={`${className} transition-opacity duration-500 motion-reduce:transition-none ${ready ? "opacity-100" : "opacity-0"}`} />
+}
+function HeroVideo({ src }) {
+  const [ready, setReady] = useState(false)
+  return <video src={src} autoPlay muted loop playsInline preload="auto" onPlaying={() => setReady(true)} onError={() => setReady(false)} ref={video => { if (video) video.playbackRate = 0.72 }} className={`absolute inset-0 h-full w-full object-cover !absolute !inset-0 !h-full !max-h-none !w-full !object-cover transition-opacity duration-500 motion-reduce:transition-none ${ready ? "opacity-100" : "opacity-0"}`} />
+}
 export default function HeroSection() {
   const { getSection } = useSections()
   const { t, language } = useLanguage()
-
   const hero = getSection("hero")
-
   const heading =
     language === "RU"
       ? hero?.heading || t.hero.heading
       : t.hero.heading
-
   const text =
     language === "RU"
       ? hero?.text || t.hero.text
       : t.hero.text
-
   const cardTitle =
     language === "RU"
       ? hero?.card_title || t.hero.cardTitle
       : t.hero.cardTitle
-
   const cardText =
     language === "RU"
       ? hero?.card_text || t.hero.cardText
       : t.hero.cardText
-
   const heroMedia = hero?.media || EMPTY_MEDIA
-
-  const backgroundMedia = useMemo(() => {
-    return (
-      heroMedia[0] || {
-        src: "/hero-bg.jpg",
-        type: "image",
-      }
-    )
-  }, [heroMedia])
-
-  const cardImage = heroMedia[1]?.src || "/care-card.jpg"
-
+  const backgroundMedia = heroMedia[0]
+  const cardSource = heroMedia[1]?.src
+  const cardImage = !cardSource || cardSource === LOCAL_CARD_SOURCE ? "/care-card.jpg" : cardSource
   return (
     <section
       id="top"
       className="relative min-h-screen overflow-hidden pt-24 md:pt-32 lg:[@media(max-height:900px)]:pt-32"
     >
+      <div className="absolute inset-0 bg-[#dfeeed]" />
+      <div className="absolute inset-0 overflow-hidden">
+        <img src="/hero-bg.jpg" alt="" fetchPriority="high" loading="eager" className="absolute inset-0 h-full w-full object-cover !absolute !inset-0 !h-full !max-h-none !w-full !object-cover" />
       {backgroundMedia?.type === "video" ? (
-        <motion.video
-          initial={{
-            opacity: 0,
-            scale: 1.03,
-          }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-          }}
-          transition={{
-            duration: 1.2,
-            ease: "easeOut",
-          }}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          ref={(video) => {
-            if (video) {
-              video.playbackRate = 0.72
-            }
-          }}
-          className="absolute inset-0 h-full w-full object-cover"
-        >
-          <source src={backgroundMedia.src} type="video/mp4" />
-        </motion.video>
-      ) : (
-        <>
-          <div className="absolute inset-0 bg-[#dfeeed]" />
-
-          <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${backgroundMedia.src})` }} />
-          </div>
-        </>
-      )}
-
+        <HeroVideo key={backgroundMedia.src} src={backgroundMedia.src} />
+      ) : backgroundMedia?.src && backgroundMedia.src !== "/hero-bg.jpg" && backgroundMedia.src !== LOCAL_BACKGROUND_SOURCE ? (
+        <ReadyImage key={backgroundMedia.src} src={backgroundMedia.src} className="absolute inset-0 h-full w-full object-cover !absolute !inset-0 !h-full !max-h-none !w-full !object-cover" decoding="async" />
+      ) : null}
+      </div>
       {/* Soft Premium: a calm, light backdrop for readable text.
           The background photo/video remains fully managed by the admin panel. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-white/20" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#f3f8f6]/[0.57] via-[#f3f8f6]/[0.30] to-[#f3f8f6]/[0.12] lg:from-[#f3f8f6]/[0.65] lg:via-[#f3f8f6]/[0.29] lg:to-[#f3f8f6]/[0.10]" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.06] via-transparent to-[#112d39]/[0.08]" />
-
       <div className="relative mx-auto grid min-h-[calc(100svh-6rem)] max-w-7xl items-center gap-8 px-6 pb-20 pt-2 md:min-h-screen md:gap-10 md:pb-12 md:pt-4 lg:-translate-y-8 lg:grid-cols-[1.05fr_0.95fr] lg:content-center lg:items-end lg:gap-x-12 lg:gap-y-7 lg:py-0 lg:[@media(max-height:900px)]:min-h-[calc(100svh-8rem)] lg:[@media(max-height:900px)]:translate-y-0 lg:[@media(max-height:900px)]:gap-x-6 lg:[@media(max-height:900px)]:pb-6">
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 32,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.9,
-            ease: "easeOut",
-          }}
+            initial={false}
           className="relative translate-y-8 sm:translate-y-6 md:translate-y-0"
         >
           <motion.div
-            initial={{
-              opacity: 0,
-              y: 12,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              delay: 0.18,
-              duration: 0.55,
-              ease: "easeOut",
-            }}
+            initial={false}
             className="relative max-w-[720px] pl-4"
           >
             <div className="absolute left-0 top-1 h-[74px] w-[3px] rounded-full brand-gradient" />
-
             <p className="text-[17px] font-black uppercase leading-tight tracking-[0.18em] text-[#0b5cab] drop-shadow-sm  md:text-[20px]">
               {t.hero.topLine1}
             </p>
-
             <p className="mt-1 text-[17px] font-black uppercase leading-tight tracking-[0.16em] text-[#12315c] drop-shadow-sm  md:text-[20px]">
               {t.hero.topLine2}
             </p>
-
             <p className="mt-3 text-[13px] font-black uppercase tracking-[0.08em] text-[#05a99d] md:text-[15px]">
               {t.hero.centerName}
             </p>
-
             <p className="mt-2 max-w-2xl text-sm font-bold leading-6 text-[#12315c] ">
               {t.hero.department}
             </p>
           </motion.div>
-
           <motion.h1
-            initial={{
-              opacity: 0,
-              y: 18,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              delay: 0.22,
-              duration: 0.7,
-              ease: "easeOut",
-            }}
+            initial={false}
             className="mt-6 max-w-4xl text-[2.8rem] font-black leading-[0.93] tracking-[-0.04em] sm:text-5xl md:text-7xl lg:[@media(max-height:900px)]:text-[clamp(2rem,4.1vw,3.5rem)] lg:[@media(max-height:900px)]:mt-3"
           >
             <span className="brand-text-gradient block drop-shadow-[0_4px_12px_rgba(255,255,255,0.18)]  ">
               {heading}
             </span>
           </motion.h1>
-
           <motion.p
-            initial={{
-              opacity: 0,
-              y: 12,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              delay: 0.32,
-              duration: 0.6,
-              ease: "easeOut",
-            }}
+            initial={false}
             className="mt-5 max-w-2xl text-base font-bold leading-7 text-[#12315c]  md:text-lg md:leading-8 lg:[@media(max-height:900px)]:mt-3 lg:[@media(max-height:900px)]:text-base lg:[@media(max-height:900px)]:leading-6"
           >
             {text}
           </motion.p>
-
           <motion.div
-            initial={{
-              opacity: 0,
-              scaleX: 0.6,
-            }}
-            animate={{
-              opacity: 1,
-              scaleX: 1,
-            }}
-            transition={{
-              delay: 0.38,
-              duration: 0.55,
-              ease: "easeOut",
-            }}
+            initial={false}
             className="mt-7 lg:[@media(max-height:900px)]:mt-3 h-[2px] w-52 origin-left rounded-full brand-gradient"
           />
-
           <motion.div
-            initial={{
-              opacity: 0,
-              y: 10,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              delay: 0.42,
-              duration: 0.55,
-              ease: "easeOut",
-            }}
+            initial={false}
             className="mt-7 grid max-w-2xl gap-3.5 sm:grid-cols-2 md:mt-10 md:gap-4 lg:[@media(max-height:900px)]:mt-4"
           >
             <motion.a
@@ -243,7 +126,6 @@ export default function HeroSection() {
               <CalendarDays size={18} />
               {t.hero.consultation}
             </motion.a>
-
             <motion.a
               whileHover={{
                 y: -3,
@@ -259,13 +141,10 @@ export default function HeroSection() {
               {t.hero.services}
             </motion.a>
           </motion.div>
-
           {/* Four matching cards directly beneath the hero buttons.
               Desktop: one horizontal row. Tablet: two columns. Mobile: stacked. */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.55, ease: "easeOut" }}
+            initial={false}
             className="mt-6 lg:[@media(max-height:900px)]:mt-3 grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-2"
           >
             {[
@@ -293,7 +172,6 @@ export default function HeroSection() {
                 </div>
               </motion.div>
             ))}
-
             <Link
               to="/official"
               aria-label={language === "KZ" ? "Ресми ақпарат" : language === "EN" ? "Official information" : "Официальная информация"}
@@ -314,21 +192,8 @@ export default function HeroSection() {
             </Link>
           </motion.div>
         </motion.div>
-
         <motion.div
-          initial={{
-            opacity: 0,
-            x: 42,
-          }}
-          animate={{
-            opacity: 1,
-            x: 0,
-          }}
-          transition={{
-            duration: 0.8,
-            delay: 0.2,
-            ease: "easeOut",
-          }}
+            initial={false}
           className="relative hidden lg:block"
         >
           <motion.div
@@ -346,30 +211,10 @@ export default function HeroSection() {
             }}
             className="relative ml-auto max-w-[500px] overflow-hidden rounded-[2.2rem] border border-white/20 bg-transparent shadow-[0_35px_80px_rgba(15,23,42,0.22)]   "
           >
-            <motion.img
-              initial={{
-                opacity: 0,
-                scale: 1.03,
-                filter: "blur(12px)",
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                filter: "blur(0px)",
-              }}
-              transition={{
-                duration: 0.9,
-                delay: 0.3,
-                ease: "easeOut",
-              }}
-              src={cardImage}
-              alt="Care"
-              loading="eager"
-              decoding="async"
-              fetchPriority="high"
-              className="h-[330px] lg:[@media(max-height:900px)]:h-[clamp(180px,32vh,280px)] w-full object-cover brightness-[0.97] "
-            />
-
+            <div className="relative h-[330px] lg:[@media(max-height:900px)]:h-[clamp(180px,32vh,280px)] w-full bg-[#dfeeed]">
+              <img src="/care-card.jpg" alt="Care" loading="eager" fetchPriority="high" className="absolute inset-0 h-full w-full object-cover brightness-[0.97]" />
+              {cardImage !== "/care-card.jpg" && <ReadyImage key={cardImage} src={cardImage} className="absolute inset-0 h-full w-full object-cover brightness-[0.97]" decoding="async" />}
+            </div>
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/78 via-black/36 to-transparent p-7 lg:[@media(max-height:900px)]:p-4 text-white  ">
               <div className="flex items-end gap-4">
                 <motion.div
@@ -380,12 +225,10 @@ export default function HeroSection() {
                 >
                   <Accessibility size={34} />
                 </motion.div>
-
                 <div>
                   <h3 className="text-xl font-black text-white">
                     {cardTitle}
                   </h3>
-
                   <p className="mt-1 text-sm text-white/82">
                     {cardText}
                   </p>
@@ -393,7 +236,6 @@ export default function HeroSection() {
               </div>
             </div>
           </motion.div>
-
           {/* Desktop official sections link: directly below the care photo,
               exactly the same width as the photo card. */}
           <Link
@@ -414,21 +256,8 @@ export default function HeroSection() {
             </div>
             <ArrowRight size={19} className="shrink-0" aria-hidden="true" />
           </Link>
-
           <motion.div
-            initial={{
-              opacity: 0,
-              scale: 0.84,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-            }}
-            transition={{
-              delay: 0.7,
-              duration: 0.5,
-              ease: "easeOut",
-            }}
+            initial={false}
             whileHover={{
               scale: 1.03,
               rotate: 2,
@@ -448,8 +277,6 @@ export default function HeroSection() {
             </div>
           </motion.div>
         </motion.div>
-
-
       </div>
     </section>
   )
